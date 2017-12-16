@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset addfieldpath="/administrator/components/com_secretary/models/fields">
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field name="title" type="text" class="fullwidth" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="text" class="form-control" type="editor" buttons="false" height="200" filter="JComponentHelper::filterText" label="COM_SECRETARY_TIMES_TEXT" description="" /> 
+		
+		<field name="catid" type="categories" class="inputbox" extension="times" label="COM_SECRETARY_CATEGORY" filter="intval" />
+		<field name="created" type="calendar" default="NOW" label="COM_SECRETARY_TIMES_CREATEDDATE" class="form-control" />
+       
+		<field name="startDate" format="%Y-%m-%d %H:%M:%S" type="calendar" default="NOW" label="COM_SECRETARY_TIMES_STARTDATE" class="form-control" />
+		<field name="endDate" format="%Y-%m-%d %H:%M:%S" type="calendar" default="" label="COM_SECRETARY_TIMES_ENDDATE" class="form-control" /> 
+       
+		<field name="upload" type="upload" label="COM_SECRETARY_ATTACHMENT" />
+		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="features" type="hidden" />
+		<field name="contacts" type="subjects" label="COM_SECRETARY_TIME_CONTACTS" class="form-control" /> 
+		<field name="maxContacts" type="number" default="0" min="0" label="COM_SECRETARY_TIME_MAXCONTACTS" filter="intval" class="form-control" /> 
+		 
+		<field name="document_id" type="secretarysearch" extension="documents" label="COM_SECRETARY_DOCUMENT" filter="intval" />
+		<field name="location_id" type="secretarysearch" extension="locations" module="times" label="COM_SECRETARY_TIME_LOCATION" filter="intval" />
+		
+		<field name="repetition" type="text" label="Repetition" /> 
+
+		<field name="created_by" type="user" default="" label="COM_SECRETARY_USER" />
+	   
+		<field name="state" type="secretarystatus" extension="times" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" filter="intval" />
+		
+		<field name="business" type="hidden" filter="intval" />
+		<field name="extension" type="hidden"/>
+		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
+		<field name="checked_out" type="hidden" filter="unset" />
+		<field name="checked_out_time" type="hidden" filter="unset" />
+		
+		<field name="access" type="accesslevel" default="" label="COM_SECRETARY_TIME_ACCESS" />
+	</fieldset>
+	
+	<fieldset name="accesscontrol">
+		<field name="asset_id" type="hidden" filter="unset" />
+		<field name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_secretary"
+			section="time" />
+	</fieldset>
+</form>

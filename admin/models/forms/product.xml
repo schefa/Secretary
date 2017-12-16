@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field name="title" type="text" class="form-control fullwidth" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="description" type="textarea" class="form-control row-fluid" label="COM_SECRETARY_PRODUCT_DESC" filter="Secretary\Utilities::cleaner"  />
+		<field name="entity" type="entities" class="form-control" label="COM_SECRETARY_ENTITY" filter="safehtml" /> 
+		<field name="taxRate" type="number" step="0.01" min="0" class="fullwidth" label="COM_SECRETARY_PRODUCT_TAXRATE" filter="safehtml" /> 
+		<field name="priceCost" type="number" step="0.01" min="0" class="form-control" label="COM_SECRETARY_PRODUCT_PRICECOST" filter="safehtml" /> 
+		<field name="priceSale" type="number" step="0.01" min="0" class="form-control" label="COM_SECRETARY_PRODUCT_PRICESALE" filter="safehtml" /> 
+		<field name="quantityBought" type="hidden" class="form-control" label="COM_SECRETARY_PRODUCT_QUANTITYBOUGHT" filter="safehtml" readonly="true" /> 
+		<field name="quantity" type="hidden" class="form-control" label="COM_SECRETARY_PRODUCT_QUANTITY" filter="safehtml" readonly="true" /> 
+		<field name="totalBought" type="hidden" class="form-control" label="COM_SECRETARY_PRODUCT_TOTALBOUGHT" filter="safehtml" readonly="true" /> 
+		<field name="total" type="hidden" label="COM_SECRETARY_PRODUCT_TOTAL" filter="safehtml" readonly="true" /> 
+		
+		<field name="quantityMin" type="number" min="0" class="fullwidth" label="COM_SECRETARY_PRODUCT_QUANTITYMIN" filter="floatval" /> 
+		<field name="quantityMax" type="number" min="0" class="fullwidth" label="COM_SECRETARY_PRODUCT_QUANTITYMAX" filter="floatval" /> 
+		
+		<field name="history" type="textarea" label="COM_SECRETARY_HISTORY" />
+		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+		<field name="catid" type="categories" class="form-control inputbox" extension="products" label="COM_SECRETARY_CATEGORY" />
+		<field name="year" type="text" class="form-control row-fluid" label="COM_SECRETARY_YEAR" readonly="readonly" /> 
+		<field name="state" type="secretarystatus" extension="products" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" />
+		
+		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
+		<field name="contacts" type="textarea" label="COM_SECRETARY_SUPPLIERS" />
+		<field name="features" type="hidden" />
+		
+		<field name="location" type="locations" label="COM_SECRETARY_LOCATION_PRODUCTS" extension="products" />
+		<field name="nr" type="text" label="COM_SECRETARY_PRODUCT_NR" class="fullwidth" />
+		<field name="upload" type="upload" label="COM_SECRETARY_ATTACHMENT" />
+		<field name="upload_title" type="text" />
+		<field name="template" type="templates" label="COM_SECRETARY_TEMPLATE" />
+	</fieldset>
+	
+	<fieldset name="accesscontrol">
+		<field name="asset_id" default="0" type="hidden" filter="unset" />
+		<field name="rules" 
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_secretary"
+			section="product" />
+	</fieldset>
+</form>

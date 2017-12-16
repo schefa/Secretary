@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SECRETARY_ITEMS" option="COM_SECRETARY_ITEMS_OPTION">
+		<message>
+			<![CDATA[COM_SECRETARY_ITEMS_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			<field name="extension" type="list" label="COM_SECRETARY_ITEMS_OPTIONS" required="true">
+				<option value="uploads">COM_SECRETARY_UPLOADS</option>
+			</field>
+		</fieldset>
+	</fields>
+
+	<fields name="params">
+		<fieldset name="basic" label="JGLOBAL_CATEGORIES_OPTIONS">
+			<field name="show_base_description" type="list" label="JGLOBAL_FIELD_SHOW_BASE_DESCRIPTION_LABEL">
+				<option value="">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

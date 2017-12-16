@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		
+		<field name="state" type="secretarystatus" extension="messages" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" />
+		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+		<field name="catid" type="categories" class="filter_category" extension="messages" label="COM_SECRETARY_CATEGORY" filter="intval" />
+		
+		<field name="priority" type="range" step="1" first="1" last="9" default="1" label="COM_SECRETARY_PRIORITY" description="" filter="intval"  />
+		
+		<field name="created_by" type="number" min="0" filter="intval" label="COM_SECRETARY_USER" />
+		<field name="created_by_alias" type="text" class="fullwidth" label="COM_SECRETARY_ALIAS" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="contact_to" type="subjects" filter="intval" label="COM_SECRETARY_SUBJECT" />
+		<field name="contact_to_alias" type="text" label="COM_SECRETARY_ALIAS" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="message" type="editor" label="COM_SECRETARY_MESSAGE" description="COM_SECRETARY_MESSAGE_DESC" required="true" filter="JComponentHelper::filterText" buttons="true" hide="readmore,pagebreak,image,article" />
+			
+		<field name="subject" type="text" class="fullwidth" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="upload" type="upload" label="COM_SECRETARY_ATTACHMENT" description="COM_SECRETARY_ATTACHMENT_DESC" />
+		<field name="upload_title" type="text" />
+		
+		<field name="created" type="calendar" label="COM_SECRETARY_DATE" />
+		<field name="refer_to" type="hidden" filter="intval" />
+		<field name="template" type="templates" label="COM_SECRETARY_TEMPLATE" extension="messages" />
+	</fieldset>
+	
+</form>

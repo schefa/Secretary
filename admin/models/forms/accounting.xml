@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+  
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		
+		<field name="entry_id" type="secretarysearch" class="fullwidth" extension="documents" label="COM_SECRETARY_DOCUMENT" filter="intval" />
+		
+		<field name="business" type="businesses" default="1" label="COM_SECRETARY_BUSINESS" filter="intval" />
+		<field name="created_by" type="user" label="COM_SECRETARY_CREATEDBY" filter="intval" /> 
+		<field name="created" type="calendar" label="COM_SECRETARY_CREATED" filter="intval" />  
+		
+		<field name="title" type="textarea" class="fullwidth" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" />
+	   
+		<field name="state" type="secretarystatus" class="fullwidth" extension="accountings" label="COM_SECRETARY_STATUS" /> 
+		<field name="soll" type="hidden" label="COM_SECRETARY_SOLL" filter="Secretary\Utilities::cleaner" /> 
+		<field name="haben" type="hidden" label="COM_SECRETARY_HABEN" filter="Secretary\Utilities::cleaner" /> 
+		<field name="total" type="number" min="0" step="0.01" label="COM_SECRETARY_ACCOUNTING_TOTAL" filter="Secretary\Utilities::cleaner" /> 
+		
+		<field name="upload" type="upload" label="COM_SECRETARY_ATTACHMENT" description="COM_SECRETARY_DOCUMENT_DESC" size="10" />
+		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
+		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
+		
+		<field name="accounting" type="textarea" /> 
+	</fieldset>
+</form>

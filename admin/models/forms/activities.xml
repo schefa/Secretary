@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field name="extension" type="hidden" />
+		<field name="business" type="hidden" />
+		
+		<field name="catid" type="text" label="COM_SECRETARY_CATEGORY" filter="intval" /> 
+		<field name="itemID" type="text" label="COM_SECRETARY_ID" filter="intval" /> 
+		<field name="title" type="text" label="COM_SECRETARY_ENTITY_TITEL" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="created" type="calendar" label="COM_SECRETARY_CREATED" /> 
+		<field name="created_by" type="user" label="COM_SECRETARY_EVENT_CONTACTS" /> 
+		
+	</fieldset>
+</form>

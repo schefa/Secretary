@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SECRETARY_SUBJECTS" option="COM_SECRETARY_SUBJECTS_OPTION">
+		<message>
+			<![CDATA[COM_SECRETARY_DOCUMENTS_DEFAULT_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="catid" extension="documents" type="categories" label="COM_SECRETARY_FOLDER" required="true" />
+		</fieldset>
+	</fields>
+	
+</metadata>

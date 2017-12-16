@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS"  />
+       	<field name="extension" type="secretarysections" label="COM_SECRETARY_SECTION" filter="safehtml" />
+		<field name="itemID" type="text" filter="safehtml" /> 
+		<field name="title" type="text" label="COM_SECRETARY_TITLE" filter="safehtml" /> 
+		<field name="folder" type="text" label="Folder" filter="safehtml" /> 
+		<field name="created" type="calendar" default="NOW" label="COM_SECRETARY_DATE" /> 
+		<field name="description" type="textarea" label="COM_SECRETARY_DESCRIPTION" />
+		
+		<field name="upload" type="upload" label="COM_SECRETARY_DOCUMENT" description="COM_SECRETARY_DOCUMENT_DESC" size="10" />
+		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
+		
+	</fieldset>
+</form>

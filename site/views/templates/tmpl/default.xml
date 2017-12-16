@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_TEMPLATES"></layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="catid" extension="templates" type="categories" label="COM_SECRETARY_FOLDER" required="true" />
+		</fieldset>
+	</fields>
+	
+</metadata>

@@ -1,0 +1,16 @@
+body,.secretary-sidebar-container{background-color:#383737 !important;}
+.secretary-topbar-container{background-color:#F2F2F2;border-bottom-color:#afafaf;}
+#sidebar-angle {background-color:#F2F2F2;}
+ul.secretary-nav li.nav-headline {border-top-color:#000;}
+.secretary-topbar-brand-title,.secretary-topbar-brand-title:hover {color:#C0C0C0;}
+.secretary-topbar-business .topbar-title,.nav-headline-text,ul.secretary-nav > li.headline{color:#A8A7A7;}
+ul.secretary-nav li.active {background-color:#555;}
+ul.secretary-nav > li.active > a, ul.secretary-nav ul > li.active > a{color:#fff}
+ul.secretary-nav li a,ul.secretary-nav li .fa.pull-right{color:#BDBDBD;}
+ul.secretary-nav li a.nolink,.secretary-footer{color: #777;}
+.secretary-main-area-right,h3.documents-sidebar-title{color:#ccc;}
+ul.secretary-nav li.active {background-color:#515151;}
+div.sidebar-nav ul.secretary-nav ul li{list-style:square;color:#BEC5CC;}
+ul.secretary-nav li a{color:#bcbec2;}
+ul.secretary-nav > li.active > a,ul.secretary-nav ul > li.active > a{color:#fff;}
+ul.secretary-nav li .fa.pull-right{color:#fff;}

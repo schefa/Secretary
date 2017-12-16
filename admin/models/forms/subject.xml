@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset addfieldpath="/administrator/components/com_secretary/models/fields">
+	
+		<field id="id" name="id" type="hidden" class="form-control inputbox" label="" size="10" readonly="true" />
+		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+		<field name="gender" type="gender" class="form-control" label="COM_SECRETARY_ANREDE" /> 
+		<field name="catid" type="categories" class="form-control inputbox" required="required" extension="subjects" filter="int" label="COM_SECRETARY_CATEGORY" description=""  />
+		
+		<field name="firstname" type="text" class="form-control" label="COM_SECRETARY_FIRSTNAME" filter="Secretary\Utilities::cleaner" /> 
+		<field name="lastname" type="text" class="form-control" label="COM_SECRETARY_NAME" filter="Secretary\Utilities::cleaner" /> 
+		<field name="street" type="text" class="form-control" label="COM_SECRETARY_STREET" filter="Secretary\Utilities::cleaner" /> 
+		<field name="number" type="text" class="form-control" label="COM_SECRETARY_CONTACT_NUMBER" filter="safehtml" /> 
+		<field name="zip" type="text" class="form-control" label="COM_SECRETARY_POSTCODE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="location" type="text" class="form-control" label="COM_SECRETARY_LOCATION" filter="Secretary\Utilities::cleaner" /> 
+		<field name="country" type="text" class="form-control" label="COM_SECRETARY_COUNTRY" filter="Secretary\Utilities::cleaner" /> 
+		<field name="phone" type="text" class="form-control" label="COM_SECRETARY_PHONE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="email" type="email" class="form-control" label="COM_SECRETARY_EMAIL" filter="safehtml" /> 
+		<field name="created" type="calendar" class="form-control" label="COM_SECRETARY_CONTACT_SINCE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="created_by" type="juser" class="form-control" default="" label="COM_SECRETARY_USER" filter="int" /> 
+	
+		<field name="state" type="secretarystatus" extension="subjects" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" />
+		
+		<field name="upload" type="upload" label="COM_SECRETARY_IMAGE" description="COM_SECRETARY_DOCUMENT_DESC" size="10" />
+		<field name="upload_title" type="text" />
+		<field name="lat" type="text" class="form-control" label="COM_SECRETARY_LAT" /> 
+		<field name="lng" type="text" class="form-control" label="COM_SECRETARY_LNG" /> 
+		
+		<field name="connections" type="textarea" label="COM_SECRETARY_CONNECTIONS" />
+		<field name="features" type="hidden" />
+		
+		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
+		<field name="template" type="templates" label="COM_SECRETARY_TEMPLATE" />
+		<field name="checked_out" type="hidden" filter="unset" />
+		<field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+	<fieldset name="accesscontrol">
+		<field name="asset_id" type="hidden" filter="unset" />
+		<field name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_secretary"
+			section="subject" />
+	</fieldset>
+
+</form>

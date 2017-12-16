@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SECRETARY_DOCUMENTS" option="COM_SECRETARY_DOCUMENTS_OPTION"> </layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="catid" extension="documents" type="categories" label="COM_SECRETARY_FOLDER" required="true" />
+		</fieldset>
+	</fields>
+	
+	<fields name="params">
+
+		<fieldset name="basic">
+			<field name="itemsFilter" type="list" description="" label="Special filter">
+				<option value="0">COM_SECRETARY_NONE</option> 
+				<option value="1">Documents written to user</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>

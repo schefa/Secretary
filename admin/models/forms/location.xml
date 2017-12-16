@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+	
+		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		
+		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" filter="intval" />
+		
+		<field name="catid" type="categories" class="filter_category" extension="locations" label="COM_SECRETARY_CATEGORY"  />
+		<field name="title" type="text" class="fullwidth" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="description" class="form-control" type="editor" buttons="false" height="200" filter="JComponentHelper::filterText" label="COM_SECRETARY_TIMES_TEXT" description="" />
+		
+		<field name="street" type="text" label="COM_SECRETARY_STREET" filter="Secretary\Utilities::cleaner" /> 
+		<field name="zip" type="text" label="COM_SECRETARY_POSTCODE" filter="Secretary\Utilities::cleaner" /> 
+		<field name="location" type="text" label="COM_SECRETARY_LOCATION" filter="Secretary\Utilities::cleaner" /> 
+		<field name="country" type="text" label="COM_SECRETARY_COUNTRY" filter="Secretary\Utilities::cleaner" /> 
+		
+		<field name="lat" type="text" class="form-control" label="COM_SECRETARY_LAT" /> 
+		<field name="lng" type="text" class="form-control" label="COM_SECRETARY_LNG" /> 
+		
+		<field name="currency" type="currency" required="true" class="form-control" label="COM_SECRETARY_CURRENCY" filter="safehtml" />
+		
+		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
+		<field name="contacts" type="textarea" label="COM_SECRETARY_TEAM" />
+		<field name="features" type="hidden" /> 
+		
+		<field name="upload" type="upload" label="COM_SECRETARY_DOCUMENT" description="COM_SECRETARY_DOCUMENT_DESC" />
+		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
+		
+		<field name="state" type="secretarystatus" extension="times" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" filter="intval" />
+		
+		<field name="extension" type="secretarysections" label="COM_SECRETARY_SECTION" />
+		
+	</fieldset>
+	<fieldset name="accesscontrol">
+		<field name="asset_id" type="hidden" filter="unset" />
+		<field name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_secretary"
+			section="location" />
+	</fieldset>
+	
+</form>

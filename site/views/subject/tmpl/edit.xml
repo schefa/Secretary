@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_SUBJECT_FORM"></layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+			<field name="catid" extension="subjects" type="categories" label="COM_SECRETARY_FOLDER" required="true" />
+		</fieldset>
+	</fields>
+	
+	<fields name="params">
+		<fieldset name="basic">
+			<field name="userprofile" type="list" description="" label="COM_SECRETARY_FILTER">
+				<option value="0">Anybody</option>
+				<option value="1">User profile</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Secretary" default="all" basedir=".">
+       <import file="common.xml"/>
+       <target name="all" depends="build,package"/>
+       <target name="package">
+			<antcall target="_package">
+				<param name="NAME" value="com_secretary"/>
+				<param name="NAME_SHORT" value="secretary"/>
+			</antcall>
+       </target>
+	
+       <target name="build">
+               <antcall target="buildcomponent">
+					<param name="NAME" value="com_secretary"/>
+           			<param name="NAME_SHORT" value="secretary"/>
+                    <param name="PREFIX" value=""/>
+               </antcall>
+       </target>
+</project>

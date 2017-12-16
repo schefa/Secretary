@@ -1,0 +1,12 @@
+body a{color:#8c2828}
+body,.secretary-sidebar-container{background-color:#5D2727 !important;}
+.secretary-topbar-container{background-color:#FEF7F5;border-bottom-color:#E4C5C5;}
+#sidebar-angle {background-color:#FEF7F5;}
+ul.secretary-nav li.nav-headline {border-top-color:#000;}
+.secretary-topbar-brand-title,.secretary-topbar-brand-title:hover {color:#fff;}
+.secretary-topbar-business .topbar-title,.nav-headline-text,ul.secretary-nav > li.headline{color:#B6A0A0;}
+ul.secretary-nav li.active {background-color:#823333;}
+div.sidebar-nav ul.secretary-nav ul li{list-style:square;color:#B07575;}
+ul.secretary-nav li a{color:#b48484;}
+ul.secretary-nav > li.active > a,ul.secretary-nav ul > li.active > a{color:#fff;}
+ul.secretary-nav li .fa.pull-right{color:#fff;}

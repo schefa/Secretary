@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_FOLDERS"></layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="extension" type="secretarysections" label="COM_SECRETARY_AREA" required="true" />
+		</fieldset>
+	</fields>
+	
+</metadata>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SECRETARY_MESSAGE_FORM"></layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields" >
+			<field name="id" type="subjects" label="COM_SECRETARY_MESSAGE_CONTACT_ID" email="true" required="true" edit="true" clear="false" />
+			<field name="cid" type="categories" label="COM_SECRETARY_MESSAGE_CATEGORY" extension="messages" />
+			<field name="tid" type="templates" label="COM_SECRETARY_TEMPLATE" extension="messages" required="true" />
+		</fieldset>
+	</fields>
+
+	<fields name="params">
+	
+		<fieldset name="params" label="COM_SECRETARY_BASIC_OPTIONS_FIELDSET_LABEL" >
+		
+			<field name="allow_vcard" type="radio" default="1" class="btn-group btn-group-yesno" label="VCard" >
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field name="sendType" type="list" default="0" label="COM_SECRETARY_MESSAGE_SENDTYPE" >
+				<option value="0">Email + InMail</option>
+				<option value="1">Email</option>
+				<option value="2">InMail</option>
+			</field>
+			
+			<field name="banned_email" type="textarea" cols="30" label="COM_SECRETARY_MESSAGE_BANNED_EMAIL" rows="3" />
+			<field name="banned_subject" type="textarea" cols="30" label="COM_SECRETARY_MESSAGE_BANNED_SUBJECT" rows="3" />
+			<field name="banned_text" type="textarea" cols="30" label="COM_SECRETARY_MESSAGE_BANNED_TEXT" rows="3" />
+			<field name="redirect" type="text" label="COM_SECRETARY_MESSAGE_REDIRECT" size="30" />
+				
+		</fieldset>
+	</fields>
+</metadata>
