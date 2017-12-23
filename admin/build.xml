@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Secretary" default="all" basedir=".">
-       <import file="common.xml"/>
+       <import file="application/common.xml"/>
        <target name="all" depends="build,package"/>
        <target name="package">
 			<antcall target="_package">

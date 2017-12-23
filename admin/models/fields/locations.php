@@ -29,18 +29,16 @@ class JFormFieldLocations extends JFormFieldList
 		$extension = (string) $this->element['extension'];
 		$html = array();
 		
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select("id,title");
-		$query->from($db->qn('#__secretary_locations'));
-		$query->where('business = '. intval($business['id']));
-		$query->order('title ASC');
-		
-		if(!empty($extension)) $query->where('extension = '.$db->quote($extension));
-		
-		$db->setQuery($query);
-		$items = $db->loadObjectList();
+		$db = JFactory::getDbo(); 
  
+		$where = array('business = '. intval($business['id'])); 
+		if(!empty($extension)) {
+		    array_push($where,'extension = '.$db->quote($extension));
+		}
+		
+		$items = \Secretary\Database::getObjectList('locations',['id','title'],$where,'title ASC'); 
+		
+		// Make list
 		$html[] = JHtml::_('select.option', 0, JText::_('COM_SECRETARY_SELECT_OPTION') );
 		foreach($items as $message) {
 			if($user->authorise('core.show','com_secretary.location.'.$message->id) 

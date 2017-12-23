@@ -23,21 +23,24 @@ class JFormFieldAccountssystem extends JFormFieldList
 	
 	public function getOptions( )
 	{
-		$id = JFactory::getApplication()->input->getInt('id');
+	    
+	    $id = \Secretary\Joomla::getApplication()->input->getInt('id');
 		$html = array();
 		
         $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
-        	->select($db->quoteName(array("id","title","parent_id","level","type","nr")))
-				->from($db->qn('#__secretary_accounts_system'))
-				->where('id != '. (int) $id )
-				->order('id ASC');
+        $query = $db->getQuery(true);
+        
+        $query->select($db->qn(array("id","title","parent_id","level","type","nr")));
+        $query->from($db->qn('#__secretary_accounts_system'));
+        $query->where($db->qn('id').'!='.intval($id));
+        $query->order('id ASC');
 				
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 		
 		$items = Secretary\Utilities::reorderTree($items, 'parent_id', 'id');
 		
+		// Make list
 		$html[] = JHtml::_('select.option', 0, JText::_('COM_SECRETARY_NONE') );
 		foreach($items as $item) {
 			if(isset($item->step))
@@ -54,7 +57,7 @@ class JFormFieldAccountssystem extends JFormFieldList
 	public function getList( $default, $name = 'jform[accountssystem]' )
 	{
 		$html = $this->getOptions();
-		$result =	'<select name="'.$name.'" class="form-control inputbox">'. JHtml::_('select.options', $html, 'value', 'text', $default) . '</select>';
+		$result = '<select name="'.$name.'" class="form-control inputbox">'. JHtml::_('select.options', $html, 'value', 'text', $default) . '</select>';
 		return $result;
 	}
 }

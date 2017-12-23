@@ -23,17 +23,18 @@ class JFormFieldAccounts extends JFormFieldList
 	
 	public function getOptions( )
 	{
-		$id = JFactory::getApplication()->input->getInt('id');
+		$id = \Secretary\Joomla::getApplication()->input->getInt('id');
 		$html = array();
 		
         $db = JFactory::getDbo();
-        $query = $db->getQuery(true)
-				->select("s.nr,s.title")
-				->from($db->qn('#__secretary_accounts_system','s'))
-				->select('a.id')
-				->join('RIGHT',$db->qn('#__secretary_accounts','a').' ON a.kid = s.id')
-				->where('a.year = '.date('Y'))
-				->order('s.id ASC');
+        $query = $db->getQuery(true);
+        
+        $query->select("s.nr,s.title");
+        $query->from($db->qn('#__secretary_accounts_system','s'));
+        $query->select('a.id');
+        $query->join('RIGHT',$db->qn('#__secretary_accounts','a').' ON a.kid = s.id');
+        $query->where('a.year = '.date('Y'));
+        $query->order('s.id ASC');
 				
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
@@ -50,7 +51,7 @@ class JFormFieldAccounts extends JFormFieldList
 	public function getList( $default, $name = 'jform[accounts]' )
 	{
 		$html = $this->getOptions();
-		$result =	'<select name="'.$name.'" class="form-control inputbox">'. JHtml::_('select.options', $html, 'value', 'text', $default) . '</select>';
+		$result = '<select name="'.$name.'" class="form-control inputbox">'. JHtml::_('select.options', $html, 'value', 'text', $default) . '</select>';
 		return $result;
 	}
 }

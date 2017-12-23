@@ -24,17 +24,7 @@ class JFormFieldBusinesses extends JFormFieldList
 	public function getOptions( )
 	{
 		$html = array();
-		
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        
-        $query->select("id,title");
-        $query->from($db->qn('#__secretary_businesses'));
-        $query->order('id ASC');
-        
-		$db->setQuery($query);
-		$items = $db->loadObjectList();
-		
+		$items = \Secretary\Database::getObjectList('businesses',['id','title']); 
 		foreach($items as $message) {
 			$html[] = JHtml::_('select.option', $message->id, $message->title );
 		}
@@ -45,7 +35,7 @@ class JFormFieldBusinesses extends JFormFieldList
 	public function getList( $default, $name = 'jform[fields][template]' )
 	{
 		$html = $this->getOptions();
-		$result =	'<select name="'.$name.'" class="form-control inputbox">'. JHtml::_('select.options', $html, 'value', 'text', $default) . '</select>';
+		$result = '<select name="'.$name.'" class="form-control inputbox">'.JHtml::_('select.options', $html,'value','text',$default).'</select>';
 		return $result;
 	}
 }

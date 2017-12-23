@@ -59,6 +59,5 @@ class JFormFieldTasks extends JFormFieldList
 		
 		array_unshift(	$tasks , JText::_('COM_SECRETARY_SELECT_OPTION') );
     	return $tasks;
-		
 	}
 }

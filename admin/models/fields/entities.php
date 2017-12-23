@@ -30,22 +30,17 @@ class JFormFieldEntities extends JFormFieldList
 		
 		} else {
 				
-			$options = array();
-			$db = JFactory::getDbo();
-			$q = $db->getQuery(true);
-			$q->select('id,title')
-				->from($db->qn('#__secretary_entities'))
-				->order('title ASC');
-			
-			$db->setQuery($q);
-			$items = $db->loadObjectList();
-			
-			$options[] = JHtml::_('select.option', 0, JText::_('COM_SECRETARY_ENTITY') );
+			$options = array(); 
+			$items = \Secretary\Database::getObjectList('entities',['id','title'],[],'title ASC'); 
+			$options[] = JHtml::_('select.option', 0, JText::_('COM_SECRETARY_SELECT_OPTION') );
 			foreach($items as $message) {
 				$options[] = JHtml::_('select.option', $message->id, JText::_($message->title) );
 			}
 		
-			$html = '<div class="select-arrow select-arrow-white"><select name="'.$this->name.'" id="'.$this->id.'" class="form-control entity-select">'. JHtml::_('select.options', $options, 'value', 'text', $this->value) . '</select></div>';
+			$html = '<div class="select-arrow select-arrow-white">'
+			    .'<select name="'.$this->name.'" id="'.$this->id.'" class="form-control entity-select">'
+                . JHtml::_('select.options', $options, 'value', 'text', $this->value)
+                .'</select></div>';
 			
 		} 
 		

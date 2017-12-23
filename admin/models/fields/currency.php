@@ -19,27 +19,27 @@ class JFormFieldCurrency extends JFormFieldList
 	
 	protected $type = 'currency';
 	
+	/**
+	 * Method to return a list of all available currencies
+	 * 
+	 * {@inheritDoc}
+	 * @see JFormFieldList::getInput()
+	 */
 	public function getInput( )
 	{
 		$options = array();
-		$db = JFactory::getDbo();
 		
-		$query = $db->getQuery(true)
-		->select("currency, CONCAT(symbol, ' (' , title , ')') as value")
-		->from($db->quoteName('#__secretary_currencies'))
-		->order('title ASC');
-		
-		$db->setQuery($query);
-		$items = $db->loadObjectList();
-		
+		$items = \Secretary\Database::getObjectList('currencies',['currency',"CONCAT(symbol,' (',title,')') as value"],[],'title ASC'); 
 		foreach($items as $message) {
 			$options[] = JHtml::_('select.option', $message->currency, $message->value );
 		}
 	
-		$html = '<div class="select-arrow select-arrow-white"><select name="'.$this->name.'" id="'.$this->id.'" class="form-control currency-select">'. JHtml::_('select.options', $options, 'value', 'text', $this->value) . '</select></div>';
-		
+		$html = '<div class="select-arrow select-arrow-white">'
+		    .'<select name="'.$this->name.'" id="'.$this->id.'" class="form-control currency-select">'
+            . JHtml::_('select.options', $options, 'value', 'text', $this->value)
+            . '</select></div>';
+            	
 		return $html;
-		
 	}
 	
 }

@@ -37,6 +37,11 @@ class SecretaryControllerDatabase extends JControllerForm
 		parent::__construct($config);	
 	}
 	
+	/**
+	 * Method to fix assets table
+	 * 
+	 * @return boolean
+	 */
 	public function fixassets()
 	{
 		// Check for request forgeries.
@@ -76,6 +81,12 @@ class SecretaryControllerDatabase extends JControllerForm
 		return true;
 	}
 	
+	/**
+	 * Method to export
+	 * 
+	 * @throws Exception
+	 * @return boolean
+	 */
 	public function submit()
 	{
 		// Check for request forgeries.

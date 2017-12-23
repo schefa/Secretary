@@ -15,6 +15,8 @@ class SecretaryController extends JControllerLegacy
 {
     
     /**
+     * Main entry point
+     * 
      * {@inheritDoc}
      * @see \Joomla\CMS\MVC\Controller\BaseController::display()
      */
@@ -22,7 +24,10 @@ class SecretaryController extends JControllerLegacy
 	{ 
         $raws = array('preview','modal','modaljusers','raw'); 
 		
-		$app	= Secretary\Joomla::getApplication();
+		$app	= \Secretary\Joomla::getApplication();
+        $user		= \Secretary\Joomla::getUser();
+		$business	= \Secretary\Application::company();
+		
         $view	= $app->input->getCmd('view', 'dashboard');
         $layout	= $app->input->getCmd('layout', '');
         $task	= $app->input->getCmd('task', '');
@@ -31,10 +36,7 @@ class SecretaryController extends JControllerLegacy
         $app->input->set('layout', $layout);
         $app->input->set('task', $task);
 		
-        $user		= Secretary\Joomla::getUser();
-		$business	= Secretary\Application::company();
-		$canSee		= $user->authorise('core.manage','com_secretary');
-		
+		$canSee = $user->authorise('core.manage','com_secretary');
 		if($app->isClient('site')) {
 		    $single = Secretary\Application::getSingularSection($view);
             $canSee	= $user->authorise('core.show','com_secretary.'.$single);
@@ -49,7 +51,7 @@ class SecretaryController extends JControllerLegacy
 		    $canSee = boolval($canDo->get('core.show'));
 		}
 		
-		if($view=== 'dashboard')
+		if($view === 'dashboard')
 		    $canSee = true;
 		
 	    if((\Secretary\Helpers\Access::checkAdmin()) || $canSee )

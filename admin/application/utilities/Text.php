@@ -26,6 +26,9 @@ class Text
      * Make a string alphanumeric and remove all other characters
      */
     public static function alphanumeric($s) {
+        if(is_array($s)) {
+            $s = implode('_',$s);
+        }
         return preg_replace("/[^a-zA-Z0-9]+/", "", $s);
     }
     

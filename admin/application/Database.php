@@ -18,6 +18,7 @@ defined('_JEXEC') or die;
 class Database
 {
     private static $query_result = array();
+    private static $objectList = array();
     private static $object = array();
     private static $jdataresult = array();
     
@@ -81,6 +82,44 @@ class Database
             return $names;
         }
         return self::$secretary_tables;
+    }
+    
+    /**
+     * SELECT objectlist for secretary tables
+     */
+    public static function getObjectList($table, $select = array('*'), $where = array(), $order = null)
+    {
+        // Allow only secretary tables
+        if(!in_array($table,self::$secretary_tables)) {
+            throw new \Exception ('Table not allowed: '. $table);
+            return false;
+        }
+        
+        $db     = self::getDBO();
+        $query  = $db->getQuery(true);
+        
+        $key  = strtolower($table .'_') . Utilities\Text::alphanumeric($select) . implode('_',$where) . $order; 
+        $query->select($select);
+        $query->from($db->qn('#__secretary_'.$table));
+        
+        if(!empty($where) && is_array($where)) {
+            $query->where($where);
+        }
+        
+        if(!empty($order)) {
+            $query->order($order);
+        }
+         
+        try {
+            $db->setQuery($query);
+            self::$objectList[$key] = $db->loadObjectList(); 
+        
+        } catch(\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+            return false;
+        }
+        
+        return self::$objectList[$key];
     }
     
     /**
