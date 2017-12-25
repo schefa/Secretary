@@ -1,5 +1,4 @@
 /.gitignore
 /.htaccess
-/admin/uploads/*
 /*.txt
 /robots.txt.dist
