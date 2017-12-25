@@ -162,23 +162,21 @@ class SecretaryViewDocument extends JViewLegacy
 		$document = JFactory::getDocument();
 		
 		if(!empty($this->item->items)) :
-			$sec	= " var e_items = ".$this->item->items."; ";
+			$javaScript	= " var e_items = ".$this->item->items."; ";
 			$items	= json_decode($this->item->items, true);
 			$this->countParameters	= count($items);
 		else :
-			$sec	= " var e_items = [] ; ";
+			$javaScript	= " var e_items = [] ; ";
 			$this->countParameters	= 0;
 		endif;
 		
-		$sec .= ' var taxRatePerc = "' . $this->item->tax .'";';
-		$sec .= ' var currency = "' . $this->item->currencySymbol .'";';
+		$javaScript .= ' var taxRatePerc = "' . $this->item->tax .'";';
+		$javaScript .= ' var currency = "' . $this->item->currencySymbol .'";';
 		
-		$fields	= $this->item->datafields['fields'];
-		$script = "jQuery.noConflict(); jQuery( document ).ready(function( $ ) { var secretary_fields = [";
-		$script .= (isset($fields)) ? $fields : '';
-		$script .= "]; Secretary.Fields( secretary_fields ); });";
+		$fields	= (isset($this->item->datafields['fields'])) ? $this->item->datafields['fields'] : '';
+		$javaScript = 'Secretary.printFields( ['. $fields .'] );' . $javaScript;
 		
-		$document->addScriptDeclaration( $script . $sec);
+		$document->addScriptDeclaration( $javaScript);
 		$document->addScriptDeclaration(\Secretary\HTML::_('javascript.submitformbutton','document'));
 
 	}

@@ -36,7 +36,7 @@ class JFormFieldEntities extends JFormFieldList
 			foreach($items as $message) {
 				$options[] = JHtml::_('select.option', $message->id, JText::_($message->title) );
 			}
-		
+			
 			$html = '<div class="select-arrow select-arrow-white">'
 			    .'<select name="'.$this->name.'" id="'.$this->id.'" class="form-control entity-select">'
                 . JHtml::_('select.options', $options, 'value', 'text', $this->value)

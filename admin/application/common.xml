@@ -34,10 +34,10 @@
 					<fileset dir="${source}/administrator/components/${NAME}"/>
                </copy>
                <copy todir="${builddir}/${NAME_SHORT}/admin/application/language" overwrite="true" verbose="${verbose}" flatten="true">
-                       <fileset dir="${source}/administrator/language">
-                               <exclude name="overrides/*"/>
-                               <include name="**/*${NAME}*.ini"/>
-                       </fileset>
+       				<fileset dir="${source}/administrator/language">
+                       	<exclude name="overrides/*"/>
+                       	<include name="**/*${NAME}*.ini"/>
+       				</fileset>
                </copy>
                <copy todir="${builddir}/${NAME_SHORT}/site" overwrite="true" verbose="${verbose}">
                        <fileset dir="${source}/components/${NAME}"/>

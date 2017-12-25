@@ -1,19 +1,41 @@
-/*
-* @package     com_secretary
-* @copyright   Copyright (C) Fjodor Schäfer, SCHEFA.COM - All Rights Reserved.
-*
-**********************************************************************
-* 
-* These file is proprietary of SCHEFA.COM, copyrighted and cannot be redistributed
-* in any form without prior permission from SCHEFA.COM
-*			
-**********************************************************************
-*
-* @license     SCHEFA.COM Proprietary Use License
-*
-*/
+/**
+ * @version     3.0.0
+ * @package     com_secretary
+ *
+ * @author       Fjodor Schaefer (schefa.com)
+ * @copyright    Copyright (C) 2015-2017 Fjodor Schaefer. All rights reserved.
+ * @license      GNU General Public License version 2 or later.
+ */
 
-(function() {
+(function($, Secretary) {
+
+	$( document ).ready(readyFn);
+	
+	function readyFn() { 
+		$('.message-talk-item-form-bottom > button[type="submit"]').click(function(){
+		});
+		
+		$('.message-talk-item-top select').on('change',function(){
+			var id		= $(this).data('id');
+			var value	= $(this).val();
+			$.ajax({ 
+				url : 'index.php?option=com_secretary&task=message.changeStatus&id=' + id + '&value='+value
+			}).done(function(data) {
+				alert(data);
+			});
+		});
+		 
+		$('#secretary-form-message').keyup(function() {
+			var postLength = $(this).val().length;
+			$('.counter').text(postLength);
+			if(postLength == 0) {
+				$('.btn.btn-success').addClass('disabled');
+			}
+			else {
+				$('.btn.btn-success').removeClass('disabled');
+			}
+		});
+	};
 	
 	angular
 	.module('SecretaryChat', ['ngRoute','ngSanitize'])
@@ -109,4 +131,4 @@
         $scope.scrollDown();
 
     }]);
-})();
+})(jQuery, Secretary);

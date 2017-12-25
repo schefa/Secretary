@@ -83,7 +83,9 @@ class Items
 		    
 			case 'list':
 				if( $fieldvalues = json_decode($object->values, true) ) {
-				foreach($fieldvalues AS $key => $val) $options[] = JHtml::_( 'select.option', $key,  JText::_($val));
+    				foreach($fieldvalues AS $key => $val) {
+    				    $options[] = JHtml::_( 'select.option', $key,  JText::_($val));
+    				}
 				}
 				$html = JHtml::_('select.genericlist',$options, $name,'','value','text',\Secretary\Utilities::cleaner($standard));
 				break;

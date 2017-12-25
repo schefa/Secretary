@@ -52,6 +52,7 @@ if($format != 'raw') {
 	$document->addScript($mediaURL.'/assets/jquery/jquery-ui.min.js');
 	$document->addScript($mediaURL.'/js/secretary.js?v='.SECRETARY_VERSION);
 	if( $view == 'document' && $layout == 'edit' ) {
+	    $document->addScript($mediaURL.'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
 	    $document->addScript($mediaURL.'/js/secretary.document.js?v='.SECRETARY_VERSION);
 		$document->addScript($mediaURL.'/assets/jquery/jquery.nestable.js');
 	}

@@ -107,24 +107,18 @@ class SecretaryViewTemplate extends JViewLegacy
 	{
 		$document = JFactory::getDocument();
 
-		$document->addScript(JURI::root().'media/secretary/js/secretary.template.js');
+		$document->addScript(JURI::root().'media/secretary/js/secretary.template.js?v='.SECRETARY_VERSION);
 
-		$style = 'var proportion = "'. $this->item->dim->proportion .'",
+		$javaScript = 'var proportion = "'. $this->item->dim->proportion .'",
 			formatWidth = '. $this->item->dim->formatWidth .',
 			formatHeight = '. $this->item->dim->formatHeight .',
 			dpi = '. $this->item->dpi .',
 			zindex = 100;';
 
-		$fi = 'jQuery.noConflict(); jQuery( document ).ready(function( $ ) { ';
-		if(isset($this->datafields['fields'])) :
-			$fi .= 'var secretary_fields = ['. $this->datafields['fields'] .'];';
-		else :
-			$fi .= 'var secretary_fields = [];';
-		endif;
-		$fi .= 'Secretary.Fields( secretary_fields );});';
+		$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+		$javaScript = 'Secretary.printFields( ['. $fields .'] );' . $javaScript;
 		
-		$document->addScriptDeclaration($fi ." ".
-		    $style . "
+		$document->addScriptDeclaration($javaScript ." 
 			Joomla.submitbutton = function(task) {
 				if (task == 'template.cancel') {
 					Joomla.submitform(task, document.getElementById('adminForm'));

@@ -198,16 +198,10 @@ $user = JFactory::getUser();
 
 </form>
 
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery( document ).ready(function( $ ) {
-<?php if(isset($this->datafields['fields'])) :?>
-	var secretary_fields = [<?php echo $this->datafields['fields'];?>];
-<?php else : ?>
-	var secretary_fields = [];
-<?php endif;?>
-	Secretary.Fields( secretary_fields );
-});
-</script>
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>
 
 </div>

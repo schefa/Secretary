@@ -132,15 +132,8 @@ class SecretaryViewFolder extends JViewLegacy
 		$document = JFactory::getDocument();
 		
 		if($this->layout == 'edit') {
-			$sec = 'jQuery.noConflict(); jQuery( document ).ready(function( $ ) { ';
-			if(isset($this->datafields['fields'])) :
-				$sec .= ' var secretary_fields = ['. $this->datafields['fields'] .']; ';
-			else : 
-				$sec .= ' var secretary_fields = [];';
-			endif;
-			$sec .= 'Secretary.Fields( secretary_fields ); });';
-		
-			$document->addScriptDeclaration( $sec);
+			$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';			
+			$document->addScriptDeclaration( 'Secretary.printFields( ['. $fields .'] );' );
 			$document->addScriptDeclaration(\Secretary\HTML::_('javascript.submitformbutton','folder'));
 		}
 		

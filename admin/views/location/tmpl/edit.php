@@ -14,7 +14,6 @@ defined('_JEXEC') or die;
 $user = Secretary\Joomla::getUser();
  
 $this->datafields   = \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields             = $this->datafields['fields']; 
 ?>
 
 <div class="secretary-main-container">
@@ -160,15 +159,11 @@ $fields             = $this->datafields['fields'];
 <?php echo JHtml::_('form.token'); ?>
 </form>
 
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery( document ).ready(function( $ ) {
-<?php if(isset($fields)) :?>
-	var secretary_fields = [<?php echo $fields;?>];
-<?php else : ?>
-	var secretary_fields = [];
-<?php endif;?>
-Secretary.Fields( secretary_fields );
-});
-</script>
+
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>
+
 </div>

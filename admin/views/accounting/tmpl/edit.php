@@ -17,7 +17,6 @@ $currency	= $business['currency'];
 $extension	= 'accountings';
 
 $this->datafields		= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields			= $this->datafields['fields'];
 
 if(!empty($this->item->accounting) && !is_array($this->item->accounting))
 	$this->document->addScriptDeclaration('var accJSON = '.$this->item->accounting );
@@ -74,16 +73,10 @@ if(!empty($this->item->accounting) && !is_array($this->item->accounting))
     </form>
 
     
-    <script type="text/javascript">
-    jQuery.noConflict();
-    jQuery( document ).ready(function( $ ) {
-    <?php if(isset($fields)) :?>
-        var secretary_fields = [<?php echo $fields;?>];
-    <?php else : ?>
-        var secretary_fields = [];
-    <?php endif;?>
-	Secretary.Fields( secretary_fields );
-    });
-    </script>
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>
 
 </div>

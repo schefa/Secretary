@@ -49,13 +49,10 @@ $fields				= $this->datafields['fields'];
 
         
 <script type="text/javascript">
-jQuery.noConflict();
-jQuery( document ).ready(function( $ ) {
 <?php if(isset($fields)) :?>
 	var secretary_fields = [<?php echo $fields;?>];
 <?php else : ?>
 	var secretary_fields = [];
 <?php endif;?>
-Secretary.Fields( secretary_fields );
-});
+Secretary.printFields( secretary_fields );
 </script>

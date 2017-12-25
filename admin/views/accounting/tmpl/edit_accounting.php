@@ -16,8 +16,7 @@ $business	= Secretary\Application::company();
 $currency	= $business['currency'];
 $extension	= 'accountings';
 
-$this->datafields		= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields			= $this->datafields['fields'];
+$this->datafields		= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields); 
 ?>
 
 <ul class="nav nav-tabs fullwidth" id="myTab" role="tablist">
@@ -79,3 +78,9 @@ $fields			= $this->datafields['fields'];
     </div>
     
 </div>
+
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>

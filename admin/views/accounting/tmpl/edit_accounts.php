@@ -16,8 +16,7 @@ $business	= Secretary\Application::company('currency,taxvalue');
 $currency	= $business['currency'];
 $extension	= 'bookings';
 
-$this->datafields		= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields			= $this->datafields['fields'];
+$this->datafields = \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
 
 $accountTitle = Secretary\Database::getQuery('accounts_system',intval($this->item->kid),'id','title','loadResult');
 ?>
@@ -64,14 +63,8 @@ $accountTitle = Secretary\Database::getQuery('accounts_system',intval($this->ite
 
 </div>
 
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery( document ).ready(function( $ ) {
-<?php if(isset($fields)) :?>
-	var secretary_fields = [<?php echo $fields;?>];
-	Secretary.Fields( secretary_fields );
-<?php else : ?>
-	var secretary_fields = [];
-<?php endif;?>
-});
-</script>
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>

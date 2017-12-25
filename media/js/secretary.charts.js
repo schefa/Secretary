@@ -1,27 +1,18 @@
-/*
-* @package     com_secretary
-* @copyright   Copyright (C) Fjodor Schäfer, SCHEFA.COM - All Rights Reserved.
-*
-**********************************************************************
-* 
-* These file is proprietary of SCHEFA.COM, copyrighted and cannot be redistributed
-* in any form without prior permission from SCHEFA.COM
-*			
-**********************************************************************
-*
-* @license     SCHEFA.COM Proprietary Use License
-*
-*/
-	
-(function() {
+/**
+ * @version     3.0.0
+ * @package     com_secretary
+ *
+ * @author       Fjodor Schaefer (schefa.com)
+ * @copyright    Copyright (C) 2015-2017 Fjodor Schaefer. All rights reserved.
+ * @license      GNU General Public License version 2 or later.
+ * 
+ */
 
-	this.Secretary = { };
-	
+(function($, Secretary) {
+ 
 	Secretary.Charts = function( output ) {
 
-		var settings = {};
-
-		settings = { 
+		var settings = { 
 			id					: '',
 			series				: null,
 			labels				: null,
@@ -41,7 +32,7 @@
 		}
 		
 		if (arguments[1] && typeof arguments[1] === "object") {
-			this.options = Secretary.Utils.extendDefaults(settings, arguments[1]);
+			this.options = Secretary.Charts.Utils.extendDefaults(settings, arguments[1]);
 		}
 
 		if( typeof arguments[1].series !== 'undefined' ) {
@@ -49,7 +40,7 @@
 			// Resize listener
 			function createChart() {
 				
-				var maxValueArray		= Secretary.Utils.maxValueFromMultiDArray( settings.series );
+				var maxValueArray		= Secretary.Charts.Utils.maxValueFromMultiDArray( settings.series );
 				var container			= document.getElementById(settings.id);
 
 				settings.height			= parseInt(settings.height);
@@ -59,7 +50,7 @@
 				settings.svgPaddingLeft = 9 * (Math.round(settings.maxValue).toString().length) + 5;
 
 				if(settings.maxValue < 0) {
-					Secretary.SVGFactory.create.ErrorBox(settings);
+					Secretary.Charts.SVGFactory.create.ErrorBox(settings);
 					return;
 				}
 				
@@ -94,7 +85,7 @@
 				}
 				settings.xAxisBarCenter = (((settings.svgWidth-settings.svgPaddingLeft)/totalColumns)-settings.rectWidth)/2;
 				
-				var factory 		= Secretary.SVGFactory;
+				var factory 		= Secretary.Charts.SVGFactory;
 				factory.settings	= settings;
 				factory.svg			= factory.create.SVG(container);
 				
@@ -113,12 +104,12 @@
 			createChart();
 		} else {
 			settings.container	= document.getElementById(settings.id);
-			Secretary.SVGFactory.create.ErrorBox(settings);
+			Secretary.Charts.SVGFactory.create.ErrorBox(settings);
 			return;
 		}
 	};
 	
-	Secretary.SVGFactory = {
+	Secretary.Charts.SVGFactory = {
 		
 		svg : null,
 		settings : {},
@@ -127,14 +118,14 @@
 		create : {
 			
 			SVG : function (container) {
-				var element = Secretary.SVGFactory.svg; 
+				var element = Secretary.Charts.SVGFactory.svg; 
 				while (container.hasChildNodes()) {
 					container.removeChild(container.lastChild); 
 				}
-				var svg = document.createElementNS(Secretary.SVGFactory.svgNS, 'svg');
+				var svg = document.createElementNS(Secretary.Charts.SVGFactory.svgNS, 'svg');
 					svg.setAttributeNS(null, 'class', 'secretary-charts-svg');
-					svg.setAttributeNS(null, 'width', Secretary.SVGFactory.settings.width );
-					svg.setAttributeNS(null, 'height', parseInt(Secretary.SVGFactory.settings.height,10));
+					svg.setAttributeNS(null, 'width', Secretary.Charts.SVGFactory.settings.width );
+					svg.setAttributeNS(null, 'height', parseInt(Secretary.Charts.SVGFactory.settings.height,10));
 
 				container.appendChild(svg);	
 				return svg;
@@ -152,7 +143,7 @@
 			},
 			
 			Circle : function ( parent, attributes ) {
-		        var circle = document.createElementNS(Secretary.SVGFactory.svgNS,"circle" );
+		        var circle = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"circle" );
 				for(var key in attributes) {
 					if(attributes.hasOwnProperty(key))
 						circle.setAttributeNS(null,key,attributes[key]);
@@ -161,7 +152,7 @@
 			},
 			
 			DashedLine : function ( parent, attributes) {
-				var line = document.createElementNS(Secretary.SVGFactory.svgNS,"line");
+				var line = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"line");
 				if(typeof attributes !== 'undefined') {
 					for(var key in attributes) {
 						if(attributes.hasOwnProperty(key))
@@ -172,15 +163,15 @@
 			}, 
 			
 			Group : function( id, transform ) {
-				var group = document.createElementNS(Secretary.SVGFactory.svgNS,"g");
-				group.setAttribute('id', Secretary.SVGFactory.settings.id +"_"+ id );
+				var group = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"g");
+				group.setAttribute('id', Secretary.Charts.SVGFactory.settings.id +"_"+ id );
 				if(typeof(transform) !== "undefined")
 					group.setAttribute('transform', transform);
 				return group;	
 			},
 			
 			Line : function ( parent, attributes ) {
-				var line = document.createElementNS(Secretary.SVGFactory.svgNS,"line");
+				var line = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"line");
 				if(typeof attributes !== 'undefined') {
 					for(var key in attributes) {
 						if(attributes.hasOwnProperty(key))
@@ -192,7 +183,7 @@
 			},
 			
 			PieSection : function ( parent, section, tooltip) {
-		        var newSection = document.createElementNS(Secretary.SVGFactory.svgNS,"path" );
+		        var newSection = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"path" );
 		        newSection.setAttributeNS(null, 'class', section.cssClass);
 		        newSection.setAttributeNS(null, 'd', 'M' + section.L + ',' + section.L + ' L' + section.L + ',0 A' + section.L + ',' + section.L + ' 0 ' + section.arcSweep + ',1 ' + section.X + ', ' + section.Y + ' z');
 		        newSection.setAttributeNS(null, 'transform', 'rotate(' + (section.R) + ', '+ section.L+', '+ section.L+')');
@@ -202,7 +193,7 @@
 			},
 			
 			Rectangle : function (parent,attributes) {
-		        var rect = document.createElementNS(Secretary.SVGFactory.svgNS,"rect" );
+		        var rect = document.createElementNS(Secretary.Charts.SVGFactory.svgNS,"rect" );
 				for(var key in attributes) {
 					if(attributes.hasOwnProperty(key))
 						line.setAttributeNS(null,key,attributes[key]);
@@ -212,7 +203,7 @@
 			
 			Text : function ( op ) {
 				var textnode = document.createTextNode( op.text );			
-				var text = document.createElementNS(Secretary.SVGFactory.svgNS, "text");
+				var text = document.createElementNS(Secretary.Charts.SVGFactory.svgNS, "text");
 				cssClass = (typeof(cssClass) !== 'undefined') ? " "+ op.cssClass : "";
 				text.setAttributeNS(null,"class","text text-" + Math.round(op.x) +  cssClass);
 				text.setAttributeNS(null, "x", op.x );
@@ -235,7 +226,7 @@
 		draw : {
 			
 			Bar : function ( options ) {
-				var settings	= Secretary.SVGFactory.settings,
+				var settings	= Secretary.Charts.SVGFactory.settings,
 					fullRectHeight = 0, rectHeight = 0, rectPosY = 0, lastValue = 0, sumValues = 0;
 
 				if( typeof options.data === 'object' ) {
@@ -287,7 +278,7 @@
 				if(options.x > 0) options.rectPosY = options.rectPosY + (options.lastValue * settings.steps);
 				
 				// Draw
-				var item = Secretary.SVGFactory.create.Line( options.parent, { 
+				var item = Secretary.Charts.SVGFactory.create.Line( options.parent, { 
 							"x1" : rectX, "x2" : rectX , "y1" : (rectHeight + options.rectPosY), "y2" : options.rectPosY,
 							"class" : 'line '+options.cssClass, "style" : "stroke-width:"+ settings.rectWidth +"px"
 						});
@@ -301,16 +292,16 @@
 					item.title += "<div class=\"secretary-charts-tooltip-title\">"+options.value+"</div>";
 					if(typeof(options.status) !== 'undefined' && isNaN(options.status))
 						item.title += "<div class=\"secretary-charts-tooltip-subtext\">"+ options.status + "</div>";
-					Secretary.Utils.Tooltip.attach(item);
+					Secretary.Charts.Utils.Tooltip.attach(item);
 				}
 
 			},
 
 			Bars : function() {
 				
-				var settings	= Secretary.SVGFactory.settings;
-				var group		= Secretary.SVGFactory.create.Group('bars');
-				var tooltip		= (settings.tooltip !== false) ? Secretary.SVGFactory.create.Tooltip(settings.container) : '';
+				var settings	= Secretary.Charts.SVGFactory.settings;
+				var group		= Secretary.Charts.SVGFactory.create.Group('bars');
+				var tooltip		= (settings.tooltip !== false) ? Secretary.Charts.SVGFactory.create.Tooltip(settings.container) : '';
 				
 				// Draw Bars
 				for(var barsGroup = 0; barsGroup < settings.series.length; barsGroup++) {
@@ -332,14 +323,14 @@
 						
 						if( typeof settings.series[barsGroup] === 'number' || typeof(settings.series[barsGroup].length) === 'undefined'  ) {
 							options.data	= settings.series[barsGroup];
-							Secretary.SVGFactory.draw.Bar(options);
+							Secretary.Charts.SVGFactory.draw.Bar(options);
 						} else {
 							while( options.barNr < settings.series[barsGroup].length ) {
 								if((typeof settings.series[barsGroup][options.barNr] !== 'undefined')) {
 									options.data	= settings.series[barsGroup][options.barNr];
 									options.bars	= settings.series[barsGroup].length;
 									options.className = (settings.classes !== null && typeof settings.classes[barsGroup][options.barNr] !== 'undefined') ? settings.classes[barsGroup][options.barNr] : '';
-									Secretary.SVGFactory.draw.Bar(options);
+									Secretary.Charts.SVGFactory.draw.Bar(options);
 									options.barNr++;
 								}
 							} 
@@ -349,18 +340,18 @@
 
 		        this.Legend({ legend : settings.legend, parent : settings.container });
 		        
-				Secretary.SVGFactory.svg.appendChild(group);
+				Secretary.Charts.SVGFactory.svg.appendChild(group);
 				
 			},
 
 			Graph : function() {
-				var settings	= Secretary.SVGFactory.settings;
-				var group		= Secretary.SVGFactory.create.Group('graph');
+				var settings	= Secretary.Charts.SVGFactory.settings;
+				var group		= Secretary.Charts.SVGFactory.create.Group('graph');
 
 				var endY = 0;
 				var endX = 0;
 
-				var tooltip = (settings.tooltip !== false) ? Secretary.SVGFactory.create.Tooltip(settings.container) : '';
+				var tooltip = (settings.tooltip !== false) ? Secretary.Charts.SVGFactory.create.Tooltip(settings.container) : '';
 				var pathLine = "M50";
 				
 				for(var barsGroup = 0; barsGroup < settings.series.length; barsGroup++)
@@ -390,8 +381,8 @@
 						if(endX == 0) endX = startX;
 						
 						// Draw
-						Secretary.SVGFactory.create.Line( group, {"class":"line","x1" : startX, "x2": endX, "y1" : startY, "y2" : endY });
-						var item = Secretary.SVGFactory.create.Line(group,{"class":"point","x1":startX,"x2":startX,"y1":startY,"y2":startY});
+						Secretary.Charts.SVGFactory.create.Line( group, {"class":"line","x1" : startX, "x2": endX, "y1" : startY, "y2" : endY });
+						var item = Secretary.Charts.SVGFactory.create.Line(group,{"class":"point","x1":startX,"x2":startX,"y1":startY,"y2":startY});
 						
 						// pathLine += "," + (Math.round(startY*3)/3).toFixed(3) + "," + (startX + startY) /2;
 						
@@ -402,24 +393,24 @@
 					        if(settings.labels !== null && settings.labels[1].length > 0)
 					        	item.title += "<div class=\"secretary-charts-tooltip-subtext\">"+ settings.labels[1]+"</div>";
 					        item.title += "<div class=\"secretary-charts-tooltip-title\">"+  settings.series[barsGroup] + "</div>";
-					        Secretary.Utils.Tooltip.attach(item);
+					        Secretary.Charts.Utils.Tooltip.attach(item);
 				        }
 						endY = startY;
 						endX = startX;
 					}
 				}
 				/*
-				var path = document.createElementNS(Secretary.SVGFactory.svgNS, "path");
+				var path = document.createElementNS(Secretary.Charts.SVGFactory.svgNS, "path");
 				path.setAttributeNS(null, "d", pathLine );
-				Secretary.SVGFactory.svg.appendChild(path);
+				Secretary.Charts.SVGFactory.svg.appendChild(path);
 				*/
 				
-				Secretary.SVGFactory.svg.appendChild(group);
+				Secretary.Charts.SVGFactory.svg.appendChild(group);
 			},
 
 			Pie : function () {
 
-				var settings	= Secretary.SVGFactory.settings;
+				var settings	= Secretary.Charts.SVGFactory.settings;
 				settings.percs	= [];
 				
 				var sum = settings.series.reduce(function(pv, cv) { return pv + cv; }, 0);
@@ -450,11 +441,11 @@
 				    };
 				
 				sectors = calcSectors(settings);
-			    var newSVG = Secretary.SVGFactory.svg;
+			    var newSVG = Secretary.Charts.SVGFactory.svg;
 
 		        var titles = [];
-				var tooltip = Secretary.SVGFactory.create.Tooltip(settings.container);
-			    var groupSections = Secretary.SVGFactory.create.Group("sections");
+				var tooltip = Secretary.Charts.SVGFactory.create.Tooltip(settings.container);
+			    var groupSections = Secretary.Charts.SVGFactory.create.Group("sections");
 			    for(var j = 0; j < sectors.length; j++) {
 
 		            var CSSClass = (settings.classes != null) ? settings.classes[j] : '';
@@ -462,14 +453,14 @@
 		            var label = (settings.labels[j].toString().length > 32) ? settings.labels[j].toString().substr(0,32)+'...': settings.labels[j];
 		        	titles[j] = '<span class="legend-perc '+ CSSClass +'">'+ settings.percs[j] +'%</span><span class="legend-text">'+ label +'</span>';
 		        	
-			        var item = Secretary.SVGFactory.create.PieSection(groupSections, sectors[j]);
+			        var item = Secretary.Charts.SVGFactory.create.PieSection(groupSections, sectors[j]);
 			        item.tip =  tooltip;
 			         
 			        item.title = "<div class=\"secretary-charts-tooltip-title\">"+ sectors[j].label + "</div>";
 			        item.title += "<div class=\"secretary-charts-tooltip-subtext\">"+ sectors[j].value +" (" + sectors[j].perc + "%)</div>";
 			        
 			        item.parentId = settings.id;
-			        Secretary.Utils.Tooltip.attach(item);
+			        Secretary.Charts.Utils.Tooltip.attach(item);
 			    };
 		        newSVG.appendChild(groupSections); 
 
@@ -479,7 +470,7 @@
 		        if(typeof settings.donut !== 'undefined') {
 		        	var m = parseInt(settings.width,10) / 2;
 			        var r = parseInt(settings.donut, 10);
-			        Secretary.SVGFactory.create.Circle( newSVG, {'cx':m,'cy':m,'r':(r/2),'class':'donut'});
+			        Secretary.Charts.SVGFactory.create.Circle( newSVG, {'cx':m,'cy':m,'r':(r/2),'class':'donut'});
 		        }
 			},
 
@@ -513,35 +504,35 @@
 
 			XAxis : function() {
 				
-				var settings = Secretary.SVGFactory.settings;
-				var xAxisGroup = Secretary.SVGFactory.create.Group('xAxis');
+				var settings = Secretary.Charts.SVGFactory.settings;
+				var xAxisGroup = Secretary.Charts.SVGFactory.create.Group('xAxis');
 				var fullHeight = settings.height - settings.svgPaddingBottom;
 
-				Secretary.SVGFactory.create.Line(xAxisGroup,{"class":"axisZero","x1":settings.svgPaddingLeft,"x2":settings.svgPaddingLeft,"y1":fullHeight,"y2":0,"style":settings.style.zeroAxis});
+				Secretary.Charts.SVGFactory.create.Line(xAxisGroup,{"class":"axisZero","x1":settings.svgPaddingLeft,"x2":settings.svgPaddingLeft,"y1":fullHeight,"y2":0,"style":settings.style.zeroAxis});
 				if(settings.labels == null) {
-					Secretary.SVGFactory.svg.appendChild(xAxisGroup);
+					Secretary.Charts.SVGFactory.svg.appendChild(xAxisGroup);
 					return;
 				}
 				
 				for(var i = 0; i < settings.labels.length; i++)
 				{
-					var group = Secretary.SVGFactory.create.Group('xAxis_'+i);
+					var group = Secretary.Charts.SVGFactory.create.Group('xAxis_'+i);
 					var posX = settings.svgPaddingLeft + settings.rectDistance * i;
-					Secretary.SVGFactory.create.Text({
+					Secretary.Charts.SVGFactory.create.Text({
 							parent : group,text : settings.labels[i][0].toString(),
 							x : posX + settings.xAxisBarCenter,y : settings.height-10
 						});
 					
 					if(i > 0)
-						Secretary.SVGFactory.create.DashedLine( group,{"class":"dashedline xline"+ i,"x1":posX,"x2":posX,"y1":fullHeight,"y2":0,"style":settings.style.dashedLine});
+						Secretary.Charts.SVGFactory.create.DashedLine( group,{"class":"dashedline xline"+ i,"x1":posX,"x2":posX,"y1":fullHeight,"y2":0,"style":settings.style.dashedLine});
 					xAxisGroup.appendChild(group);
 				}
-				Secretary.SVGFactory.svg.appendChild(xAxisGroup);
+				Secretary.Charts.SVGFactory.svg.appendChild(xAxisGroup);
 			},
 			
 			YAxis : function() {
 				
-				var settings = Secretary.SVGFactory.settings;
+				var settings = Secretary.Charts.SVGFactory.settings;
 				var yAxisValue = (Math.round( settings.maxValue / ( settings.horzLines  ) ));
 				var yAxisValueLength = yAxisValue.toString().length;
 				var abschnittsFaktor = 5 * Math.pow(10, yAxisValueLength - 2);
@@ -563,7 +554,7 @@
 				if((yAxisValue * settings.horzLines < settings.maxValue))
 					yAxisValue *= 2;
 					
-				var yAxisGroup = Secretary.SVGFactory.create.Group('yAxis');
+				var yAxisGroup = Secretary.Charts.SVGFactory.create.Group('yAxis');
 				var fullHeight = settings.height - settings.svgPaddingBottom;
 				var fullWidth  = settings.svgWidth;
 				
@@ -575,24 +566,24 @@
 					settings.steps = (fullHeight - 10)/(yAxisValue * linesNeeded); 
 				
 				if(!settings.yScaleFromZero && settings.minValue < 0) {
-					var group=Secretary.SVGFactory.create.Group('zero');
+					var group=Secretary.Charts.SVGFactory.create.Group('zero');
 					var posY=fullHeight + settings.minValue * settings.steps;
-					Secretary.SVGFactory.create.Text({ parent:group,text:settings.minValue.toString(), x : 0, y : fullHeight });
-					Secretary.SVGFactory.create.Line(group,{"class":"axisZero yline0","x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY,"y2":posY,"style":settings.style.zeroAxis});
+					Secretary.Charts.SVGFactory.create.Text({ parent:group,text:settings.minValue.toString(), x : 0, y : fullHeight });
+					Secretary.Charts.SVGFactory.create.Line(group,{"class":"axisZero yline0","x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY,"y2":posY,"style":settings.style.zeroAxis});
 					yAxisGroup.appendChild(group);
 				}
 				
 				for(var i = 0; i <= linesNeeded ; i++)
 				{
 					var posY=fullHeight-(yAxisValue*settings.steps*i);
-					var group=Secretary.SVGFactory.create.Group('yAxis_'+i);
+					var group=Secretary.Charts.SVGFactory.create.Group('yAxis_'+i);
 					
 					posY = (!isNaN(posY)) ? posY : 0;
 
 					if(i == 0) {
-						Secretary.SVGFactory.create.Line(group,{"class":"axisZero","x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY,"y2":posY,"style":settings.style.zeroAxis});
+						Secretary.Charts.SVGFactory.create.Line(group,{"class":"axisZero","x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY,"y2":posY,"style":settings.style.zeroAxis});
 					} else {
-						Secretary.SVGFactory.create.DashedLine(group,{"class":"dashedline yline"+i,"x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY, "y2":posY,"style":settings.style.dashedLine});
+						Secretary.Charts.SVGFactory.create.DashedLine(group,{"class":"dashedline yline"+i,"x1":settings.svgPaddingLeft,"x2":fullWidth,"y1":posY, "y2":posY,"style":settings.style.dashedLine});
 					}
 					
 					// Labels
@@ -602,19 +593,19 @@
 						var label = (yAxisValue * i).toString();
 									
 					if(i > 0) {
-						Secretary.SVGFactory.create.Text({ parent : group, text : label.toString(), x : 0, y : posY });
+						Secretary.Charts.SVGFactory.create.Text({ parent : group, text : label.toString(), x : 0, y : posY });
 					}
 					
 					yAxisGroup.appendChild(group);
 					
 				}
 				
-				Secretary.SVGFactory.svg.appendChild(yAxisGroup);
+				Secretary.Charts.SVGFactory.svg.appendChild(yAxisGroup);
 			}
 		}
 	};
 		
-	Secretary.Utils = {
+	Secretary.Charts.Utils = {
 		
 		Tooltip : {
 
@@ -632,7 +623,7 @@
 		    	e.target.tip.style.display = "none";
 		    },
 		    pathMouseMove : function(e) {
-		    	var pos = Secretary.Utils.getElementPosition(e.target.parentId);
+		    	var pos = Secretary.Charts.Utils.getElementPosition(e.target.parentId);
 		    	if (e.clientX || e.clientY)
 				{
 					PosX = e.clientX ;
@@ -713,8 +704,4 @@
 	};
 		
 		
-})();
-
-
-
-  
+})(jQuery, Secretary);
