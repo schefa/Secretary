@@ -37,10 +37,10 @@ foreach($this->talks as $k => $talk) {
     $talk->message =  Secretary\Utilities::cleaner($talk->message,true);
 } 
 
-$this->document->addScript(JURI::root() .'media/secretary/assets/angular/angular.min.js');
-$this->document->addScript(JURI::root() .'media/secretary/assets/angular/angular-sanitize.min.js');
-$this->document->addScript(JURI::root() .'media/secretary/assets/angular/angular-route.min.js');
-$this->document->addScript(JURI::root() .'media/secretary/js/secretary.messages.js?v='.SECRETARY_VERSION);
+$this->document->addScript(SECRETARY_MEDIA_PATH .'/assets/angular/angular.min.js');
+$this->document->addScript(SECRETARY_MEDIA_PATH .'/assets/angular/angular-sanitize.min.js');
+$this->document->addScript(SECRETARY_MEDIA_PATH .'/assets/angular/angular-route.min.js');
+$this->document->addScript(SECRETARY_MEDIA_PATH .'/js/secretary.messages.js?v='.SECRETARY_VERSION);
 
 $this->online = \Secretary\Helpers\Messages::getChatOnlineUsers($this->referTo) ;
 

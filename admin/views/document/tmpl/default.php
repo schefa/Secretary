@@ -40,12 +40,12 @@ $taxTypesOptions = array( 0 => 'COM_SECRETARY_NONE', 1 => 'COM_SECRETARY_INKLUSI
                 <a class="btn btn-link" href="#more" role="tab" data-toggle="tab"><?php echo JText::_('COM_SECRETARY_TAB_ERWEITERT', true); ?></a>
             </li>
             <li>
-                <a onclick="window.print();return false;" class="btn btn-link" href="#" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/document_print_preview-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PRINT_THIS_PREVIEW'); ?>
+                <a onclick="window.print();return false;" class="btn btn-link" href="#" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/document_print_preview-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PRINT_THIS_PREVIEW'); ?>
                 </a>
             </li>
             <?php if(COM_SECRETARY_PDF) { ?>
             <li>
-                <a class="btn btn-link modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('document', array('format'=>'pdf', 'tmpl'=>'component', 'id'=> $this->item->id)); ?>" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW'); ?></a>
+                <a class="btn btn-link modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('document', array('format'=>'pdf', 'tmpl'=>'component', 'id'=> $this->item->id)); ?>" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW'); ?></a>
             </li>
             <?php }  ?>
         </ul>
@@ -237,7 +237,7 @@ $taxTypesOptions = array( 0 => 'COM_SECRETARY_NONE', 1 => 'COM_SECRETARY_INKLUSI
             
 		<?php if(!empty($this->item->subject[5])) {  ?>
             <div class="tab-pane" id="email">
-                <?php require(JPATH_COMPONENT_ADMINISTRATOR.'/views/document/tmpl/email.php');?>
+                <?php require(SECRETARY_ADMIN_PATH.'/views/document/tmpl/email.php');?>
             </div>
         <?php } ?>
         

@@ -115,7 +115,7 @@ class SecretaryModelItems extends JModelList
     public function getEmailFiles()
 	{
         $result    = array();
-	    $path      = JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$this->business['id'].'/emails/';
+        $path      = SECRETARY_ADMIN_PATH.'/uploads/'.$this->business['id'].'/emails/';
 	    if (is_dir($path))  {
     	    $files = array_diff(scandir($path), array('.', '..'));
             foreach($files as $k => $file) {

@@ -27,7 +27,7 @@ defined('_JEXEC') or die;
     <div class="secretary-template-margins secretary-control-group">
             	
         <h4 class="secretary-tooltip"><?php echo JText::_('COM_SECRETARY_MARGINS'); ?>&nbsp;<i class="fa fa-question-circle"></i>
-          <span class="tooltip-toggle"><img src="<?php echo JURI::root(); ?>/media/secretary/images/margins.png" /></span>
+          <span class="tooltip-toggle"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/margins.png" /></span>
         </h4>
 
     	<div class="secretary-input-prepend">

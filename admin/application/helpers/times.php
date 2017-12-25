@@ -262,7 +262,7 @@ class Times
 	public static function updateRepetitions($extension, $ids = array())
 	{
 		// Naive Loesung
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'models'.DS.'tables');
+	    JTable::addIncludePath(SECRETARY_ADMIN_PATH.'/models/tables');
 		$section = \Secretary\Application::getSingularSection( $extension );
 		$table = JTable::getInstance($section, "SecretaryTable" );
  
@@ -479,7 +479,7 @@ class Times
 	
 	public static function subscription() {
 		
-		JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.'/models/tables');
+	    JTable::addIncludePath(SECRETARY_ADMIN_PATH.'/models/tables');
 		
 		$app 	= \Secretary\Joomla::getApplication();
 		

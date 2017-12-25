@@ -9,10 +9,7 @@
  */
  
 // No direct access
-defined('_JEXEC') or die;
-
-// Include the component HTML helpers.
-JHtml::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/html');
+defined('_JEXEC') or die; 
 
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen', 'select');

@@ -15,7 +15,7 @@ $user		= Secretary\Joomla::getUser();
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 
-//$this->document->addScript(JURI::root().'media/secretary/js/secretary.charts.js?'.time());
+//$this->document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.charts.js?'.time());
 $this->columnsCount = 0;
 $this->depotVolume = array();
 $foldersLink = $user->authorise('core.show','com_secretary.folder');

@@ -85,7 +85,7 @@ class SecretaryControllerItem extends JControllerForm
 						
 			if(!empty($item->title) && $canDownload) {
 				
-				$file = JPATH_COMPONENT_ADMINISTRATOR . '/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
+			    $file = SECRETARY_ADMIN_PATH . '/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
 				$filename = $item->title;
 					
 				// Clean	
@@ -126,7 +126,7 @@ class SecretaryControllerItem extends JControllerForm
 	    $id		= $this->app->input->getInt('id');
 		if($id > 0) {
 		    $item = Secretary\Database::getQuery('uploads', intval($id) ,'id','business,title,folder');
-			$file = JPATH_COMPONENT_ADMINISTRATOR . '/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
+		    $file = SECRETARY_ADMIN_PATH . '/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
 			$ext = explode('.', $item->title);
 			$fileType = \Secretary\Helpers\Uploads::whatFileType(end($ext));
 			

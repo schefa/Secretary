@@ -39,7 +39,7 @@ class Email
 			return $result;
 		}
 		
-		// $attachment = JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$business['id'].'/emails/document-'.$data['createdEntry'].'.pdf';
+		// $attachment = SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/emails/document-'.$data['createdEntry'].'.pdf';
 		$attachment = "";
 		$name		= $data['contact_to'];
 		$email		= $data['contact_to_alias'];
@@ -104,7 +104,7 @@ class Email
 		}
 		
 		$category_title = self::getCategoryTitle($data['catid']);
-		$attachment = JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$business['id'].'/emails/'.$category_title.'-'.$data['createdEntry'].'.pdf';
+		$attachment = SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/emails/'.$category_title.'-'.$data['createdEntry'].'.pdf';
 		
 		$name		= $data['subject'][1];
 		$email		= $data['subject'][6];

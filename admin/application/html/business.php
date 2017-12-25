@@ -10,7 +10,7 @@
 
 namespace Secretary\HTML;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
 
 use JText; 
 use JUri;
@@ -56,7 +56,7 @@ class Business
         $html[] = '<div class="secretary-install-or">'.JText::_('COM_SECRETARY_OR') . '</div><a href="'. \Secretary\Route::create('index.php?option=com_secretary&task=business.csample') .'" class="btn btn-large btn-default">'. JText::_('COM_SECRETARY_INSTALL_SAMPLE_DATA') .'</a>';
         $html[] = '<div class="secretary-install-desc">'.JText::_('COM_SECRETARY_BUSINESS_STARTBUSINESS_DESC').'</div>';
         
-        $html[] = '<div class="fullwidth"><img class="secretary-start-logo" src="'.JUri::root().'media/secretary/images/secretary_medium_logo.png" /></div>';
+        $html[] = '<div class="fullwidth"><img class="secretary-start-logo" src="'.SECRETARY_MEDIA_PATH.'/images/secretary_medium_logo.png" /></div>';
         $html[] = ' </div>';
         
         return implode("\n",$html);

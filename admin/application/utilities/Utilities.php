@@ -35,7 +35,7 @@ class Utilities {
      */
     public static function getGender( $genderkey = false )
     {
-        JFormHelper::addFieldPath(JPATH_COMPONENT_ADMINISTRATOR . '/models/fields');
+        JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
         $gender = JFormHelper::loadFieldType('gender', false)->getOptions($genderkey);
         return trim($gender);
     }

@@ -10,7 +10,7 @@
 
 namespace Secretary;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/NavigationModel.php'; 
+require_once SECRETARY_ADMIN_PATH .'/application/NavigationModel.php'; 
 
 use JText;
 

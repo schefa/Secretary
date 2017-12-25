@@ -91,7 +91,7 @@ class SecretaryViewItems extends JViewLegacy
 		$this->document->setTitle('Secretary - '. $this->title);
 
         //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/item';
+		$formPath = SECRETARY_ADMIN_PATH.'/views/item';
         if (file_exists($formPath) && ($this->extension != 'plugins')) {
 
 			$module =  (!empty($this->module)) ? '&module='.$this->module : '';

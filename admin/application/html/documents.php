@@ -10,7 +10,7 @@
 
 namespace Secretary\HTML;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
 
 use JText; 
 

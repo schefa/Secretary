@@ -62,7 +62,7 @@ class SecretaryController extends JControllerLegacy
 					
 					case 'navbar' :  
 						switch ($layout) {
-						    case 'changelog' : include_once( JPATH_COMPONENT_ADMINISTRATOR ."/application/html/changelog.php"); break;
+						    case 'changelog' : include_once( SECRETARY_ADMIN_PATH ."/application/html/changelog.php"); break;
 							case 'lastversion' : echo \Secretary\HTML::_('layout.lastversion'); break;
 						}
 						break;

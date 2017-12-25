@@ -57,7 +57,7 @@ class SecretaryViewReports extends JViewLegacy
 			throw new Exception(implode("\n", $errors));
 		}
 		 
-		$this->document->addScript(JURI::root().'media/secretary/js/secretary.charts.js?v='.SECRETARY_VERSION);
+		$this->document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.charts.js?v='.SECRETARY_VERSION);
 		
 		parent::display($tpl);
 	}

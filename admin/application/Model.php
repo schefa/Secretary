@@ -27,7 +27,7 @@ class Model {
      */
     public static function create($name,$prefix = 'SecretaryModel',array $config = array('ignore_request' => true))
     {
-        $path = JPATH_COMPONENT_ADMINISTRATOR.'/models/'.strtolower($name).'.php';
+        $path = SECRETARY_ADMIN_PATH.'/models/'.strtolower($name).'.php';
         require_once $path;
         
         $modelClass = $prefix . ucfirst($name);

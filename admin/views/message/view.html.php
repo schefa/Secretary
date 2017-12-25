@@ -158,7 +158,7 @@ class SecretaryViewMessage extends JViewLegacy
 	
 	    if(isset($this->item->id)) {
 	        if(COM_SECRETARY_PDF) {
-	            echo '<a class="btn btn-danger modal" rel="{size: {x: 900, y: 500}, handler:\'iframe\'}" href="'. Secretary\Route::create('message', array('format'=>'pdf', 'id'=> $this->item->id )) .'"><img src="'. JURI::root().'media/secretary/images/pdf-20.png" />&nbsp;'. JText::_('PDF') .'</a>';
+	            echo '<a class="btn btn-danger modal" rel="{size: {x: 900, y: 500}, handler:\'iframe\'}" href="'. Secretary\Route::create('message', array('format'=>'pdf', 'id'=> $this->item->id )) .'"><img src="'. SECRETARY_MEDIA_PATH.'/images/pdf-20.png" />&nbsp;'. JText::_('PDF') .'</a>';
 	        }
 	    }
 	

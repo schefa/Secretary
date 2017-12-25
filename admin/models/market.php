@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
 
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/application/webservice/HttpClient.php';
-require_once JPATH_COMPONENT_ADMINISTRATOR.'/application/webservice/yahoo/YahooFinanceApi.php';
+require_once SECRETARY_ADMIN_PATH.'/application/webservice/HttpClient.php';
+require_once SECRETARY_ADMIN_PATH.'/application/webservice/yahoo/YahooFinanceApi.php';
 
 class SecretaryModelMarket extends JModelAdmin
 {

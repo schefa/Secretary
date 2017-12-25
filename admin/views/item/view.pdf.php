@@ -46,7 +46,7 @@ class SecretaryViewItem extends JViewLegacy
 			$kontotitle	= Secretary\Email::getCategoryTitle($catid);
 			
 			$business	= Secretary\Application::company();
-			$path		= JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$business['id'].'/emails/';
+			$path		= SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/emails/';
 			$filename	= $kontotitle.'-'.$docId.'.pdf';
 			$file		= $path . $filename;
 			

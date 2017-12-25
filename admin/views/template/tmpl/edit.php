@@ -53,7 +53,7 @@ echo Secretary\HTML::_('datafields.item');
 			<?php if($this->item->id) {  ?>
                 <?php if(COM_SECRETARY_PDF) { ?>
             	<li class="pull-right secretary-document-pdf-print">
-                    <a class="modal btn btn-danger" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('template', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?></a>
+                    <a class="modal btn btn-danger" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('template', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?></a>
                 </li>
                 <?php }  ?>
             <?php } ?>

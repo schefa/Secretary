@@ -46,7 +46,7 @@ class SecretaryControllerBusiness extends JControllerForm
 		// Update
 		$db = JFactory::getDBO();
         $dbName = $db->name == "postgresql" ? 'postgre' : 'mysql';
-		$file = JPATH_COMPONENT_ADMINISTRATOR.'/application/install/samples/sample_business.' . $dbName . '.sql';
+        $file = SECRETARY_ADMIN_PATH.'/application/install/samples/sample_business.' . $dbName . '.sql';
 		$buffer = file_get_contents($file);
 		
 		// Graceful exit and rollback if read not successful

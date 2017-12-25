@@ -11,8 +11,10 @@
 // No direct access
 defined('_JEXEC') or die;
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+if(!defined('SECRETARY_ADMIN_PATH')) define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR .'/components/com_secretary');
+define('SECRETARY_MEDIA_PATH', JURI::root() .'media/secretary');
 
-/**************		Access       ************/
+// Access 
 $app	= JFactory::getApplication();
 $view	= $app->input->getVar('view');
 $format	= $app->input->getVar('format');
@@ -24,37 +26,29 @@ if ($app->isClient('administrator') && !JFactory::getUser()->authorise('core.man
 	return false;
 }
 
-/********* Dependancies ************/
-
+// Dependancies
 jimport('joomla.application.component.controller');
+require_once SECRETARY_ADMIN_PATH .'/application/Secretary.php';
+JTable::addIncludePath( SECRETARY_ADMIN_PATH .'/models/tables');
+JForm::addFormPath( SECRETARY_ADMIN_PATH .'/models/forms');
 
-// Framework
-require_once  JPATH_ADMINISTRATOR .'/components/com_secretary/application/Secretary.php';
-
-// Helpers 
-Secretary\Application::loadFunctionsFromFolder(JPATH_COMPONENT_ADMINISTRATOR .'/helpers/');
-JTable::addIncludePath(JPATH_SITE .'/administrator/components/com_secretary/models/tables');
-JForm::addFormPath(JPATH_SITE .'/administrator/components/com_secretary/models/forms');
-
-$pdf = Secretary\PDF::getInstance(); 
-
+$pdf = Secretary\PDF::getInstance();
 define('SECRETARY_VERSION', Secretary\Application::getVersion());
 define('COM_SECRETARY_PDF', (null !== $pdf->getStrategy()));
 
-/********** Head ********************/
-
+// Head
 $document = JFactory::getDocument();
 if($format != 'raw') { 
-	$mediaURL = JURI::root() .'media/secretary';
+    
 	JHtml::_('jquery.framework');
 	
 	$timestamp = '?'.strtotime(date('Y-m-d'));
-	$document->addScript($mediaURL.'/assets/jquery/jquery-ui.min.js');
-	$document->addScript($mediaURL.'/js/secretary.js?v='.SECRETARY_VERSION);
+	$document->addScript(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery-ui.min.js');
+	$document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.js?v='.SECRETARY_VERSION);
 	if( $view == 'document' && $layout == 'edit' ) {
-	    $document->addScript($mediaURL.'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
-	    $document->addScript($mediaURL.'/js/secretary.document.js?v='.SECRETARY_VERSION);
-		$document->addScript($mediaURL.'/assets/jquery/jquery.nestable.js');
+	    $document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
+	    $document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.document.js?v='.SECRETARY_VERSION);
+		$document->addScript(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery.nestable.js');
 	}
 
 	if($layout == 'edit') {
@@ -64,10 +58,10 @@ if($format != 'raw') {
 	
 	JHTML::_('behavior.modal');
 	
-	$document->addStyleSheet($mediaURL.'/assets/jquery/jquery-ui.css');
-	$document->addStyleSheet($mediaURL.'/css/secretary.css?v='.SECRETARY_VERSION);
-	$document->addStyleSheet($mediaURL.'/css/custom.css?v='.SECRETARY_VERSION);
-	$document->addStyleSheet($mediaURL.'/fontawesome/css/font-awesome.min.css');
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery-ui.css');
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/css/secretary.css?v='.SECRETARY_VERSION);
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/css/custom.css?v='.SECRETARY_VERSION);
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/fontawesome/css/font-awesome.min.css');
 	\Secretary\Html::_('layout.templateCssStyle'); 
 }
 
@@ -75,9 +69,7 @@ $title = 'Secretary';
 if(!empty($view)) $title .= ' - '. JText::_('COM_SECRETARY_'.$view);
 $document->setTitle($title);
 			
-/************		Display       ************/
-
-//$legacy = new JControllerLegacy(array('base_path'=>JPATH_COMPONENT_ADMINISTRATOR,'table_path'=> JPATH_COMPONENT_ADMINISTRATOR));
-$controller	= JControllerLegacy::getInstance('Secretary',array('base_path'=>JPATH_COMPONENT_ADMINISTRATOR));
+// Display
+$controller	= JControllerLegacy::getInstance('Secretary',array('base_path'=> SECRETARY_ADMIN_PATH));
 $controller->execute($app->input->get('task'));
 $controller->redirect();

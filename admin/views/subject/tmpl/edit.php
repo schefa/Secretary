@@ -41,7 +41,7 @@ $user = JFactory::getUser();
             
             <?php if($this->item->id > 0 && COM_SECRETARY_PDF && !empty($this->defaultTemplate)) { ?>
             <li class="pull-right secretary-document-pdf-print">
-                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('subject', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" />&nbsp;<?php echo 'PDF'; ?></a>
+                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('subject', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" />&nbsp;<?php echo 'PDF'; ?></a>
             </li>
             <?php }  ?>
             

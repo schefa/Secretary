@@ -186,7 +186,7 @@ defined('_JEXEC') or die;
             <div class="tab-pane" id="documents">
             <?php
                 if(!empty($this->item->documents)) {
-				    include_once(JPATH_COMPONENT_ADMINISTRATOR .'/views/subject/tmpl/edit_documents.php');
+                    include_once(SECRETARY_ADMIN_PATH .'/views/subject/tmpl/edit_documents.php');
 				} else {
 					echo '<div class="alert alert-warning">'.JText::_('COM_SECRETARY_NONE').'</div>';	
 				}
@@ -196,7 +196,7 @@ defined('_JEXEC') or die;
             <div class="tab-pane" id="messages">
             	<?php 
             	if(!empty($this->item->messages)) {
-            		include_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/subject/tmpl/edit_messages.php');
+            	    include_once(SECRETARY_ADMIN_PATH.'/views/subject/tmpl/edit_messages.php');
             	} else {
             	    echo '<div class="alert alert-warning">'.JText::_('COM_SECRETARY_NONE').'</div>';
             	}
@@ -206,7 +206,7 @@ defined('_JEXEC') or die;
             <div class="tab-pane" id="projects">
             	<?php 
             	if(!empty($this->item->projects)) {
-            		include_once(JPATH_COMPONENT_ADMINISTRATOR.'/views/subject/tmpl/edit_times.php');
+            	    include_once(SECRETARY_ADMIN_PATH.'/views/subject/tmpl/edit_times.php');
             	} else {
             	    echo '<div class="alert alert-warning">'.JText::_('COM_SECRETARY_NONE').'</div>';
             	}

@@ -44,11 +44,11 @@ class PDF
             if(isset($pdfParameter)) {
                 switch ($pdfParameter) {
                     case 'mpdf': 
-                        require_once JPATH_COMPONENT_ADMINISTRATOR . '/application/pdf/mpdf.php'; 
+                        require_once SECRETARY_ADMIN_PATH . '/application/pdf/mpdf.php'; 
                         return new MPDFStrategy();
                         break;
                     case 'dompdf': 
-                        require_once JPATH_COMPONENT_ADMINISTRATOR . '/application/pdf/dompdf.php';
+                        require_once SECRETARY_ADMIN_PATH . '/application/pdf/dompdf.php';
                         return new DomPDFStrategy();
                         break;
                 }

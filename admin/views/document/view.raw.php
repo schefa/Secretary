@@ -76,7 +76,7 @@ class SecretaryViewDocument extends JViewLegacy
 		$this->business	= Secretary\Application::company();
 		
 		//Get Field options
-		JFormHelper::addFieldPath(JPATH_COMPONENT_ADMINISTRATOR . '/models/fields');
+		JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
 		$this->genderoptions		=	JFormHelper::loadFieldType('gender', false)->getList( $this->item->subject[0], 'jform[subject][0]' );
 		$this->entityoptions		=	JFormHelper::loadFieldType('entities', false)->getList();
 		$this->productUsageOption	=	JFormHelper::loadFieldType('productUsage', false)->getList( $this->item->productUsage );

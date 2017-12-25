@@ -152,7 +152,7 @@ $locationTitle = Secretary\Database::getQuery('locations',$this->item->location,
         <div class="tab-pane" id="history">
         <?php
             if(!empty($this->item->history)) {
-			    include_once(JPATH_COMPONENT_ADMINISTRATOR .'/views/product/tmpl/default_documents.php');
+                include_once(SECRETARY_ADMIN_PATH .'/views/product/tmpl/default_documents.php');
 			} else {
 				echo '<div class="alert alert-warning">'.JText::_('COM_SECRETARY_NONE').'</div>';	
 			}

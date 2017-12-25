@@ -19,8 +19,8 @@ $listDirn		= $this->state->get('list.direction');
 $filterZeitraum = $this->state->get('filter.zeitraum');
 $filterZeitraum = (empty($filterZeitraum)) ? 1 : $filterZeitraum;
 
-$this->document->addStylesheet(JURI::root().'media/secretary/css/secretary.print.css?'.time());
-$this->document->addScript(JURI::root().'media/secretary/js/secretary.charts.js?'.time());
+$this->document->addStylesheet(SECRETARY_MEDIA_PATH.'/css/secretary.print.css?'.time());
+$this->document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.charts.js?'.time());
 ?>
 
 

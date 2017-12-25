@@ -77,8 +77,8 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 		if($user->authorise('core.delete', 'com_secretary')) {
 		    $x = 0;
 		    foreach($files as $file) {
-		        if(file_exists(JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$file)) {
-                    unlink(JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$file);
+		        if(file_exists(SECRETARY_ADMIN_PATH.'/uploads/'.$file)) {
+		            unlink(SECRETARY_ADMIN_PATH.'/uploads/'.$file);
                     $x++;
 		        }
 		    }
@@ -98,7 +98,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 		if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 		$upload = Secretary\Database::getQuery('uploads', $pk );
 	
-		$path = JPATH_COMPONENT_ADMINISTRATOR . DS .'uploads' .DS. $upload->business . DS . $upload->folder . DS . $upload->title;
+		$path = SECRETARY_ADMIN_PATH .'/uploads/'. $upload->business .'/'. $upload->folder .'/'. $upload->title;
 		if( JFile::delete($path) ) {
 			if($upload->itemID > 0) $this->_updateItemDocument($upload->itemID, $upload->extension, $pk);
 			$this->app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED',$upload->title), 'notice');

@@ -94,7 +94,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
                 <td>
                 <?php if(COM_SECRETARY_PDF) { ?>
                     <?php $href = Secretary\Route::create('message', array('id' => $item->id, 'format' => 'pdf')); ?>
-                    <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" /></a>
+                    <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" /></a>
                 <?php } ?>
                     <?php echo $link; ?>
                 </td>

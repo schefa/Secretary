@@ -12,7 +12,7 @@ namespace Secretary\HTML;
 
 use JText;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
  
 // No direct access
 defined('_JEXEC') or die;

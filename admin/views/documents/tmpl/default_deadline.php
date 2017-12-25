@@ -64,15 +64,15 @@ defined('_JEXEC') or die;
             
             <?php if(COM_SECRETARY_PDF && $item->template > 0) { ?>
                 <?php $href = Secretary\Route::create('document', array('id' => $item->id, 'format' => 'pdf')); ?>
-                <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" /></a>
+                <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" /></a>
             <?php } ?>
             
                 <?php $href = Secretary\Route::create('document', array('id' => $item->id, 'layout' => 'template', 'tmpl' => 'component')); ?>
-                <a href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?>" class="hasTooltip printpdf modal" rel="{size: {x: 800, y: 500}, handler:'iframe'}" id="modalLink1"><img src="<?php echo JURI::root(); ?>/media/secretary/images/document_print_preview-20.png" /></a>
+                <a href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?>" class="hasTooltip printpdf modal" rel="{size: {x: 800, y: 500}, handler:'iframe'}" id="modalLink1"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/document_print_preview-20.png" /></a>
                 
                 <?php /*if(!empty($item->email)) { ?>
                 <?php $email = 'index.php?option=com_secretary&view=document&task=email&id='.$item->id ; ?>
-                <a class="hasTooltip printpdf" href="<?php echo $email; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_EMAIL'); ?>"><img src="<?php echo JURI::root(); ?>/media/secretary/images/email-25.png" /></a>
+                <a class="hasTooltip printpdf" href="<?php echo $email; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_EMAIL'); ?>"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/email-25.png" /></a>
                 <?php }*/ ?>
                 
             </td>

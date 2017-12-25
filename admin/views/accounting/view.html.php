@@ -96,7 +96,7 @@ class SecretaryViewAccounting extends JViewLegacy
 	protected function getJS()
 	{
 	    $document = JFactory::getDocument();
-	    $document->addScript(JURI::root() .'media/secretary/js/secretary.accounting.js?v='.SECRETARY_VERSION);
+	    $document->addScript(SECRETARY_MEDIA_PATH .'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
 	    $document->addScriptDeclaration(\Secretary\HTML::_('javascript.submitformbutton','accounting'));
 	}
 }

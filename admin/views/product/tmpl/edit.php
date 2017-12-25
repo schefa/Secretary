@@ -42,7 +42,7 @@ $fields             = (isset($this->datafields['fields'])) ? $this->datafields['
             
             <?php if($this->item->id > 0 && COM_SECRETARY_PDF && !empty($this->defaultTemplate)) { ?>
             <li class="pull-right secretary-document-pdf-print">
-                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('product', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" />&nbsp;<?php echo 'PDF'; ?></a>
+                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('product', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" />&nbsp;<?php echo 'PDF'; ?></a>
             </li>
             <?php }  ?>
         </ul>
@@ -211,7 +211,7 @@ $fields             = (isset($this->datafields['fields'])) ? $this->datafields['
             <div class="tab-pane" id="history">
             <?php
                 if(!empty($this->item->history)) {
-    			    include_once(JPATH_COMPONENT_ADMINISTRATOR .'/views/product/tmpl/default_documents.php');
+                    include_once(SECRETARY_ADMIN_PATH .'/views/product/tmpl/default_documents.php');
     			} else {
     				echo '<div class="alert alert-warning">'.JText::_('COM_SECRETARY_NONE').'</div>';	
     			}

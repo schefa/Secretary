@@ -39,12 +39,12 @@ class SecretaryTableUploads extends JTable
 		if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 		$upload = Secretary\Database::getQuery('uploads', $pk );
 		
-		$path = JPATH_COMPONENT_ADMINISTRATOR . DS .'uploads' .DS. $upload->business . DS . $upload->folder . DS . $upload->title;
+		$path = SECRETARY_ADMIN_PATH .'/uploads/'. $upload->business . '/' . $upload->folder . '/' . $upload->title;
 		if( JFile::delete($path) ) {
-			if($upload->itemID > 0) $this->_updateItemDocument((int) $upload->itemID, $upload->extension,(int) $pk);
-			$app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED',$upload->title), 'notice');
+		    if($upload->itemID > 0) $this->_updateItemDocument((int) $upload->itemID, $upload->extension,(int) $pk);
+		    $app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED',$upload->title), 'notice');
 		} else {
-			$app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED_NOT',$upload->title), 'error');
+		    $app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED_NOT',$upload->title), 'error');
 		}
 		
 		parent::delete($pk);

@@ -44,7 +44,7 @@ class Admin extends JControllerAdmin
 	    if(JFactory::getUser()->authorise('core.delete', 'com_secretary.'.$section)) {
     	    $cid  = $this->input->post->get('cid', array(), 'array');
     	     
-    	    require_once JPATH_COMPONENT_ADMINISTRATOR.'/models/'.$section.'.php';
+    	    require_once SECRETARY_ADMIN_PATH.'/models/'.$section.'.php';
     	    $classname = 'SecretaryModel' . ucfirst($section);
     	    if(class_exists($classname)) {
         	    $model = new $classname();

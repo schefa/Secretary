@@ -46,7 +46,7 @@ class Uploads
 	{
 		if(empty($item)) return false;
 		
-		$file	      = JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
+		$file	      = SECRETARY_ADMIN_PATH.'/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
 		$parts	      = explode('.', strtolower($item->title));
 		$extension    = self::whatFileType(end($parts));
 		
@@ -174,7 +174,7 @@ class Uploads
 		// Endung OK
 		// $files['name'] = date('Y-m-d_H-i-s',$itemID).'_'. $files['name'];
 		$fileNamePathName = (!empty($itemID)) ? ($itemID.'_'. $files['name']) : ( date('Y-m-d') .'_'. $files['name']);
-		$uploadPath = JPATH_COMPONENT_ADMINISTRATOR.'/uploads/'.$business['id'].'/'.$folder.'/'.$fileNamePathName;
+		$uploadPath = SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/'.$folder.'/'.$fileNamePathName;
 
 		// Existiert in der UploadRoutine
 		if(isset($files['uploaded']) && strlen($files['uploaded']) > 0 && JFile::copy($files['uploaded'], $uploadPath)) {

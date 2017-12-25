@@ -62,7 +62,7 @@ class SecretaryViewProduct extends JViewLegacy
             $this->checkedOut = false;
         }
 
-        JFormHelper::addFieldPath(JPATH_COMPONENT_ADMINISTRATOR . '/models/fields');
+        JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
         $this->itemtemplates = JFormHelper::loadFieldType('templates',false)->getList($this->item->template,'jform[template]','', array('products'));
         if(isset($this->item->template) && $this->item->template > 0)
             $this->defaultTemplate		= \Secretary\Helpers\Templates::getTemplate($this->item->template);

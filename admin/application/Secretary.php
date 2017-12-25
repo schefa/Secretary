@@ -7,13 +7,14 @@
  * @copyright    Copyright (C) 2015-2017 Fjodor Schaefer. All rights reserved.
  * @license      GNU General Public License version 2 or later.
  */
-
-
+ 
 namespace Secretary {
     
     use JFactory;
     use JRegistry;
     use JText;
+    
+    if(!defined('SECRETARY_ADMIN_PATH')) define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR .'/components/com_secretary');
     
     // No direct access
     defined('_JEXEC') or die; 
@@ -124,7 +125,7 @@ namespace Secretary {
          */
         public static function getVersion() {
             if(empty(self::$version)) {
-                $xmlPath = JPATH_COMPONENT_ADMINISTRATOR ."/secretary.xml";
+                $xmlPath = SECRETARY_ADMIN_PATH ."/secretary.xml";
                 if(file_exists($xmlPath)) {
                     $xml = JFactory::getXML( $xmlPath );
                     self::$version = $xml->version;
@@ -186,7 +187,7 @@ namespace Secretary {
          * @param string $folder name of the folder where the files are
          */
         public static function loadFunctionsFromFolder($folder) {
-            if ($handle = opendir($folder)) {
+            if (is_dir($folder) && $handle = opendir($folder)) {
                 while (false !== ($entry = readdir($handle))) {
                     if ($entry != "." && $entry != ".." && strpos($entry,'.php') !== false ) {
                         require_once $folder . $entry;

@@ -12,7 +12,7 @@ namespace Secretary;
 
 use JFactory;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/ControllerAdmin.php';
+require_once SECRETARY_ADMIN_PATH .'/application/ControllerAdmin.php';
 
 // No direct access
 defined('_JEXEC') or die;

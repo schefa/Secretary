@@ -56,18 +56,18 @@ $taxSelection= ($toggleTaxRateColumn== 0) ? '' : ' taxSelection';
         
             <?php if(COM_SECRETARY_PDF && !empty($this->defaultTemplate)) { ?>
             <li class="pull-right secretary-document-pdf-print">
-                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('document', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" />&nbsp;<?php echo JText::_('PDF'); ?></a>
+                <a class="btn btn-link btn-pdf modal" rel="{size: {x: 900, y: 500}, handler:'iframe'}" href="<?php echo Secretary\Route::create('document', array('format'=>'pdf', 'id'=> $this->item->id )); ?>" role="tab" data-toggle="tab"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" />&nbsp;<?php echo JText::_('PDF'); ?></a>
             </li>
             <?php }  ?>
             
         <?php if(\Secretary\Helpers\Access::checkAdmin() && !empty($this->item->subject[6])) {  ?>
             <li class="pull-right">
-                <a class="btn btn-link open-modal" data-url="<?php echo Secretary\Route::create('document', array('layout'=>'email','format'=>'raw','tmpl'=>'component', 'id'=> $this->item->id )); ?>"><img src="<?php echo JURI::root(); ?>/media/secretary/images/email-25.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_EMAIL'); ?></a> 
+                <a class="btn btn-link open-modal" data-url="<?php echo Secretary\Route::create('document', array('layout'=>'email','format'=>'raw','tmpl'=>'component', 'id'=> $this->item->id )); ?>"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/email-25.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_EMAIL'); ?></a> 
             </li>
         <?php } ?>
         
             <li class="pull-right">
-            	<a class="btn btn-link open-modal" data-url="<?php echo Secretary\Route::create('document', array('layout'=>'preview','format'=>'raw','tmpl'=>'component', 'id'=> $this->item->id )); ?>"><img src="<?php echo JURI::root(); ?>/media/secretary/images/document_print_preview-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?></a> 
+            	<a class="btn btn-link open-modal" data-url="<?php echo Secretary\Route::create('document', array('layout'=>'preview','format'=>'raw','tmpl'=>'component', 'id'=> $this->item->id )); ?>"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/document_print_preview-20.png" />&nbsp;<?php echo JText::_('COM_SECRETARY_PREVIEW'); ?></a> 
             </li>
             
         <?php } ?>

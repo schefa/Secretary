@@ -10,7 +10,7 @@
 
 namespace Secretary\HTML;
 
-require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
 
 use JText; 
 use JUri;
@@ -29,7 +29,7 @@ class Layout
         $value	= $params->get('templateColor', 'white');
         $css	= '';
         
-        $filename = JURI::root() .'media/secretary/css/style.'.$value.'.css';
+        $filename = SECRETARY_MEDIA_PATH .'/css/style.'.$value.'.css';
         $css = file_get_contents($filename);
         
         \JFactory::getDocument()->addStyleDeclaration($css);

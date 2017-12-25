@@ -145,7 +145,7 @@ $canCheckin	= $user->authorise('core.manage', 'com_secretary');
     	<td>
     	<?php if(COM_SECRETARY_PDF) { ?>
         <?php $href = (isset($item->document->id)) ? Secretary\Route::create('document', array('id' => $item->document->id, 'format' => 'pdf')) : ''; ?>
-        <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo JURI::root(); ?>/media/secretary/images/pdf-20.png" /></a>
+        <a class="hasTooltip printpdf modal" href="<?php echo $href; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_PDF_PREVIEW') ; ?>" rel="{size: {x: 900, y: 500}, handler:'iframe'}"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" /></a>
         <?php } ?><?php echo $item->title; ?></td>
     </tr>
 	<?php endforeach; ?>

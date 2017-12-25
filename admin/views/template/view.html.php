@@ -107,7 +107,7 @@ class SecretaryViewTemplate extends JViewLegacy
 	{
 		$document = JFactory::getDocument();
 
-		$document->addScript(JURI::root().'media/secretary/js/secretary.template.js?v='.SECRETARY_VERSION);
+		$document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.template.js?v='.SECRETARY_VERSION);
 
 		$javaScript = 'var proportion = "'. $this->item->dim->proportion .'",
 			formatWidth = '. $this->item->dim->formatWidth .',
