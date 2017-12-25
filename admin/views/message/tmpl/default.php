@@ -131,7 +131,10 @@ defined('_JEXEC') or die;
         <?php if(!empty($this->item->fields) && ($fields = json_decode($this->item->fields, true))) { ?>
             <?php foreach($fields as $field) { ?>
                 <div class="field-item">
-                    <?php echo \Secretary\Helpers\Items::getFieldRaw($field[0],$field[2]); ?>
+                    <div class="control-group">
+                        <div class="control-label"><label><?php echo $field[1]; ?></label></div>
+                        <div class="controls"><?php echo $field[2]; ?></div>
+                    </div>
                 </div>
             <?php } ?>
         <?php } ?>

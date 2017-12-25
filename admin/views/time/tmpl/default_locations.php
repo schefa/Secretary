@@ -114,22 +114,18 @@ $status = Secretary\Database::getQuery('status',$this->item->state,'id','title',
     
     <div class="tab-pane" id="fields">
         
-                        <div class="fields-items form-horizontal">
-                            <?php if(!empty($this->item->fields) && ($fields = json_decode($this->item->fields, true))) { ?>
-                                <?php foreach($fields as $field) { ?>
-                                    
-                                <?php $f = \Secretary\Helpers\Items::getFieldRaw($field[0],$field[2], true); ?>
-                                
-                                <div class="control-group">
-                                <div class="control-label">
-                                <label><?php echo $f[0]; ?></label>
-                                </div>
-                                <div class="controls"><?php echo $f[1]; ?></div>
-                                </div>
+        <div class="fields-items form-horizontal">
+            <?php if(!empty($this->item->fields) && ($fields = json_decode($this->item->fields, true))) { ?>
+                <?php foreach($fields as $field) { ?>
+                   
+                <div class="control-group">
+                    <div class="control-label"><label><?php echo $field[1]; ?></label></div>
+                    <div class="controls"><?php echo $field[2]; ?></div>
+                </div>
     
-                                <?php } ?>
-                            <?php } ?>
-                        </div>
+                <?php } ?>
+            <?php } ?>
+        </div>
                         
     </div>
     

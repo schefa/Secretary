@@ -11,8 +11,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$this->datafields   = \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields			      = $this->datafields['fields'];
+$this->datafields   = \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields); 
 ?>
 
 <?php if( $this->tmpl == 'component') { ?>
@@ -140,3 +139,10 @@ if($userId <= 0) {
     <div class="btn modal-close" ><?php echo JText::_('COM_SECRETARY_TOOLBAR_CLOSE'); ?></div>
 </div>
 <?php } ?>
+
+
+<?php
+$fields	= (isset($this->datafields['fields'])) ? $this->datafields['fields'] : '';
+$javaScript = 'Secretary.printFields( ['. $fields .'] );';
+$this->document->addScriptDeclaration($javaScript);
+?>

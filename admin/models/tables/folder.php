@@ -217,9 +217,9 @@ class SecretaryTableFolder extends JTable
 				
 			// Update Level of pk
 			$query = $this->_db->getQuery(true);
-			$query->update($this->_tbl)
-					->set('ordering = '. intval($x))
-					->where('id = '. intval($itemId));
+			$query->update($this->_tbl);
+			$query->set('ordering = '. intval($x));
+			$query->where('id = '. intval($itemId));
 			$this->_db->setQuery($query);
 	
 			// If there is an update failure, return false to break out of the recursion.

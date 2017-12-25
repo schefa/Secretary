@@ -103,7 +103,14 @@ class Folders
         return (int) self::$_lastNr[$catid];
     }
     
-	public static function reorderFolderItems( $oldItems, $getOrdered = FALSE )
+    /**
+     * Reorders the folder hierarchy
+     * 
+     * @param object[] $oldItems
+     * @param boolean $getOrderedValues if true, then return the reordered ids
+     * @return array|object[]
+     */
+	public static function reorderFolderItems( $oldItems, $getOrderedValues = FALSE )
 	{
 		// Preprocess the list of items to find ordering divisions.
 		$result = array();
@@ -164,7 +171,7 @@ class Folders
 		
 		// Finalize
 		$ordered = array_filter(explode("-",$ordered));
-		if($getOrdered)
+		if($getOrderedValues)
 		{
 			// Returns the reordered Ids of all Items
 			return array_values($ordered);

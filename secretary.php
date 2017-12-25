@@ -58,10 +58,10 @@ if($format != 'raw') {
 	
 	JHTML::_('behavior.modal');
 	
-	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery-ui.css');
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery-ui.css?v='.SECRETARY_VERSION);
 	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/css/secretary.css?v='.SECRETARY_VERSION);
 	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/css/custom.css?v='.SECRETARY_VERSION);
-	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/fontawesome/css/font-awesome.min.css');
+	$document->addStyleSheet(SECRETARY_MEDIA_PATH.'/assets/fontawesome/css/font-awesome.min.css');
 	\Secretary\Html::_('layout.templateCssStyle'); 
 }
 

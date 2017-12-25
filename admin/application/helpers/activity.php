@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class Activity 
 {
 	/**
-	 * Get an actity
+	 * Get an activity
 	 */
 	public static function get($id)
 	{

@@ -134,7 +134,13 @@ class Connections
         }
         return $result;
     }
-     
+
+    /**
+     * Deletes specific contacts for this (subject) instance
+     * 
+     * @param array $contacts
+     * @return boolean
+     */
     public function deleteConnectionsSubjects($contacts) {
         if(empty($this->extension) or empty($this->one) or empty($contacts))
             return false;
@@ -145,7 +151,7 @@ class Connections
         }
         $ids = implode(",", $ids);
         
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
         $query->delete('#__secretary_connections');
         $query->where('extension = '.$db->quote($this->extension).' AND (( one = '.(int) $this->one.' AND two in ('. $db->escape($ids) .')) OR ( one in ('.$db->escape($ids).') AND two = '. $this->one .'))' );
@@ -154,7 +160,13 @@ class Connections
         $db->execute();
     }
     
-    public function deleteConnections($both = true) {
+    /**
+     * Deletes connections to this instance
+     * 
+     * @param boolean $bothWays search for this instance also as the second connection to another item 
+     * @return boolean
+     */
+    public function deleteConnections($bothWays = true) {
     
         if(empty($this->extension) or empty($this->one))
             return false;
@@ -163,7 +175,7 @@ class Connections
         $query = $db->getQuery(true);
         $query->delete('#__secretary_connections');
         
-        if(true === $both) {
+        if(true === $bothWays) {
             $query->where('extension = '.$db->quote($this->extension).' AND ( one = '.(int) $this->one.' OR two = '.(int) $this->one .')' );
         } else {
             $query->where('extension = '.$db->quote($this->extension).' AND ( one = '.(int) $this->one.')' );
@@ -173,6 +185,16 @@ class Connections
         $db->execute();
     }
     
+    /**
+     * Method to connect a second item to this instance
+     * An item can be a subject or anything else 
+     * This method is used to logically couple
+     * 
+     * @param unknown $two
+     * @param unknown $note
+     * @param boolean $both
+     * @return boolean
+     */
     public function addConnection($two,$note,$both = false) {
 
         if(empty($this->extension) or empty($this->one))

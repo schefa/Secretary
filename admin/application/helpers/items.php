@@ -21,14 +21,20 @@ defined('_JEXEC') or die;
 
 class Items
 {
+    
     protected static $_reqFields = array();
     
     public static $allowedHTML = "<p><strong><b><i><u><a><s><big><small><ul><li><ol><blockquote><h1><h2><h3><div><img><h4><h5><h6><sub><sup><mark><br><table><thead><tbody><tr><td><hr><pre>";
     
-	/* 
-	**  D A T A F I E L D S
-	*/
-	
+    /**
+     * Method to get a field
+     * 
+     * @param number $id
+     * @param string $extension
+     * @param string $default
+     * @param string $counter
+     * @return \stdClass|boolean
+     */
 	public static function getField( $id = 1, $extension = 'documents', $default = '', $counter = "##counter##" )
 	{
 	    $db = \Secretary\Database::getDBO();
@@ -61,7 +67,7 @@ class Items
 			}
 			
 			$return->description = JText::_(trim($field->description));
-			$return->box = self::getFieldTypes($field, $standard, $counter);
+			$return->box = self::getValuesContent($field, $standard, $counter);
 			
 			if(!is_object($return)) die;
 			
@@ -70,8 +76,18 @@ class Items
 		return false;
 	}
 	
-	public static function getFieldTypes( $object, $standard = NULL, $counter = "##counter##")
+	/**
+	 * Method to get the specific values content to display
+	 * Each field has its datatype 
+	 * 
+	 * @param object $object
+	 * @param string $standard
+	 * @param string $counter
+	 * @return string
+	 */
+	public static function getValuesContent( $object, $standard = NULL, $counter = "##counter##")
 	{
+	    
 		$name = "jform[fields][".$counter."][values]";
 		$placeholder = '';
 		$html = '';
@@ -98,8 +114,11 @@ class Items
 					
 					if(empty($items)) {
 						$options = array( 0 => JText::_('COM_SECRETARY_NONE') );
-					} else 
-						foreach($items as $item) $options[] = JHtml::_('select.option', $item->id, JText::_($item->title) );
+					} else {
+                        foreach($items as $item) {
+                            $options[] = JHtml::_('select.option', $item->id, JText::_($item->title) );
+                        }
+					}
 					
 					$html = JHTML::_('select.genericlist',$options, $name,'','value','text',\Secretary\Utilities::cleaner($standard));
 				}
@@ -140,20 +159,16 @@ class Items
 		return $html ;
 		
 	}
-	
-	public static function getFieldRaw( $id = NULL, $default = NULL , $return = false)
-	{
-		$obj = \Secretary\Database::getQuery('fields',$id); 
-		if($return) {
-		    return array( JText::_($obj->title) , $default );
-		} else {
-    		return JText::_($obj->title) .' '. $default;
-		}
-	}
-	
-     
-	/** object list of standard fields **/
-	public static function getFields($extension, $nots = array())
+    
+    /**
+    * Method to get an objectlist of all standard fields for an extension/view
+    * Usage: Selectbox in a view
+    *  
+    * @param string $extension
+    * @param array $excludes arraylist of types to exclude
+    * @return void|mixed[]
+    */
+	public static function getFields($extension, $excludes = array())
 	{
 	    $db = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
@@ -161,13 +176,12 @@ class Items
 		$additional = "";
 		if($extension == 'subjects') $additional = " OR ". $db->qn('extension')." = ".$db->quote("newsletters");
 		
-		$query->select('*')
-				->from($db->qn('#__secretary_fields'))
-				->where(' ( ('. $db->qn('extension').' = '. $db->quote($extension) . ' OR extension = '.$db->quote("folders").' '. $additional . ') OR '.$db->qn('extension').'='. $db->quote("system") .')');
+		$query->select('*');
+		$query->from($db->qn('#__secretary_fields'));
+		$query->where(' ( ('. $db->qn('extension').' = '. $db->quote($extension) . ' OR extension = '.$db->quote("folders").' '. $additional . ') OR '.$db->qn('extension').'='. $db->quote("system") .')');
 		
-				
-		if(!empty($nots)) {
-			foreach($nots as $not){
+		if(!empty($excludes)) {
+			foreach($excludes as $not){
 				$query->where($db->qn('hard').' != '. $db->quote($not) );
 			}
 		}
@@ -177,12 +191,18 @@ class Items
 		$result = $db->loadObjectList();
 		return $result;
 	}
-	 
+	
+	/**
+	 * Method to get standard fields required for an extension/section
+	 * 
+	 * @param string $extension
+	 * @return mixed
+	 */
 	public static function getRequiredFields($extension)
 	{
 		if(empty($_reqFields[$extension])) {
-				
-			$db = JFactory::getDbo();
+		    
+		    $db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id,hard,title,standard')
 					->from($db->qn('#__secretary_fields'))
@@ -196,7 +216,13 @@ class Items
 		return self::$_reqFields[$extension];
 		
 	}
- 
+	
+	/**
+	 * Prepares data for saving
+	 * 
+	 * @param array $datas
+	 * @return boolean|string
+	 */
 	public static function saveFields( $datas = FALSE )
 	{
 	    $fields = array();
@@ -240,6 +266,12 @@ class Items
 		return json_encode($fields,true);
 	}
 	
+	/**
+	 * Method to prepare data to display
+	 * 
+	 * @param array $data
+	 * @return void|number[]|string[]|string
+	 */
 	public static function makeFieldsReadyForList( &$data )
 	{
 		if(empty($data))
