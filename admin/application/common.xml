@@ -44,8 +44,9 @@
        	<move file="${builddir}/${NAME_SHORT}/admin/${NAME_SHORT}.xml" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}"/>
        	<move file="${builddir}/${NAME_SHORT}/admin/${NAME_SHORT}.php" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}" failonerror="false"/>
        	
-       	<delete dir="${builddir}/${NAME_SHORT}/admin/uploads" verbose="${verbose}"/> 
-       	<mkdir dir="${builddir}/${NAME_SHORT}/admin/uploads" />
-	
+		<delete includeEmptyDirs="true">
+		  <fileset dir="${builddir}/${NAME_SHORT}/admin/uploads" includes="**/*" excludes="*.*"/>
+		 </delete>
+		
    </target>
 </project>

@@ -21,7 +21,6 @@ $parts  = explode(".",$task);
 
 // Framework
 require_once  JPATH_ADMINISTRATOR .'/components/com_secretary/application/Secretary.php';
-JLoader::register('SecretaryFactory', JPATH_ADMINISTRATOR .'/components/com_secretary/helpers/factory.php');
 
 $single = Secretary\Application::getSingularSection($view);
 $canSee	= $user->authorise('core.show','com_secretary.'.$single);

@@ -16,8 +16,6 @@ jimport('joomla.form.formfield');
 jimport('joomla.form.helper');
 JFormHelper::loadFieldClass('list');
 
-JLoader::register('SecretaryFactory', JPATH_SITE.'/administrator/components/com_secretary/helpers/factory.php');
-
 class JFormFieldTemplates extends JFormFieldList
 {
 	
