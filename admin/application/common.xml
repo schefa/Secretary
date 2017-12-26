@@ -4,7 +4,6 @@
 	<property environment="env"/>
 	<property name="source" value="."/> 
 	<property name="builddir" value="../Github"/>
-
 	<property name="release" value="${builddir}/_package"/>
 	<property name="verbose" value="false"/>
 	
@@ -15,7 +14,9 @@
 	</condition>
 	
 	<target name="_clean">
-		<delete dir="${builddir}/${NAME}" verbose="${verbose}"/>
+		<delete includeEmptyDirs="true">
+		  <fileset dir="${builddir}/${NAME_SHORT}" includes="**/*" excludes="*.*"/>
+		</delete>
 	</target>
 
 	<target name="_package">
@@ -26,27 +27,38 @@
    		<mkdir dir="${builddir}/${NAME_SHORT}/site"/>
        	<mkdir dir="${builddir}/${NAME_SHORT}/admin"/>
        	<mkdir dir="${builddir}/${NAME_SHORT}/media"/>
+		
        	<copy todir="${builddir}/${NAME_SHORT}/media" overwrite="true" verbose="${verbose}" failonerror="false">
        		<fileset dir="${source}/media/${NAME_SHORT}"/>
        	</copy>
+		
        	<copy todir="${builddir}/${NAME_SHORT}/admin" overwrite="true" verbose="${verbose}">
        		<fileset dir="${source}/administrator/components/${NAME}"/>
        	</copy>
+
+		<delete>
+			<fileset dir="${builddir}/${NAME_SHORT}/admin/application/language">
+				<include name="*.ini"/>
+			</fileset>
+		</delete>
+		
        	<copy todir="${builddir}/${NAME_SHORT}/admin/application/language" overwrite="true" verbose="${verbose}" flatten="true">
        		<fileset dir="${source}/administrator/language">
        			<exclude name="overrides/*"/>
        			<include name="**/*${NAME}*.ini"/>
        		</fileset>
        	</copy>
+
        	<copy todir="${builddir}/${NAME_SHORT}/site" overwrite="true" verbose="${verbose}">
        		<fileset dir="${source}/components/${NAME}"/>
        	</copy>
+
        	<move file="${builddir}/${NAME_SHORT}/admin/${NAME_SHORT}.xml" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}"/>
-       	<move file="${builddir}/${NAME_SHORT}/admin/${NAME_SHORT}.php" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}" failonerror="false"/>
+       	<move file="${builddir}/${NAME_SHORT}/admin/script.php" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}" failonerror="false"/>
        	
 		<delete includeEmptyDirs="true">
 		  <fileset dir="${builddir}/${NAME_SHORT}/admin/uploads" includes="**/*" excludes="*.*"/>
-		 </delete>
+		</delete>
 		
    </target>
 </project>

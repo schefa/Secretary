@@ -51,6 +51,7 @@ defined('_JEXEC') or die;
                 	$options = array();
                 	$options[] = JHtml::_('select.option','0',JText::_('COM_SECRETARY_SELECT_OPTION'));
                 	$options[] = JHtml::_('select.option','mpdf','mPDF');
+                	$options[] = JHtml::_('select.option','mpdf7','mPDF 7');
                 	$options[] = JHtml::_('select.option','dompdf','Dompdf');
                 	
                 	$standardPDF = (isset($this->item->params['pdf'])) ? $this->item->params['pdf'] : 0;
@@ -61,12 +62,15 @@ defined('_JEXEC') or die;
                 	echo $item;
                 	?>
                 	</td>
-                	<td>
-                	<div class="secretary-desc">
-                	<span id="mpdf" style="display:<?php if($standardPDF == 'mpdf') { echo 'block'; } else { echo 'none';}?>">
+                	<td> 
+                	<div class="secretary-desc">  
+                	<span id="mpdf" style="display:<?php if(in_array($standardPDF,['mpdf'])) { echo 'block'; } else { echo 'none';}?>">
                 		<?php echo JText::_('COM_SECRETARY_PDF_MPDF_DOWNLOADINFO') ?>
                 	</span>
-                	<span id="dompdf" style="display:<?php if($standardPDF == 'dompdf') { echo 'block'; } else { echo 'none';}?>">
+                	<span id="mpdf7" style="display:<?php if(in_array($standardPDF,['mpdf7'])) { echo 'block'; } else { echo 'none';}?>">
+                		<?php echo JText::_('COM_SECRETARY_PDF_MPDF7_DOWNLOADINFO') ?>
+                	</span>
+                	<span id="dompdf" style="display:<?php if(in_array($standardPDF,['dompdf'])) { echo 'block'; } else { echo 'none';}?>">
                 		<?php echo JText::_('COM_SECRETARY_PDF_DOMPDF_DOWNLOADINFO') ?>
                 	</div>
                 	</div>

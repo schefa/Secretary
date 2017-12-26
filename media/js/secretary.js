@@ -479,13 +479,18 @@ Secretary.printFields = function(fields) {
 				parent.insertAfter(next);
 			}
 		});
-
+		
+		/**
+		 * Configuration View
+		 * Toggle PDF and show info
+		 */
 		$('#pdf_select').change(function() {
 			var value = $(this).val();
+			$('.secretary-desc').children().hide();
 			switch(value) {
-				case 'mpdf': $('.secretary-desc').children().hide(); $('.secretary-desc #mpdf').show(); break;
-				case 'dompdf': $('.secretary-desc').children().hide(); $('.secretary-desc #dompdf').show(); break;
-				default : $('.secretary-desc').children().hide(); break;
+				case 'mpdf': $('.secretary-desc #mpdf').show(); break;
+				case 'mpdf7': $('.secretary-desc #mpdf7').show(); break;
+				case 'dompdf': $('.secretary-desc #dompdf').show(); break;
 			}
 		});
 	}

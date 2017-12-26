@@ -14,6 +14,7 @@ namespace Secretary;
 defined('_JEXEC') or die;
 
 use Secretary\PDF\DomPDFStrategy;
+use Secretary\PDF\MPDF7Strategy;
 use Secretary\PDF\MPDFStrategy;
 
 class PDF
@@ -43,10 +44,10 @@ class PDF
             $pdfParameter = Application::parameters()->get('pdf');
             if(isset($pdfParameter)) {
                 switch ($pdfParameter) {
-                    case 'mpdf': 
-                        require_once SECRETARY_ADMIN_PATH . '/application/pdf/mpdf.php'; 
+                    case 'mpdf': case 'mpdf7':
+                        require_once SECRETARY_ADMIN_PATH . '/application/pdf/mpdf.php';
                         return new MPDFStrategy();
-                        break;
+                        break; 
                     case 'dompdf': 
                         require_once SECRETARY_ADMIN_PATH . '/application/pdf/dompdf.php';
                         return new DomPDFStrategy();
