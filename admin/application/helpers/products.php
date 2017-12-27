@@ -386,9 +386,9 @@ abstract class Products
         $query->where($db->qn("business").'='.intval($business['id']));
         $query->where('( title LIKE '.$searchValue .') OR ( description LIKE '.$searchValue.')');
         $query->order('CHAR_LENGTH(history) DESC');
-        $db->setQuery($query,0,50);
 		try
 		{
+            $db->setQuery($query,0,50);
         	$results = $db->loadObjectList();
 		}
 		catch(\Exception $e)
