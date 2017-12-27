@@ -6,12 +6,12 @@ Secretary is a Joomla component that allows you to manage your digital office lo
 - Invoicing & Accounting
 -- Create bills, invoices, offers, contracts, etc.
 - Contacts
-Manage the master data of customers, suppliers, employees, members or other contact types
+-- Manage the master data of customers, suppliers, employees, members or other contact types
 - Products
-Warehouse & Inventory Management
+-- Warehouse & Inventory Management
 - Time and Project Management
-Seconds-accurate planning of events, projects, courses, occupated times, warehousing
+-- Seconds-accurate planning of events, projects, courses, occupated times, warehousing
 - Messages (CRM)
-Customer Relationship Management, Messenger, Coordination of Projects
+-- Customer Relationship Management, Messenger, Coordination of Projects
 - Reports
-Visualised Statistics and Charts
+-- Visualised Statistics and Charts
