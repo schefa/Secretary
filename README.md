@@ -2,9 +2,9 @@
 
 Secretary is a Joomla component that allows you to manage your digital office locally or from anywhere (online). Create invoices, bills, offers, manage master data of your clients, observe products trends, record working times, coordinate projects and much more.
 
-# Sections
+## Sections
 - Invoicing & Accounting
-Create bills, invoices, offers, contracts, etc.
+-- Create bills, invoices, offers, contracts, etc.
 - Contacts
 Manage the master data of customers, suppliers, employees, members or other contact types
 - Products
