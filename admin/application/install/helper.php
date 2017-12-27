@@ -62,6 +62,12 @@ class SecretaryInstall
 		return $message;
     }
 	
+    /**
+     * Install database updates
+     * 
+     * @param string $file
+     * @return boolean|string
+     */
     private function updateSQL($file)
     {
         $db = JFactory::getDBO();
@@ -103,6 +109,11 @@ class SecretaryInstall
 		
     }
 
+    /**
+     * Method to check if some folders exists
+     * 
+     * @return string Message
+     */
 	public function checkFolder()
 	{
 		$uploadfolder = JPATH_ADMINISTRATOR ."/components/com_secretary/uploads";
@@ -126,6 +137,11 @@ class SecretaryInstall
 		return $message;
 	}
 	
+	/**
+	 * Create or keep custom user files (like custom.css)
+	 * 
+	 * @return string Message
+	 */
 	private function customFiles()
 	{
         $dest   = JPATH_SITE.'/media/secretary/css/custom.css'; 
@@ -140,6 +156,11 @@ class SecretaryInstall
         }
 	}
 	
+	/**
+	 * Secures upload folder with .htaccess from direct access
+	 * 
+	 * @return string Message
+	 */
 	private function secureFolder()
 	{
         // check folder protection situation
@@ -159,6 +180,13 @@ class SecretaryInstall
 		return "";
 	}
 	
+	/**
+	 * Message after successful installation
+	 * 
+	 * @param number $version
+	 * @param string $message
+	 * @param string $messageInstall
+	 */
 	public function message($version, $message, $messageInstall = "")
 	{
 		
@@ -220,6 +248,12 @@ class SecretaryInstall
 		}
 	}
 
+	/**
+	 * Delete folder and subfolders
+	 * 
+	 * @param string $path
+	 * @param array $ignore
+	 */
 	public function deleteFolders($path, $ignore = array())
 	{
 		$ignore = array_merge($ignore, array('.git', '.svn', 'CVS', '.DS_Store', '__MACOSX'));
@@ -235,13 +269,25 @@ class SecretaryInstall
 			}
 		}
 	}
-
+	
+	/**
+	 * Delete directory and all files und subdirectories
+	 * 
+	 * @param string $path
+	 * @param array $ignore
+	 */
 	public function deleteFolder($path, $ignore = array())
 	{
 		$this->deleteFiles($path, $ignore);
 		$this->deleteFolders($path, $ignore);
 	}
 	
+	/**
+	 * Cleans cache
+	 * 
+	 * @param string $group
+	 * @param number $client_id
+	 */
 	protected function cleanCache($group = 'com_secretary', $client_id = 0)
 	{
 		$conf = JFactory::getConfig();

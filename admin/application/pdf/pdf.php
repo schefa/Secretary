@@ -14,7 +14,6 @@ namespace Secretary;
 defined('_JEXEC') or die;
 
 use Secretary\PDF\DomPDFStrategy;
-use Secretary\PDF\MPDF7Strategy;
 use Secretary\PDF\MPDFStrategy;
 
 class PDF

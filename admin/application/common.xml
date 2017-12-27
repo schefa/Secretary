@@ -57,7 +57,7 @@
        	<move file="${builddir}/${NAME_SHORT}/admin/script.php" todir="${builddir}/${NAME_SHORT}" verbose="${verbose}" failonerror="false"/>
        	
 		<delete includeEmptyDirs="true">
-		  <fileset dir="${builddir}/${NAME_SHORT}/admin/uploads" includes="**/*" excludes="*.*"/>
+			<fileset dir="${builddir}/${NAME_SHORT}/admin/uploads" includes="**/*" excludes="*.*"/>
 		</delete>
 		
    </target>
