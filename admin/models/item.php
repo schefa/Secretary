@@ -308,7 +308,7 @@ class SecretaryModelItem extends JModelAdmin
 	 */
 	private function updateDownloadId($downloadID) {
 		$hasValue = null;
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 		$extra_query = "dlid=".($downloadID);
 		
 		$query = $db->getQuery(true);
@@ -332,7 +332,7 @@ class SecretaryModelItem extends JModelAdmin
 			$object->enabled = 1;
 			$object->extra_query= $extra_query;
 			$object->location='https://www.schefa.com/updates/secretary.xml';  
-			$result = JFactory::getDbo()->insertObject('#__update_sites', $object);
+			$result = $db->insertObject('#__update_sites', $object);
 		}
 	}
 	

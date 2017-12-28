@@ -120,7 +120,7 @@ class SecretaryModelTimes extends JModelList
      */
 	protected function getListQuery()
 	{
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
 
         $wheres = array();
@@ -190,7 +190,7 @@ class SecretaryModelTimes extends JModelList
 		}
 		
 		
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         if(Secretary\Database::getDbType() == 'postgresql') {
         	$timeOrderingStr = "  time.ordering || '_' ||  0 ";
 	        $taskOrderingStr= " time.ordering || '_' || lpad( CAST(task.ordering AS CHAR) , 3,'0') ";
@@ -359,7 +359,7 @@ class SecretaryModelTimes extends JModelList
 			$endDay = date('Y-m-t', strtotime($startDay));
 			
 			// Create a new query object.
-			$db		= JFactory::getDBO();
+			$db		= \Secretary\Database::getDBO();
 			$query	= $db->getQuery(true);
 			
 			$query->select($db->qn(array("id","extension","title","startDate","endDate","fields","created_by")))

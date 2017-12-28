@@ -50,7 +50,7 @@ class JFormFieldJuser extends JFormFieldList
 		// Get the title of the linked chart
 		if ((int) $this->value > 0)
 		{
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true)
 				->select($db->qn('name'))
 				->from($db->qn('#__users'))

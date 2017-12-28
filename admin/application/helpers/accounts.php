@@ -63,7 +63,7 @@ class Accounts
 		$soll = json_encode($soll);
 		$haben = json_encode($haben);
 		
-		$db		= JFactory::getDbo();
+		$db   = \Secretary\Database::getDBO();
 		$query	= $db->getQuery(true);
 		
 		$columns = array('created_by','currency','created','title','entry_id','business','soll','haben','total');
@@ -86,8 +86,7 @@ class Accounts
 	
 	public static function storno ( $ids )
 	{
-		
-		$db	= JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$done = 0;
 		if(!empty($ids)) {
 			$table = JTable::getInstance('Accounting','SecretaryTable');
@@ -127,8 +126,7 @@ class Accounts
 	
 	protected static function getOrCreateAccount ( $account_id )
 	{
-		
-		$db	= JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$db->setQuery('SELECT id,soll,haben,history FROM #__secretary_accounts WHERE kid = '. (int) $account_id .' AND year = '. (int) date('Y') );
 		$tkonto = $db->loadObject();
 		
@@ -144,7 +142,7 @@ class Accounts
 	
 	protected static function bookAccount ( $accounting_entry )
 	{
-		$db	= JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		if( $soll = json_decode($accounting_entry['soll'],true) ) {
 			foreach($soll as $row) {
 				
@@ -212,7 +210,7 @@ class Accounts
 	
 	private static function _update($section , $fields, $conditions )
 	{
-		$db		= JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$query	= $db->getQuery(true);
 		$query->update($db->quoteName('#__secretary_'.$db->escape($section)))->set($fields)->where($conditions);
 		$db->setQuery($query);
@@ -221,13 +219,13 @@ class Accounts
 	
 	public static function getAccounts ( $term )
 	{
-		$db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$term = $db->quote('%'.str_replace(" ","",htmlentities($term, ENT_QUOTES)).'%');
 		
 		$a_json		= array();
 		$a_json_row	= array();
 		
-		if ( !isset($term) ) { exit; }
+		if ( !isset($term) || strlen($term) <= 2) exit;
 		
 		$query = $db->getQuery(true);
 		$query->select('a.*')

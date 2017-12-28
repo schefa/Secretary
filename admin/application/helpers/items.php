@@ -107,8 +107,8 @@ class Items
 				break;
 			case 'sql':
 				$canManage = JFactory::getUser()->authorise('core.admin');
-				if($canManage == 1) { 
-					$db = JFactory::getDbo();
+				if($canManage == 1) {
+				    $db   = \Secretary\Database::getDBO();
 					$db->setQuery( $object->values );
 					$items = $db->loadObjectlist();
 					

@@ -28,7 +28,7 @@ class Controller
         
         $return = false;
         if(!empty($ids)) {
-            $db = JFactory::getDbo();
+            $db = \Secretary\Database::getDBO();
             $query = $db->getQuery(true);
             $query->update($db->qn('#__secretary_'.$table))
             ->set('checked_out=0')

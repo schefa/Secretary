@@ -56,7 +56,7 @@ class JFormFieldEntities extends JFormFieldList
 		$params = Secretary\Application::parameters();
 		if( $params->get('entitySelect') == 1) {
 				
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true)
 					->select("id,title")
 					->from($db->qn('#__secretary_entities'))

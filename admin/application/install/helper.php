@@ -21,7 +21,7 @@ class SecretaryInstall
 	
     public function getDbType()
     {
-        return JFactory::getDBO()->name == "postgresql" ? 'postgresql' : 'mysql';
+        return \JFactory::getDBO()->name == "postgresql" ? 'postgresql' : 'mysql';
     }
 	
     public function updateDatabase($newVersion, $oldversion = null, $ignoreVersions = null)
@@ -70,7 +70,7 @@ class SecretaryInstall
      */
     private function updateSQL($file)
     {
-        $db = JFactory::getDBO();
+        $db = \JFactory::getDBO();
         $buffer = file_get_contents(COM_SECRETARY_INSTALLER_ADMINPATH.'/application/install/updates/' . $file );
 
         // Graceful exit and rollback if read not successful
@@ -312,7 +312,7 @@ class SecretaryInstall
 	
 	public function _update15() {
 		
-        $db	= JFactory::getDbo();
+	    $db	= \JFactory::getDBO();
 		$db->setQuery('SELECT id,subject FROM `#__secretary_documents`');
 		$documents = $db->loadObjectList();
 		
@@ -358,7 +358,7 @@ class SecretaryInstall
 
 	public function _update_2_0_5(){
 	
-	    $db = JFactory::getDbo();
+	    $db = \JFactory::getDBO();
 	    $query = $db->getQuery(true);
 	    $db->setQuery('SELECT id,connections FROM #__secretary_subjects WHERE connections != ""');
 	    $subjects = $db->loadObjectList();

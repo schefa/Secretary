@@ -55,7 +55,7 @@ class Email
 				
 			if($sent == 1)
 			{
-				$db = JFactory::getDbo();
+				$db = \Secretary\Database::getDBO();
 				 
 				$data['fields']['emailed'] = intval( time() );
 				$fields = json_encode($data['fields'], true);
@@ -120,7 +120,7 @@ class Email
 				
 			if(is_bool($sent))
 			{
-				$db = JFactory::getDbo();
+				$db = \Secretary\Database::getDBO();
 				 
 				$data['fields']['message']['emailed'] = intval( time() );
 				$fields = json_encode($data['fields'], true);

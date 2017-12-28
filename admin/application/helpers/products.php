@@ -372,9 +372,8 @@ abstract class Products
 		$i		= 0;
 		$json	= array();
 		
-		if ( !isset($search) )
-			exit;
-		 
+		if ( !isset($search) || strlen($search) <= 2) exit;
+			
 		$business	= \Secretary\Application::company();
         $user		= \Secretary\Joomla::getUser();
         $db			= \Secretary\Database::getDBO(); 

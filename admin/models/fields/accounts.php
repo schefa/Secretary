@@ -26,7 +26,7 @@ class JFormFieldAccounts extends JFormFieldList
 		$id = \Secretary\Joomla::getApplication()->input->getInt('id');
 		$html = array();
 		
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
         
         $query->select("s.nr,s.title");

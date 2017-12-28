@@ -210,7 +210,7 @@ class SecretaryModelMarket extends JModelAdmin
 			}
 		}
 		
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
         
         $stockData  = $this->getStocksQuotes($json['symbol']);

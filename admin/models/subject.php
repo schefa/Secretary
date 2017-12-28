@@ -304,7 +304,7 @@ class SecretaryModelSubject extends JModelAdmin
     	
     	$fullname = $data['firstname'].' '.$data['lastname'];
     	
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
 		$query->update("#__users");
 		$query->set('name='.$db->quote($fullname));
@@ -380,7 +380,7 @@ class SecretaryModelSubject extends JModelAdmin
 	        $createdByToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (i.created_by AS INTEGER)': 'i.created_by';
 	        
 	        if(isset($contact->id)) {
-    	        $db = JFactory::getDbo();
+    	        $db = \Secretary\Database::getDBO();
     	        $query = $db->getQuery(true);
     	        $query->select("i.*");
     	        $query->from($db->qn('#__secretary_messages','i'));

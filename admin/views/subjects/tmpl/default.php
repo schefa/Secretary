@@ -283,7 +283,7 @@ $foldersLink = $user->authorise('core.show','com_secretary.folder');
 jQuery( document ).ready(function( $ ) {
 	// Autocomplete
 	$( ".filter_search_subject" ).autocomplete({
-			source: 'index.php?option=com_secretary&task=ajax.searchSubjects', 
+			source: 'index.php?option=com_secretary&task=ajax.search&section=subjects', 
 			minLength:2,
 			open: function(event, ui) {
 				$(".ui-autocomplete").css("z-index", 1000);

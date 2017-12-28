@@ -41,7 +41,7 @@ class SecretaryModelDatabase extends JModelItem
      */
     public function clearAssetsTable()
     {
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query  = $db->getQuery(true);
         $query->delete($db->qn('#__assets'));
         $query->where($db->qn('name').' LIKE '.$db->quote('com_secretary.%'));
@@ -52,15 +52,15 @@ class SecretaryModelDatabase extends JModelItem
     
     /**
      * Method to set missing parent id
-     * 
+     *
      * @param int $id
-     * @return unknown|boolean|string
+     * @return boolean|string
      */
 	public function assetsFix( $id )
 	{
 		
-		$db		= JFactory::getDbo();
-		$item	= Secretary\Database::getJDataResult('assets',$id,'*','loadObject');
+		$db		= \Secretary\Database::getDBO();
+		$item	= \Secretary\Database::getJDataResult('assets',$id,'*','loadObject');
 		
 		$parts	= explode('.',$item->name);
 		if(count($parts) == 1) {
@@ -102,7 +102,7 @@ class SecretaryModelDatabase extends JModelItem
 	
 	public function assetsErrorMissingParent()
 	{
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 
 		// No Parent
 		$sql = $db->getQuery(true);
@@ -142,7 +142,7 @@ class SecretaryModelDatabase extends JModelItem
 		
 		if(!empty($exportTables) && isset($format)) {
 				
-			$prefix = JFactory::getDbo()->getPrefix();
+			$prefix = \Secretary\Database::getDBO()->getPrefix();
 			$tables = array();
 			
 			foreach($exportTables as $table) {
@@ -178,7 +178,7 @@ class SecretaryModelDatabase extends JModelItem
 		header('Content-type: text/json');
 		header('Content-Disposition: attachment; filename="'.$filename.'.json"');
 		
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 		$fp = fopen('php://output', 'w');
 		$response = array();
 		
@@ -210,7 +210,7 @@ class SecretaryModelDatabase extends JModelItem
 		header("Pragma: no-cache");
 		header("Expires: 0");
 		
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 		$csv = fopen('php://output', 'w');
 		
 		foreach($tables AS $table) {
@@ -252,7 +252,7 @@ class SecretaryModelDatabase extends JModelItem
 		header('Content-Disposition: attachment; filename="'.$filename.'.xml"');
 		@date_default_timezone_set("GMT");
 		
-		$db	 = JFactory::getDBO();
+		$db	 = \Secretary\Database::getDBO();
 		$xml = new XMLWriter();
 		
 		$xml->openURI('php://output');
@@ -312,7 +312,7 @@ class SecretaryModelDatabase extends JModelItem
 		header("Content-Disposition: attachment; filename=\"$filename\"");
 		header("Content-Type: application/vnd.ms-excel");
 	  
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 		
 		foreach($tables AS $table)
 		{
@@ -351,7 +351,7 @@ class SecretaryModelDatabase extends JModelItem
 		$config			= JFactory::getConfig();
 		$databaseName	= $config->get('db');
 
-        $db = JFactory::getDBO();
+        $db = \Secretary\Database::getDBO();
 		$sql = $db->getQuery(true);
 		
 		try {
@@ -528,7 +528,7 @@ class SecretaryModelDatabase extends JModelItem
 	
     private function updateSQL($file)
     {
-        $db = JFactory::getDBO();
+        $db = \Secretary\Database::getDBO();
         $buffer = file_get_contents( $file );
 
         // Graceful exit and rollback if read not successful

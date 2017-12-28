@@ -26,7 +26,7 @@ class JFormFieldSubjects extends JFormFieldList
 		$html = array();
 		
         $user	= JFactory::getUser();
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
 		
 		$query->select("id,CONCAT( lastname ,', ', firstname, ' aus ', location, ' (', street, ')') AS username")
@@ -79,7 +79,7 @@ class JFormFieldSubjects extends JFormFieldList
 		{
 		    $fieldStr = (Secretary\Database::getDbType() == 'postgresql') ? "firstname || ' ' || lastname" : 'CONCAT_WS(" ",firstname,lastname)';
 			
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true)
 				->select($fieldStr)
 				->from($db->qn('#__secretary_subjects'))

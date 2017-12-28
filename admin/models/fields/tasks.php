@@ -21,7 +21,7 @@ class JFormFieldTasks extends JFormFieldList
 	protected function getOptions()
 	{
 		$app = JFactory::getApplication();
-		$db	 = JFactory::getDBO();
+		$db	 = \Secretary\Database::getDBO();
 		$pid = $app->input->getInt('pid','');
 		
 		if(empty($pid)) {

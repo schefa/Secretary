@@ -74,7 +74,7 @@ abstract class Newsletter
     
     public static function addContactToNewsletter($contactid , $newsletterid)
     {
-        $db = JFactory::getDbo();
+        $db   = \Secretary\Database::getDBO();
         
         $db->setQuery('SELECT * FROM #__secretary_newsletter WHERE '.$db->qn('listID').'='. (int) $newsletterid.' AND '.$db->qn('contactID').'='. (int) $contactid);
         $exists = $db->loadResult();
@@ -99,7 +99,7 @@ abstract class Newsletter
     
     public static function removeContactFromAllNewsletters($contactid )
     {
-        $db = JFactory::getDBO();
+        $db   = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
         
         $sql->delete($db->qn("#__secretary_newsletter"));
@@ -116,7 +116,7 @@ abstract class Newsletter
     
     public static function removeContactFromNewsletter($contactid,$newsletter_id)
     {
-        $db = JFactory::getDBO();
+        $db   = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
         if(!empty($exists)) {
             $sql->delete($db->qn("#__secretary_newsletter"))
@@ -137,7 +137,7 @@ abstract class Newsletter
     
     public static function removeNewsletterFromContact($contactid, $newsletterid = NULL)
     {
-        $db = JFactory::getDBO();
+        $db   = \Secretary\Database::getDBO();
         $subject = \Secretary\Database::getQuery('subjects',(int) $contactid);
         
         if(empty($subject))
@@ -190,8 +190,8 @@ abstract class Newsletter
     
     public static function refreshNewsletterListToContacts($newsletterListID , $contacts, $batch = false)
     {
-        $app			= JFactory::getApplication();
-        $db				= JFactory::getDbo();
+        $app  = JFactory::getApplication();
+        $db   = \Secretary\Database::getDBO();
         $contactsIds	= array_unique($contacts);
         
         // Geld field ID

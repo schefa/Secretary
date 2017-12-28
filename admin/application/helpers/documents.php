@@ -76,8 +76,8 @@ class Documents
 	{
 		if(!empty($nr_to_check) && !empty($catid))
 		{
-			$return	= '';
-			$db		= JFactory::getDbo();
+		    $return	= '';
+		    $db   = \Secretary\Database::getDBO();
 			$sql = $db->getQuery(true);
 			
 			$sql->select("COUNT(*)")
@@ -173,12 +173,12 @@ class Documents
 	 * @param string $search term
 	 * @return string JSON result
 	 */
-	public static function search($search )
+	public static function search( $search )
 	{
 		$i        = 0;
 		$json     = array();
 		
-		if ( !isset($search) ) exit;
+		if ( !isset($search) || strlen($search) <= 2) exit;
 		
 		$business	= \Secretary\Application::company();
         $user		= \Secretary\Joomla::getUser();
@@ -227,5 +227,41 @@ class Documents
 		return json_encode($json);
 		
     }
-
+    
+    /**
+     * Search document titles
+     */
+    public static function searchTitle( $search )
+    {
+        $i        = 0;
+        $json     = array();
+        
+        if ( !isset($search) || strlen($search) <= 2) exit;
+    
+        $business    = \Secretary\Application::company();
+        $db          = \Secretary\Database::getDBO();
+        $searchValue = $db->quote('%'. htmlentities($search, ENT_QUOTES) .'%');
+        
+        $query = $db->getQuery(true);
+        $query->select("DISTINCT(title)");
+        $query->from($db->qn("#__secretary_documents"));
+        $query->where($db->qn('business').' = '. (int) $business['id']);
+        $query->where($db->qn('title').' LIKE ' . $db->quote('%'. $search .'%') );
+        $query->order('title ASC');
+        $db->setQuery($query);
+        
+        try {
+            $results = $db->loadObjectList();
+            foreach($results AS $result) {
+                $json[$i]["value"]	= \Secretary\Utilities::cleaner($result->title,true);
+                array_filter($json);
+                if($i > 9) break;
+                $i++;
+            }
+            return json_encode($json);
+        } catch(\Exception $e) {
+            throw new \Exception( $e->getMessage() );
+        }
+        
+    }
 }

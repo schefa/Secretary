@@ -80,7 +80,7 @@ class SecretaryModelLocations extends JModelList
     protected function getListQuery()
 	{
 		
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
 
         // SELECT

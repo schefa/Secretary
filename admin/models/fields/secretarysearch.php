@@ -65,7 +65,7 @@ class JFormFieldSecretarySearch extends JFormFieldList
 		switch ($extension) {
 			
 			case 'documents' :
-				$db = JFactory::getDbo();
+				$db = \Secretary\Database::getDBO();
 				$query = $db->getQuery(true);
 				$query->select(" d.id, d.nr, d.title, d.total, d.subtotal, d.taxtotal, d.taxtype, d.currency, d.rabatt, d.subjectid, d.created")
 					->from($db->quoteName('#__secretary_documents','d'))

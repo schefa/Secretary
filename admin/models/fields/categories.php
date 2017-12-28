@@ -30,7 +30,7 @@ class JFormFieldCategories extends JFormFieldList
 	 	$business	= \Secretary\Application::company();
 		$categories = array();
 		
-		$db	      = JFactory::getDBO();
+		$db	      = \Secretary\Database::getDBO();
 		$query    = $db->getQuery(true);
 		
 		$query->select("id,title,parent_id,level,state");
@@ -84,7 +84,7 @@ class JFormFieldCategories extends JFormFieldList
 	 	$business	= \Secretary\Application::company();
 		$categories = array();
 		
-		$db		= JFactory::getDBO();
+		$db		= \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
 		
 		$query->select("id as value,title as text,id,title,level,parent_id,state");

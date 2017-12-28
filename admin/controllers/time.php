@@ -77,7 +77,7 @@ class SecretaryControllerTime extends JControllerForm
 
 			$projectID = $this->input->getInt('id');
 
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('*')
 					->from($db->quoteName('#__secretary_tasks'))
@@ -114,7 +114,7 @@ class SecretaryControllerTime extends JControllerForm
 					$profile->upload	= $db->escape($item->upload);
 					
 					// Insert the object into the user profile table.
-					$result = JFactory::getDbo()->insertObject('#__secretary_tasks', $profile);
+					$result = $db->insertObject('#__secretary_tasks', $profile);
 					
 				}
 				

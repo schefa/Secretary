@@ -60,7 +60,7 @@ class SecretaryTableUploads extends JTable
 	 */
 	private function _updateItemDocument($itemID,$extension,$uploadID)
 	{
-		$db			= JFactory::getDbo();
+		$db			= \Secretary\Database::getDBO();
 		$query		= $db->getQuery(true);
 		$fields		= array($db->qn('upload') . " = ''");
 		$conditions	= array($db->qn('id') . ' = '. $db->escape($itemID), $db->qn('upload') . ' = '. $db->escape($uploadID));

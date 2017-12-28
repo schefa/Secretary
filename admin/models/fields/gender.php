@@ -28,7 +28,7 @@ class JFormFieldGender extends JFormFieldList
 		$options = array();
 		
 		if(empty($this->_list)) {
-    		$db = JFactory::getDbo();
+    		$db = \Secretary\Database::getDBO();
     		$query = $db->getQuery(true);
     		$query->select('*')
     			->from($db->qn('#__secretary_fields'))

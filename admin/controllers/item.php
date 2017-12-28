@@ -75,7 +75,7 @@ class SecretaryControllerItem extends JControllerForm
 		if($id > 0)
 		{
 			
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$item = Secretary\Database::getQuery('uploads', intval($id) ,'id',$db->qn(array('extension','itemID','business','title','folder')));
 			$section = Secretary\Application::getSingularSection($item->extension);
 				

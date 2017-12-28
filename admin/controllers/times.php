@@ -45,7 +45,7 @@ class SecretaryControllerTimes extends Secretary\Controller\Admin
 	    
 	    if($canDo->get('core.edit') && !empty($order)) {
 	         
-	        $db = JFactory::getDbo();
+	        $db = \Secretary\Database::getDBO();
 	
 	        $oldOrders = array();
 	        $oldOrdersTasks = array();

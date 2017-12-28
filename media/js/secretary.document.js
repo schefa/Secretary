@@ -44,7 +44,7 @@
 	
 				if(subjectid > 0) {				
 					$.ajax({
-				        url: "index.php?option=com_secretary&task=ajax.searchSubjects&id="+subjectid,
+				        url: "index.php?option=com_secretary&task=ajax.search&section=subjects&id="+subjectid,
 				        success: function (data) {
 				        	chosenSubject = JSON.parse(data);
 				        	chosenSubject.fullname = (chosenSubject.firstname + " " + chosenSubject.lastname).trim();
@@ -72,7 +72,7 @@
 					$( "input.table-item-title.pro" ).live('focus', function() {
 						var pUsage = $('select.pUsage').val();
 						$(this).autocomplete({
-								source: 'index.php?option=com_secretary&task=ajax.searchProducts&u='+pUsage, 
+								source: 'index.php?option=com_secretary&task=ajax.search&section=products&u='+pUsage, 
 								minLength:2,
 								open: function(event, ui) { $(".ui-autocomplete").css("z-index", 1000); },
 								select: function( event, ui ) {
@@ -326,7 +326,7 @@
 		// Autocomplete
 		
 		$( "input#jform_subject_name" ).autocomplete({
-				source: 'index.php?option=com_secretary&task=ajax.searchSubjects', 
+				source: 'index.php?option=com_secretary&task=ajax.search&section=subjects', 
 				minLength:2,
 				open: function(event, ui) {
 					$(".ui-autocomplete").css("z-index", 1000);
@@ -358,7 +358,7 @@
 			var catid	= cont.data('catid');
 			
 			$.ajax({
-				url: "index.php?option=com_secretary&task=ajax.testAjaxNumber&nr=" + nr + "&catid=" + catid + "&id=" + id ,
+				url: "index.php?option=com_secretary&task=ajax.checkDocumentNumber&nr=" + nr + "&catid=" + catid + "&id=" + id ,
 				type: 'get',
 				success: function(response){
 					res.html(response).fadeIn();
@@ -366,9 +366,9 @@
 			});
 		});
 				  
-		// Autocomplete Title
+		// Autocomplete Document Title
 		$( "#jform_title" ).autocomplete({
-				source: 'index.php?option=com_secretary&task=ajax.searchTitle', 
+				source: 'index.php?option=com_secretary&task=ajax.search&section=document_title', 
 				minLength:3,
 				open: function(event, ui) {
 					$(".ui-autocomplete").css("z-index", 1000);
@@ -496,7 +496,7 @@
 		$('#jform_currency').live('change',function(event) {
 			var currency = $(this).val();
 			$.ajax({
-				url: "index.php?option=com_secretary&task=ajax.getCurrency&term=" + currency ,
+				url: "index.php?option=com_secretary&task=ajax.getCurrencySymbol&term=" + currency ,
 				type: 'get',
 				success: function(response){
 					$('.currency-control').text(response).fadeIn();

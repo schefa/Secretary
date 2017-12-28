@@ -93,7 +93,10 @@ $taxSelection= ($toggleTaxRateColumn== 0) ? '' : ' taxSelection';
                             <?php echo $this->form->getLabel('created');?>
                             <div class="controls"><?php echo $this->form->getInput('created');?></div>		
                             </div>
-                            <div id="ajaxNumber" class="col-md-6" <?php if($this->item->id) echo 'data-id="'.$this->item->id.'" data-catid="'.$this->item->catid.'"'; ?>>
+                            <div id="ajaxNumber" class="col-md-6" 
+                            <?php if($this->item->id) { echo 'data-id="'.$this->item->id.'"'; } ?>
+                            <?php if($this->item->catid) { echo 'data-catid="'.$this->item->catid.'"'; } ?> 
+                            >
                             <?php echo $this->form->getLabel('nr');?>
                             <div class="controls">
        							<?php echo $this->form->getInput('nr'); ?>

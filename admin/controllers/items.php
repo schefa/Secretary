@@ -48,7 +48,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 		$order = $this->app->input->get('order', array(), 'array');
 	    $msg   = JText::_('COM_SECRETARY_ORDERING_SAVED_FAILED');
 	    if($user->authorise('core.admin', 'com_secretary') && !empty($order)) {
-	        $db = JFactory::getDbo();
+	        $db = \Secretary\Database::getDBO();
 	        $oldOrders = array();
 	        $oldOrdersTasks = array();
 	        $start = 1;
@@ -106,7 +106,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 		    $this->app->enqueueMessage(JText::sprintf('COM_SECRETARY_UPLOAD_DELETED_NOT',$upload->title), 'error');
 		}
 
-		$db = JFactory::getDBO();
+		$db = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true)
 			->delete($db->quoteName('#__secretary_uploads'))
 			->where($db->quoteName('id') . ' = ' . $db->escape($pk));
@@ -118,7 +118,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 
 	private function _updateItemDocument($itemID, $extension, $uploadID)
 	{
-		$db			= JFactory::getDbo();
+		$db			= \Secretary\Database::getDBO();
 		$query		= $db->getQuery(true);
 		$fields		= array($db->qn('upload') . " = ''");
 		$conditions	= array($db->qn('id') . ' = '. $db->escape($itemID), $db->qn('upload') . ' = '. $db->escape($uploadID));

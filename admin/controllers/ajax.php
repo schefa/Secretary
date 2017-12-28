@@ -18,30 +18,25 @@ class SecretaryControllerAjax extends JControllerForm
 {
 	
 	protected $app;
-	protected static $_secretaryTables = array('documents','templates');
 	protected $input;
+	protected static $_secretaryTables = array('documents','templates');
 	
     /**
      * List of tasks 
      */
 	protected static $allowedTasks = array(
-	    'load',
 	    'buchen',
-	    'update',
-	    'getCurrency',
-	    'searchSubjects',
-	    'searchDocuments',
-	    'searchProducts',
-	    'searchSubjectLocation',
-	    'testAjaxNumber',
-	    'searchTitle',
+	    'checkDocumentNumber',
+	    'getCurrencySymbol',
 	    'getField',
-	    'searchAccounts',
-	    'searchLocations',
+	    'load',
 	    'projectTimer',
 	    'saveProgress',
+	    'search',
+	    'searchSubjectLocation',
 	    'toggleSidebar',
 	    'toggleTaxRateColumn',
+	    'update',
 	    'updatePermission'
 	);
 	
@@ -61,12 +56,18 @@ class SecretaryControllerAjax extends JControllerForm
 		parent::__construct( $config );
 	}
 	
+	/**
+	 * Performs an database query
+	 * 
+	 * @throws Exception
+	 * @return boolean
+	 */
 	public function load()
 	{
-		$user	= Secretary\Joomla::getUser(); 
-		$table	= $this->input->getVar('table');
-		$id		= $this->input->getInt('id');
-		$document_id = $this->input->getInt('document_id');
+		$user         = \Secretary\Joomla::getUser(); 
+		$table        = $this->input->getVar('table');
+		$id           = $this->input->getInt('id');
+		$document_id  = $this->input->getInt('document_id');
 		
 		if(!in_array($table,self::$_secretaryTables)) {
 			throw new Exception ('Query failure: '. $table);
@@ -155,7 +156,7 @@ class SecretaryControllerAjax extends JControllerForm
 			$values = \Secretary\Helpers\Items::rebuildFieldsForDocument($values);
 			
 			// Update Progress
-			$db		= JFactory::getDbo();
+			$db		= \Secretary\Database::getDBO();
 			$fields = array( $db->qn('fields').'='. $db->quote( $values ) );
 			$conditions = array( $db->qn('id').'='.((int) $itemID ));
 			$result = $this->_update( $table, $fields, $conditions );
@@ -171,17 +172,19 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close();
 	}
 	
+	/**
+	 * Save project progress
+	 */
 	public function saveProgress()
-	{
-		$input	= $this->app->input;
-		$itemID = $input->getInt('id');
-		$value = $input->get('value','','float');
-		$extension = $input->getCmd('extension');
-		$canDo	= \Secretary\Helpers\Access::getActions('time');
+	{ 
+		$itemID       = $this->app->input->getInt('id');
+		$value        = $this->app->input->get('value','','float');
+		$extension    = $this->app->input->getCmd('extension');
+		$canDo        = \Secretary\Helpers\Access::getActions('time');
 
 		if($canDo->get('core.edit') && isset($extension) && isset($itemID) && isset($value)) {
 			// Update Progress
-			$db		= JFactory::getDbo();
+			$db		= \Secretary\Database::getDBO();
 			$fields = array( $db->qn('progress').'='.((float) $value ));
 			$conditions = array( $db->qn('id').'='.((int) $itemID ));
 			$result = $this->_update( $extension, $fields, $conditions );
@@ -196,12 +199,12 @@ class SecretaryControllerAjax extends JControllerForm
 	
 	public function projectTimer()
 	{ 
-		$extension = 'tasks';
-		$user = JFactory::getUser();
-		$userContactId = Secretary\Database::getQuery('subjects',$user->id,'created_by','id','loadResult');
-		$action	= $this->app->input->getVar('action');
-		$itemID = $this->app->input->getInt('itemID');
-		$projectID = $this->app->input->getInt('pid');
+		$extension        = 'tasks';
+		$user             = JFactory::getUser();
+		$userContactId    = Secretary\Database::getQuery('subjects',$user->id,'created_by','id','loadResult');
+		$action           = $this->app->input->getVar('action');
+		$itemID           = $this->app->input->getInt('itemID');
+		$projectID        = $this->app->input->getInt('pid');
 		
 		if($user->guest)
 		    return false;
@@ -240,7 +243,7 @@ class SecretaryControllerAjax extends JControllerForm
 				$totaltime = $worktime + $thatProjectTask->totaltime;
 				
 				// Update Total Time
-				$db		= JFactory::getDbo();
+				$db		= \Secretary\Database::getDBO();
 				$fields = array( $db->qn('totaltime').'='.intval( $totaltime ), $db->qn('contacts').'='.$db->quote($teamMembers));
 				$conditions = array( $db->qn('id').'='.intval( $itemID ), $db->qn('projectID').'='. intval($projectID));
 				$result = $this->_update( $extension, $fields, $conditions );
@@ -255,7 +258,10 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close();
 	}
 	
-	public function getCurrency()
+	/**
+	 * Get currency symbol for a name
+	 */
+	public function getCurrencySymbol()
 	{ 
 		$term	= $this->app->input->getVar('term');
 		$symbol = Secretary\Database::getQuery('currencies', Secretary\Utilities::cleaner($term),'currency','symbol','loadResult');
@@ -265,16 +271,15 @@ class SecretaryControllerAjax extends JControllerForm
 	
 	public function getField()
 	{
-		$input	= $this->app->input->post;
-		$extension	= $input->getVar('extension');
-		$standard = $input->getString('standard');
+		$extension    = $this->app->input->post->getVar('extension');
+		$standard     = $this->app->input->post->getString('standard');
 		if(isset($standard)) {
 			$default	= urldecode($standard);
 			$default	= Secretary\Utilities::cleaner($default,true);
 		} else {
 			$default	= '';
 		}
-		$id			= $input->getInt('id');
+		$id			= $this->app->input->post->getInt('id');
 		if(!empty($id) && !empty($extension)) {
 			$ret = \Secretary\Helpers\Items::getField($id,$extension,$default); 
 			if(!empty($ret)) { echo json_encode($ret); }
@@ -282,44 +287,57 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close();
 	}
 	
-	public function searchSubjects()
-	{ 
-		$term	= $this->input->getString('term');
-		$source	= $this->input->getVar('source');
-		$id     = $this->input->getInt('id');
-		if(!empty($term))
-		{
-			$ret = \Secretary\Helpers\Subjects::getSubjects($term, $source);
-			if(!empty($ret)) { echo $ret; }
-		}
-		elseif(is_numeric($id) && $id > 0) {
-		    $model = $this->getModel('Subject');
-		    $subject = $model->getItem($id);
-		    echo json_encode($subject);
-		}
-		$this->app->close();
+	/**
+	 * Universal search method
+	 */
+	public function search()
+	{
+	    $section   = $this->input->getCmd('section');
+	    $term      = $this->input->getString('term');
+	    $return    = '';
+	    
+	    
+	    if(in_array($section,['accounts','document_title','documents','locations','products','subjects'])) {
+	        switch ($section) {
+	            case 'accounts':
+	                $return = \Secretary\Helpers\Accounts::getAccounts($term);
+	                break;
+	            case 'document_title':
+	                $return = \Secretary\Helpers\Documents::searchTitle($term);  
+	                break;
+	            case 'documents':
+	                $return = \Secretary\Helpers\Documents::search($term);
+                    break;
+	            case 'locations':
+	                $extension    = $this->input->getCmd('extension');
+	                if(!empty($term) && !empty($extension)) {
+	                    $return = \Secretary\Helpers\Locations::search($term, $extension);
+	                }
+	                break;
+	            case 'products':
+	                $pUsage	= $this->input->getInt('u');
+	                $return = \Secretary\Helpers\Products::search($term,$pUsage);
+	                break;
+	            case 'subjects':
+	                $source	= $this->input->getVar('source');
+	                $id     = $this->input->getInt('id');
+	                if(!empty($term))
+	                {
+	                    $return = \Secretary\Helpers\Subjects::getSubjects($term, $source);
+	                }
+	                elseif(is_numeric($id) && $id > 0)
+	                {
+	                    $model = $this->getModel('Subject');
+	                    $subject = $model->getItem($id);
+	                    $return = json_encode($subject);
+	                }
+	                break;
+	        }
+	        echo $return;
+	    }
+	    $this->app->close();
 	}
-	
-	public function searchAccounts()
-	{ 
-		$term	= $this->input->getString('term');
-		if(!empty($term)) {
-			$ret = \Secretary\Helpers\Accounts::getAccounts($term);
-			if(!empty($ret)) echo $ret;
-		}
-		$this->app->close();
-	}
-	
-	public function searchDocuments()
-	{ 
-		$term	= $this->input->getString('term');
-		if(!empty($term)) {
-			$ret = \Secretary\Helpers\Documents::search($term);
-			if(!empty($ret)) { echo $ret; }
-		}
-		$this->app->close();
-	}
-	
+			
 	/**
 	 * AJAX search for ZIP/location in the contacts table
 	 */
@@ -335,92 +353,21 @@ class SecretaryControllerAjax extends JControllerForm
 	}
 	
 	/**
-	 * AJAX search for Document titles
+	 * Test on runtime if document number is available 
 	 */
-	public function searchTitle()
-	{ 
-		$search	= $this->input->getString('term');
-		if(!empty($search)) {
-				
-			$i       = 0;
-			$json    = array();
-			
-			$business    = \Secretary\Application::company();
-			$db          = \Secretary\Database::getDBO();
-			$searchValue = $db->quote('%'. htmlentities($search, ENT_QUOTES) .'%');
-			 
-			$query = $db->getQuery(true);
-			$query->select("DISTINCT(title)")
-				->from($db->qn("#__secretary_documents"))
-				->where($db->qn('business').' = '. (int) $business['id'])
-			    ->where($db->qn('title').' LIKE ' . $db->quote('%'. $search .'%') )
-				->order('title ASC');
-			$db->setQuery($query);
-			try {
-				$results = $db->loadObjectList();
-    			foreach($results AS $result) {
-    				$json[$i]["value"]	= \Secretary\Utilities::cleaner($result->title,true);
-    				array_filter($json);
-    				if($i > 9) break;
-    				$i++;
-    			}
-    			echo json_encode($json);
-			} catch(Exception $e) {
-				throw new \Exception( $e->getMessage() );
-			}
-		}
-		
-		$this->app->close();
-	}
-	
-	/**
-	 * AJAX search for locations by extension
-	 */
-	public function searchLocations()
-	{ 
-		$term         = $this->input->getString('term');
-		$extension    = $this->input->getCmd('extension');
-		
-		if(!empty($term) && !empty($extension)) {
-			$ret = \Secretary\Helpers\Locations::search($term, $extension);
-			if(!empty($ret)) echo $ret;
-		}
-		
-		$this->app->close();
-	}
-	
-	/**
-	 * AJAX search for products
-	 */
-	public function searchProducts()
-	{ 
-		$term	= $this->input->getString('term');
-		$pUsage	= $this->input->getString('u');
-		
-		if(!empty($term)) {
-				
-		    $ret = \Secretary\Helpers\Products::search($term,$pUsage);
-			if(!empty($ret)) echo $ret;
-			
-		}
-		
-		$this->app->close();
-	}
-	
-	public function testAjaxNumber()
-	{ 
-	
+	public function checkDocumentNumber()
+	{
 		$nr		= $this->input->getInt('nr');
 		$catid	= $this->input->getInt('catid');
 		$id		= $this->input->getInt('id');
 				
 		if(!empty($nr) && !empty($catid)) {
 					
-			$usedNr = \Secretary\Helpers\Documents::getDoubleCategoryNumber($nr, $catid, $id);
+			$usedNr = \Secretary\Helpers\Documents::getDoubleCategoryNumber($nr,(int) $catid, $id);
 			if (!empty($usedNr)) {
 				sort($usedNr);
 				$up		= $nr + 5;
-				$down	= $nr - 5;
+				$down	= ($nr - 5 > 0) ? ($nr - 5) : ( $nr + 1);
 				$range = range($down, $up);
 				echo '<div class="alert alert-warning number-in-use"><span class="tiny-text">'.JText::_('COM_SECRETARY_ERROR_DOUBLE_NO').'</span><ul>';
 				
@@ -443,6 +390,9 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close(); 
 	}
 	
+	/**
+	 * Hide or show sidebar menu and save current setting in the user session
+	 */
 	public function toggleSidebar()
 	{
 		$value  = $this->input->getInt('v');
@@ -450,6 +400,9 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close();
 	}
 	
+	/**
+	 * Hide or show the tax rate column in document view and save current setting in the user session
+	 */
 	public function toggleTaxRateColumn()
 	{
 		$value  = $this->input->getInt('v',1);
@@ -461,15 +414,14 @@ class SecretaryControllerAjax extends JControllerForm
 	 * Method to update permission and assets table 
 	 */
 	public function updatePermission()
-	{
-	    $app	= $this->app;
+	{ 
 	    $user	= JFactory::getUser();
 	    if($user->authorise('core.admin','com_secretary'))
 	    {
-	        $input	= $this->app->input->post;
-	        $db = JFactory::getDbo();
+	        $db = \Secretary\Database::getDBO();
 	        
-	        $rules = array();
+	        $rules     = array();
+	        $input     = $this->app->input->post;
 	        $section   = $input->getVar('section');
 	        $action    = $input->getString('action');
 	        $group     = $input->getVar('group');
@@ -485,7 +437,7 @@ class SecretaryControllerAjax extends JControllerForm
                 $parentAsset->parent_id = 1;
                 $parentAsset->level = 1;
                 $parentAsset->rules = '{}';
-                $result = JFactory::getDbo()->insertObject('#__assets', $parentAsset);
+                $result = $db->insertObject('#__assets', $parentAsset);
             }
 	        
 	        $plural = $section;
@@ -534,13 +486,14 @@ class SecretaryControllerAjax extends JControllerForm
 	    
 	    $this->app->close();
 	}
-
-            
+	
 	private function _update($section , $fields, $conditions )
 	{
-		$db		= JFactory::getDbo();
-		$query	= $db->getQuery(true);
-		$query->update($db->quoteName('#__secretary_'.$db->escape($section)))->set($fields)->where($conditions);
+	    $db    = \Secretary\Database::getDBO();
+		$query = $db->getQuery(true);
+		$query->update($db->quoteName('#__secretary_'.$db->escape($section)));
+		$query->set($fields);
+		$query->where($conditions);
 		$db->setQuery($query);
 		$result = $db->execute();
 		return $result;

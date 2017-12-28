@@ -34,8 +34,9 @@ class Connections
      * @param int $contact_id
      * @return StdClass
      */
-    public static function getContactProjects($contact_id) {
-        $db = JFactory::getDbo();
+    public static function getContactProjects($contact_id)
+    {
+        $db   = \Secretary\Database::getDBO();
         $search = '%"id":"'.(int) $contact_id .'","note%';
     
         $query = $db->getQuery(true);
@@ -66,7 +67,7 @@ class Connections
      * @return array list
      */
     public static function getFolderToTemplate($templateID) {
-        $db = JFactory::getDbo();
+        $db   = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
     
         $query->select('one,two,note')
@@ -81,8 +82,9 @@ class Connections
     /**
      * Method to get connections from one startpoint
      */
-    public static function getConnections($extension, $one, $both = true) {
-        $db = JFactory::getDbo();
+    public static function getConnections($extension, $one, $both = true)
+    {
+        $db   = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
     
         $query->select('one,two,note')
@@ -101,8 +103,9 @@ class Connections
     /**
      * Method to get the contacts that are associated with the contact
      */
-    public static function getConnectionsSubjectData($contact_id) {
-        $db = JFactory::getDbo();
+    public static function getConnectionsSubjectData($contact_id)
+    {
+        $db   = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
     
         $query->select('one,two,note')
@@ -170,8 +173,8 @@ class Connections
     
         if(empty($this->extension) or empty($this->one))
             return false;
-        
-        $db = JFactory::getDbo();
+            
+        $db   = \Secretary\Database::getDBO();
         $query = $db->getQuery(true);
         $query->delete('#__secretary_connections');
         
@@ -199,8 +202,8 @@ class Connections
 
         if(empty($this->extension) or empty($this->one))
             return false;
-        
-        $db     = JFactory::getDbo();
+            
+        $db   = \Secretary\Database::getDBO();
         $query  = $db->getQuery(true);
         
         $query->select('one')
@@ -251,7 +254,7 @@ class Connections
                 $in->one        = (int) $two;
                 $in->two        =(int) $this->one;
                 $in->note       ="";
-                $result = JFactory::getDbo()->insertObject('#__secretary_connections', $in);
+                $result = $db->insertObject('#__secretary_connections', $in);
             }
         }
     

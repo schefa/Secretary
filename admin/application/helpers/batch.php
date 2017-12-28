@@ -128,7 +128,7 @@ class Batch
 	
 	private static function createContactsinGroups($view , $messages_ids, $ids)
 	{
-		$db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$app = JFactory::getApplication();
 		foreach($messages_ids AS $messages_id)
 		{
@@ -169,9 +169,7 @@ class Batch
 	
 	public static function batchCategory($view , $entries_ids, $ids)
 	{
-	    
-	    // Get the DB object
-	    $db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	    $app = JFactory::getApplication();
 	    
@@ -194,9 +192,7 @@ class Batch
 	
 	public static function batchCopyTasksToProject($view , $tasks_ids, $projectID)
 	{
-	    
-	    // Get the DB object
-	    $db = JFactory::getDbo(); 
+	    $db   = \Secretary\Database::getDBO();
 	     
 	    // Get the tasks
 	    foreach($tasks_ids as $task_id) {
@@ -213,7 +209,7 @@ class Batch
 	                $object->id = null;
 	               $object->projectID = $projectID;
 	               try {
-	                   $result = JFactory::getDbo()->insertObject('#__secretary_tasks', $object);
+	                   $result = $db->insertObject('#__secretary_tasks', $object);
 	               } catch (\RuntimeException $e) {
 	                   JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 	                   return false;
@@ -228,9 +224,7 @@ class Batch
 	
 	public static function batchStates($view , $entries_ids, $ids)
 	{
-		
-		// Get the DB object
-		$db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
 
 		// Update the reset flag
@@ -256,9 +250,7 @@ class Batch
 
 	public static function batchTemplate($view , $entries_ids, $ids)
 	{
-	
-	    // Get the DB object
-	    $db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	
 	    // Update the reset flag
@@ -595,8 +587,8 @@ class Batch
 	    if(!$can->get('core.delete') or empty($searchfield))
 	        return false;
 	        
-	    // Get the DB object
-	    $db = JFactory::getDbo();
+        // Get the DB object
+        $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	   
 	    $query->select('id,fields')->from($db->quoteName('#__secretary_'. $view))->where($db->quoteName('id') . ' IN (' . implode(',', $entries_ids) . ')')->where('fields like '.$db->quote('%,"'.$searchfield.'",%'));
@@ -639,8 +631,8 @@ class Batch
 	    if(!$can->get('core.edit') or empty($fields))
 	        return false;
 	        
-	    // Get the DB object
-	    $db = JFactory::getDbo();
+        // Get the DB object
+        $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	   
 	    $db->setQuery("SELECT id, fields FROM ". $db->quoteName('#__secretary_'. $view) . " WHERE ".$db->quoteName('id').' IN (' . implode(',', $entries_ids) . ')');

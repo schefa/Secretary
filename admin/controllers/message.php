@@ -140,7 +140,7 @@ class SecretaryControllerMessage extends JControllerForm
     
         if(($contact_to === $userId) && ($itemID > 0) && ($value > 0)) {
             // Update Message Status
-            $db		= JFactory::getDbo();
+            $db		= \Secretary\Database::getDBO();
             $query	= $db->getQuery(true);
             $query->update($db->quoteName('#__secretary_messages'))
             ->set($db->qn('state').'='.intval($value))

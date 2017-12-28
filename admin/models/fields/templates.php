@@ -32,7 +32,7 @@ class JFormFieldTemplates extends JFormFieldList
 			$extension = (string) $this->element['extension'];
 	 		$business	= Secretary\Application::company();
 		
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true)
 					->select("id,title")
 					->from($db->quoteName('#__secretary_templates'))

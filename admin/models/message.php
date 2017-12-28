@@ -347,7 +347,7 @@ class SecretaryModelMessage extends JModelAdmin
 	}
 
 	public function getUserData( $id ) {
-	    $db		= JFactory::getDBO();
+	    $db		= \Secretary\Database::getDBO();
 	    $query	= $db->getQuery(true)
 	    ->select($db->escape('username'))
 	    ->from($db->quoteName('#__users'))

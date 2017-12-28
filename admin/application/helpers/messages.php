@@ -55,7 +55,7 @@ class Messages
 			$data['fields']['message']['id'] = $db->insertid();
 		} else {
 			$message->id = intval($data['fields']['message']['id']);
-			$val = JFactory::getDbo()->updateObject('#__secretary_messages', $message, 'id');
+			$val = $db->updateObject('#__secretary_messages', $message, 'id');
 		}
 		
 		if($data['fields']['message']['id'] > 0) {
@@ -77,9 +77,9 @@ class Messages
 		return $result;
 	}
 	
-	public static function getChatOnlineUsers( $ref = FALSE ) {
-
-	    $db    = JFactory::getDbo();
+	public static function getChatOnlineUsers( $ref = FALSE )
+	{ 
+	    $db   = \Secretary\Database::getDBO();
 	    $user  = JFactory::getUser(); 
 	    $cids  = [$user->id];
 	    
@@ -125,7 +125,7 @@ class Messages
 	    $business   = \Secretary\Application::company();
 	    $messages_unread = \Secretary\Application::parameters()->get('messages_unread', 9);
 	    
-	    $db = JFactory::getDbo();
+	    $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	    $query->select("m.id,m.subject,m.message,m.created,m.created_by_alias,m.created_by,m.state,status.title AS statustitle")
 	    ->from($db->qn('#__secretary_messages','m'))
@@ -164,8 +164,8 @@ class Messages
 
 	    $canEditState	= JFactory::getUser()->authorise('core.edit.state', 'com_secretary.message');
 	    if(true === $canEditState) {
-
-	        $db = JFactory::getDbo();
+	        
+	        $db   = \Secretary\Database::getDBO();
 	        
 	        $query = $db->getQuery(true);
 	        $query->update($db->qn('#__secretary_messages'));
@@ -225,8 +225,8 @@ class Messages
 	    $message = \Secretary\Utilities::cleaner($message);
 
 	    if(true === $canCreate) {
-    	        
-    	    $db = JFactory::getDbo();
+	        
+	        $db   = \Secretary\Database::getDBO();
     	     
     	    $query = $db->getQuery(true);
     	    $query->insert($db->qn('#__secretary_messages'));
@@ -258,7 +258,7 @@ class Messages
 	    
 	    $canDelete	= JFactory::getUser()->authorise('core.delete', 'com_secretary.message');
 	    if(true === $canDelete) {
-	        $db = JFactory::getDbo();
+	        $db   = \Secretary\Database::getDBO();
 	        $db->setQuery('DELETE FROM #__secretary_messages WHERE '.$db->qn('id').'='. intval($id));
 	        $result = $db->execute(); 
 	    } else {

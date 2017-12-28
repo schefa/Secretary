@@ -182,7 +182,7 @@ Secretary.printFields = function(fields) {
 		
 		$( "input.search-documents" ).live('focus', function() {
 			$(this).autocomplete({
-				source: 'index.php?option=com_secretary&task=ajax.searchDocuments', 
+				source: 'index.php?option=com_secretary&task=ajax.search&section=documents', 
 				minLength:1,
 				open: function(event, ui) { $(".ui-autocomplete").css("z-index", 1000); },
 				select: function( event, ui ) {
@@ -222,7 +222,7 @@ Secretary.printFields = function(fields) {
 		{
 			var ext = $("input.search-locations").data("extension");
 			$( "input.search-locations" ).autocomplete({
-				source: 'index.php?option=com_secretary&task=ajax.searchLocations&extension='+ext, 
+				source: 'index.php?option=com_secretary&task=ajax.search&section=locations&extension='+ext, 
 				minLength:2,
 				open: function(event, ui) {
 					$(".ui-autocomplete").css("z-index", 1000);
@@ -317,7 +317,7 @@ Secretary.printFields = function(fields) {
 			
 			$( ".search-features" ).autocomplete({
 				source: function( request, response ) {
-					$.getJSON( 'index.php?option=com_secretary&task=ajax.searchSubjects&source='+ source, {
+					$.getJSON( 'index.php?option=com_secretary&task=ajax.search&section=subjects&source='+ source, {
 					term: Secretary.Search.extractLast( request.term )
 					}, response );
 				},

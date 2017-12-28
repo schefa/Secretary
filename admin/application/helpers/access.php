@@ -154,7 +154,14 @@ abstract class Access
 		return $user->authorise('core.edit', 'com_secretary');
 	}
 	
-	public static function canDelete($record, $view )
+	/**
+	 * Test if user can delete a record
+	 * 
+	 * @param object $record
+	 * @param string $view
+	 * @return boolean
+	 */
+	public static function canDelete($record, $view)
 	{
 		$user = \JFactory::getUser();
 		if (!empty($record->id))
@@ -182,10 +189,15 @@ abstract class Access
         }
         return $rules;
     }
-     
+    
+    /**
+     * Returns rules for an asset item
+     * 
+     * @param number $assetId
+     */
     public static function getAssetRules ($assetId) {
-        $db = \JFactory::getDbo();
-        $query = $db->getQuery(true);
+        $db     = \Secretary\Database::getDBO();
+        $query  = $db->getQuery(true);
         
         $query->select('rules');
         $query->from($db->qn('#__assets'));
@@ -203,6 +215,14 @@ abstract class Access
         }
     }
     
+    /**
+     * Test if usergroup can perform the action for an asset
+     * 
+     * @param string $assetId
+     * @param string $actionname
+     * @param string $group
+     * @return boolean|NULL
+     */
     public static function checkAllow($assetId, $actionname, $group)
     {
         if (isset(self::$storedAssetRules[$assetId][$actionname][(int) $group])) {

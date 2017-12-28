@@ -23,7 +23,7 @@ class JFormFieldSecretarystatus extends JFormFieldList
 
 	public function getOptions( $extension = 'root' )
 	{
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
 		
 		if (!empty($this->element['extension'])) {
 			$extension = (string) $this->element['extension'];
@@ -57,7 +57,7 @@ class JFormFieldSecretarystatus extends JFormFieldList
 		
 		$items = new JObject();
 		
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true)
         		->select("*")
         		->from($db->quoteName('#__secretary_status'))

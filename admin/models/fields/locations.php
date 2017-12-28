@@ -29,7 +29,7 @@ class JFormFieldLocations extends JFormFieldList
 		$extension = (string) $this->element['extension'];
 		$html = array();
 		
-		$db = JFactory::getDbo(); 
+		$db = \Secretary\Database::getDBO(); 
  
 		$where = array('business = '. intval($business['id'])); 
 		if(!empty($extension)) {
@@ -58,7 +58,7 @@ class JFormFieldLocations extends JFormFieldList
 		$locations	= array();
 	 	$business	= Secretary\Application::company();
 		
-		$db		= JFactory::getDBO();
+		$db		= \Secretary\Database::getDBO();
 		$query = $db->getQuery(true)
 				->select("id,title")
 				->from($db->quoteName("#__secretary_locations"))

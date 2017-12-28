@@ -169,7 +169,7 @@ class SecretaryModelTime extends JModelAdmin
 		
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
-		$db     = JFactory::getDBO(); 
+		$db     = \Secretary\Database::getDBO(); 
 		$user	= JFactory::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
@@ -309,7 +309,7 @@ class SecretaryModelTime extends JModelAdmin
 		if(empty($this->pid)) $this->pid = (int) $id;
 		
 		$user	= JFactory::getUser();
-		$db = JFactory::getDbo();
+		$db = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("id,title")
 				->from($db->qn('#__secretary_times'))
@@ -333,7 +333,7 @@ class SecretaryModelTime extends JModelAdmin
 	public function cleanRepetitions( $id = '', $created = NULL )
 	{
 		if(!empty($id) && !empty($created)) {
-			$db = JFactory::getDbo();
+			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true);
 			$query->delete($db->quoteName('#__secretary_repetition'));
 			$query->where($db->quoteName('time_id').' = '. $db->escape($id));

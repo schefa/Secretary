@@ -57,7 +57,7 @@ class Database
      * Database Interface
      */
     public static function getDBO() {
-        return JFactory::getDbo();
+        return \JFactory::getDBO();
     }
     
     /**

@@ -162,7 +162,8 @@ jQuery(document).ready(function($){
 		$('.secretary-container .alert').hide();
 		$('.btn-email').show();
 	}
-	
+
+	// Loads the template
 	$('.select-template select').change(function(){
 		var id = $(this).val();
 		var docid = $(this).parents('.select-template').data('document');

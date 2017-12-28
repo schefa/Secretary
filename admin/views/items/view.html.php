@@ -159,7 +159,7 @@ class SecretaryViewItems extends JViewLegacy
     
 	protected function checkPlugin($name)
 	{
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
 		
 		$query->select('a.extension_id,a.enabled')

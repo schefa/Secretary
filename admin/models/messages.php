@@ -64,7 +64,7 @@ class SecretaryModelMessages extends JModelList
 	 */
 	protected function getListQuery()
 	{ 
-      	$db               = JFactory::getDBO();
+      	$db               = \Secretary\Database::getDBO();
 		$query 	          = $db->getQuery(true);
 		$orderAdditional  = '';
 		$contactToStr     = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (a.contact_to AS INTEGER)': 'a.contact_to';
@@ -157,7 +157,7 @@ class SecretaryModelMessages extends JModelList
 
     public function getTalks()
 	{
-		$db		= JFactory::getDbo();
+		$db		= \Secretary\Database::getDBO();
 		$query	= $db->getQuery(true);
 		$user	= JFactory::getUser();
 		
@@ -214,7 +214,7 @@ class SecretaryModelMessages extends JModelList
 	public function getRecentTalks()
 	{ 
 	    $results = array();
-      	$db		= JFactory::getDBO();
+      	$db		= \Secretary\Database::getDBO();
 		$query 	= $db->getQuery(true);
 		
 		$contactToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (a.contact_to AS INTEGER)': 'a.contact_to';
@@ -290,7 +290,7 @@ class SecretaryModelMessages extends JModelList
 
 	public function getCorrespondence()
 	{ 
-      	$db		= JFactory::getDBO();
+      	$db		= \Secretary\Database::getDBO();
       	$query 	= $db->getQuery(true);
       	$contactToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (a.contact_to AS INTEGER)': 'a.contact_to';
 		

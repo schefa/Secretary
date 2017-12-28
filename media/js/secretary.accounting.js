@@ -141,7 +141,7 @@
 		
 		$("input.search-accounts, input.search-accounts_system").live('focus', function() {
 			$(this).autocomplete({
-				source: 'index.php?option=com_secretary&task=ajax.searchAccounts', 
+				source: 'index.php?option=com_secretary&task=ajax.search&section=accounts', 
 				minLength:2,
 				open: function(event, ui) {
 					$(".ui-autocomplete").css("z-index", 1000);

@@ -25,7 +25,7 @@ class JFormFieldCategoriesMultiselect extends JFormField
 	 	$business	= Secretary\Application::company();
         $user		= JFactory::getUser();
 	
-		$db = JFactory::getDBO();
+		$db = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true)->select("id AS value, title")
 				->from($db->quoteName("#__secretary_folders"))
 				->where($db->quoteName("business").' = '. intval($business['id']))

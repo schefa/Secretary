@@ -191,7 +191,7 @@ class SecretaryModelReports extends JModelItem
     public function getProductsGrowth( array $business )
 	{
 		 
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
 
         $query->select('p.year,p.title,p.total,p.catid,f.title as category')
@@ -249,7 +249,7 @@ class SecretaryModelReports extends JModelItem
     public function getContactsGrowth( array $business )
     {
      
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
         
         $yearStr = (Secretary\Database::getDbType() == 'postgresql') ? 'EXTRACT(YEAR FROM s.created)' : 'YEAR(s.created)';
@@ -401,7 +401,7 @@ class SecretaryModelReports extends JModelItem
 	
     public function getStats( array $business, $guv = NULL  )
 	{ 
-        $db		= JFactory::getDbo();
+        $db		= \Secretary\Database::getDBO();
         $query	= $db->getQuery(true);
 		
 		if (!empty($guv)) 
@@ -488,7 +488,7 @@ class SecretaryModelReports extends JModelItem
         if($extension === 'products')
             $state = $this->state->get('filter.prodStates');
              
-        $db = JFactory::getDbo();
+        $db = \Secretary\Database::getDBO();
         $query = $db->getQuery(true)
             ->select("id AS value,title AS text,class")
             ->from($db->quoteName("#__secretary_status"))
