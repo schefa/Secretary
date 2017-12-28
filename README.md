@@ -19,4 +19,10 @@ Secretary is a Joomla component that allows you to manage your digital office lo
 
 ## Installation
 
-Download the latest release and install the zip-file via Joomla Backend
+Download the latest <a href="https://github.com/schefa/Secretary/releases">release</a> and install the zip-file via Joomla Backend
+
+## Free of charge - No support
+This software is provided WITHOUT ANY KIND OF SUPPORT WHATSOEVER. You are free to consult the documentation.
+We use Secretary for our own purpose and make it available free of charge to everyone in hope that it will be useful. 
+
+If you are a developer you are free to submit a pull request with your code fix, as long as there is a clear description of what was not working for you, why and how you fixed it.
