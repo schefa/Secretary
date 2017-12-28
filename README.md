@@ -27,3 +27,12 @@ We use Secretary for our own purpose and make it available free of charge to eve
 In order to make it free for everyone, this software is provided **WITHOUT ANY KIND OF SUPPORT WHATSOEVER**. You are free to consult the documentation or share your wisdom in the forum.
 
 If you are a developer you are free to submit a pull request with your code fix, as long as there is a clear description of what was not working for you, why and how you fixed it.
+
+## COPYRIGHT AND DISCLAIMER
+Secretary for Joomla! Copyright (c) 2014-2017 Fjodor Schäfer
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
