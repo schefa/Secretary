@@ -173,32 +173,6 @@ $foldersLink = $user->authorise('core.show','com_secretary.folder');
     <?php echo $this->loadTemplate('batch'); ?>
     
 </form>
-	</div>
+</div>
       
 <?php echo Secretary\HTML::modal(); ?>
-
-<script>
-(function($){
-    $('#add_document').click(function(){
-        var extension = $('#add_new_document').val();
-        var catid = $('input[name="catid"]').val();
-        var url = 'index.php?option=com_secretary&task=time.add&extension='+ extension+'&catid='+ catid ;
-        window.location.href = url;
-    });
-	<?php if($this->section == 'list') { ?>
-		$('.projectTimer a').click(function() {
-			$(this).parent().children().toggle();
-			var itemID = $(this).parent().data("item");
-			var projectID = $(this).parent().data("project");
-			var task = $(this).data("task");
-			$.ajax({
-				url: "index.php?option=com_secretary&task=ajax.projectTimer&action=" + task + "&itemID=" + itemID + "&pid=" + projectID ,
-				type: 'get',
-				success: function(response){
-					if(task == 'stop') $('.totalworktime-'+ itemID).text(response);
-				}
-			});
-		});
-	<?php } ?>
-})(jQuery);
-</script>

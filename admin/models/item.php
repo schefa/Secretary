@@ -331,7 +331,7 @@ class SecretaryModelItem extends JModelAdmin
 			$object->type = 'extension';
 			$object->enabled = 1;
 			$object->extra_query= $extra_query;
-			$object->location='https://www.schefa.com/updates/secretary.xml';  
+			$object->location='https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';  
 			$result = $db->insertObject('#__update_sites', $object);
 		}
 	}

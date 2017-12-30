@@ -8,9 +8,42 @@
  */
   
 
-var Secretary = {};
+// Global Objects
+var Secretary = {
+	Helpers : {}
+};
+
+// Auxiliary functions
+Secretary.Helpers = { 
+		
+	htmlEntities : function(str) {
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+	},
+	
+	stripslashes : function(str) {
+	  return (str + '')
+		.replace(/\\(.?)/g, function(s, n1) {
+		  switch (n1) {
+			case '\\':
+			  return '\\';
+			case '0':
+			  return '\u0000';
+			case '':
+			  return '';
+			default:
+			  return n1;
+		  }
+		});
+	},
+
+	cleanJSONbreaks : function(str){
+		return str.replace(/BREAK/g, "\n");
+	},
+};
+
 var chosenSubject = {};
 
+// Global Function to print and activate Fields
 Secretary.printFields = function(fields) {
 	jQuery( document ).ready(readyFn);
 	function readyFn() {
@@ -25,11 +58,14 @@ Secretary.printFields = function(fields) {
 	function readyFn() {
 
 		Secretary.Fields = function( fields ) {
-				
+ 
+			/**
+			 * Add a field as filled out HTML
+			 */
 			function addField(id, hard, title, box, description){
 				var counter = $('#field-add').attr('counter'); 
 				var html = $('.field-item:first').html();
-				html = html.replace(/##values##/g, stripslashes(box));
+				html = html.replace(/##values##/g, Secretary.Helpers.stripslashes(box));
 				html = html.replace(/##counter##/g, counter);
 				html = html.replace(/##id##/g, id);
 				html = html.replace(/##hard##/g, hard);
@@ -40,15 +76,22 @@ Secretary.printFields = function(fields) {
 				parent.appendTo('.fields-items').show();
 				$('#field-add').attr('counter', parseInt(counter) + 1);
 			};
-	
-			$('#field-add').click(function(){
+
+			/**
+			 * Click Event
+			 * Adds a new field
+			 */
+			$('#field-add').click(function(){ 
 				var id = $('#getfields').val();
 				var ext = $('#getfields').data('ext');
 				var json = getFieldObject(id,ext); 
-				if(json) addField(json.id, json.hard, htmlEntities(json.title), json.box,json.description );
+				if(json) addField(json.id, json.hard, Secretary.Helpers.htmlEntities(json.title), json.box,json.description );
 				return false;						
 			});
 			
+			/**
+			 * Run through all fields, get JSON data and create HTML
+			 */
 			function printFields (fields) {
 				var ext = $('#getfields').data('ext');
 				for(var i in fields){
@@ -56,9 +99,17 @@ Secretary.printFields = function(fields) {
 						for(var key in fields[i]){
 							if(typeof(fields[i][key][0]) !== 'undefined')
 							{
+								// Get data
 								var json = getFieldObject(fields[i][key][0], ext, fields[i][key][2] );
-								if(json !== null){
-									addField(json.id, json.hard, htmlEntities(fields[i][key][1]),cleanJSONbreaks(json.box),json.description);
+								// Print data as HTML
+								if(json !== null){ 
+									addField(
+										json.id,
+										json.hard,
+										Secretary.Helpers.htmlEntities(fields[i][key][1]),
+										Secretary.Helpers.cleanJSONbreaks(json.box),
+										json.description
+									);
 								}
 							}
 						}
@@ -66,6 +117,9 @@ Secretary.printFields = function(fields) {
 				}
 			}
 			
+			/**
+			 * Calls an AJAX and returns the data
+			 */
 			function getFieldObject(id,extension,standard) {
 				var json = null;
 	
@@ -87,32 +141,9 @@ Secretary.printFields = function(fields) {
 	
 				return json;
 			}
-	
-			function htmlEntities(str) {
-				return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-			}
-			
-			function stripslashes(str) {
-			  return (str + '')
-				.replace(/\\(.?)/g, function(s, n1) {
-				  switch (n1) {
-					case '\\':
-					  return '\\';
-					case '0':
-					  return '\u0000';
-					case '':
-					  return '';
-					default:
-					  return n1;
-				  }
-				});
-			}
-	
-			function cleanJSONbreaks(str){
-				return str.replace(/BREAK/g, "\n");
-			}
-			
-			printFields(fields);
+
+			// First output
+			printFields(fields); 
 			
 			$('.field-remove').live('click', function(){
 				$(this).parents('.field-item').remove();
@@ -180,6 +211,9 @@ Secretary.printFields = function(fields) {
 			removeInput : '<span class="removeInput">x</span>',
 		};
 		
+		/**
+		 * Search for Documents
+		 */
 		$( "input.search-documents" ).live('focus', function() {
 			$(this).autocomplete({
 				source: 'index.php?option=com_secretary&task=ajax.search&section=documents', 
@@ -215,8 +249,9 @@ Secretary.printFields = function(fields) {
 			};
 		});
 		
-		if(typeof(budget) !== 'undefined')
+		if(typeof(budget) !== 'undefined') {
 			Secretary.Search.drawBudgetContainer(budget,"input.search-documents");
+		}
 		
 		if ( $( ".search-locations" ).length)
 		{
@@ -238,40 +273,25 @@ Secretary.printFields = function(fields) {
 				.appendTo( ul );
 			};
 		};
-		
-		
-		if ( $( "input.search-subject-zip" ).length)
-		{
-			$( "input.search-subject-zip" ).autocomplete({
-					source: 'index.php?option=com_secretary&task=ajax.searchSubjectLocation&type=zip', 
-					minLength:2,
-					open: function(event, ui) {
-						$(".ui-autocomplete").css("z-index", 1000);
-					},
-					select: function( event, ui ) {
-						$('#jform_subject_location').val(ui.item.location);
-					}
-				})
-				.autocomplete( "instance" )._renderItem = function( ul, item ) {
-					return $("<li>").append( '<a><span class="ui-menuitem-value">'+ item.zip +' '+ item.location + '</span></a>' ).appendTo(ul);
-				};
-		}
-		if ( $( "input.search-subject-location" ).length)
-		{
-			$( "input.search-subject-location" ).autocomplete({
-					source: 'index.php?option=com_secretary&task=ajax.searchSubjectLocation&type=location', 
-					minLength:2,
-					open: function(event, ui) {
-						$(".ui-autocomplete").css("z-index", 1000);
-					},
-					select: function( event, ui ) {
-						$('#jform_subject_zip').val(ui.item.zip);
-					}
-				})
-				.autocomplete( "instance" )._renderItem = function( ul, item ) {
-					return $("<li>").append( '<a><span class="ui-menuitem-value">'+ item.zip +' '+ item.location + '</span></a>' ).appendTo(ul);
-				};
-		}
+	
+		/**
+		 * Search for contact locations
+		 */
+		$("input.search-subject-zip, input.search-subject-location").live('focus', function(){
+			var type = (this.id == 'jform_subject_zip') ? 'zip' : 'location';
+			$(this).autocomplete({
+				source: 'index.php?option=com_secretary&task=ajax.searchSubjectLocation&type='+type, 
+				minLength:2,
+				open: function(event, ui) { $(".ui-autocomplete").css("z-index", 1000); },
+				select: function( event, ui ) {
+					$('#jform_subject_zip').val(ui.item.zip);
+					$('#jform_subject_location').val(ui.item.location);
+				}
+			})
+			.autocomplete( "instance" )._renderItem = function( ul, item ) {
+				return $("<li>").append( '<a><span class="ui-menuitem-value">'+ item.zip +' '+ item.location + '</span></a>' ).appendTo(ul);
+			};
+		});
 		
 		if ( $( ".search-features" ).length)
 		{
@@ -281,6 +301,9 @@ Secretary.printFields = function(fields) {
 			var extension = $(theList).data("extension");
 			var counter = $(theList).data("counter");
 			
+			/**
+			 * Connections Object
+			 */
 			Secretary.Features = {
 				clear : function() { $(theList).focusout(function(){ $('.search-features').val(''); }); } ,
 				input : function(name,type,key,counter) {
@@ -315,6 +338,9 @@ Secretary.printFields = function(fields) {
 				}
 			};
 			
+			/**
+			 * Autocomplete Contacts search
+			 */
 			$( ".search-features" ).autocomplete({
 				source: function( request, response ) {
 					$.getJSON( 'index.php?option=com_secretary&task=ajax.search&section=subjects&source='+ source, {

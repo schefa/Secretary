@@ -197,7 +197,6 @@ if(!function_exists("curl_init")) {
 
 </div>
 
-
 <script>
 jQuery( document ).ready(function( $ ) {
 

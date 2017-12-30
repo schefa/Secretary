@@ -348,22 +348,5 @@ $taxSelection= ($toggleTaxRateColumn== 0) ? '' : ' taxSelection';
 
 </div>
 <?php echo Secretary\HTML::modal(); ?>
-
-<script>
-jQuery(document).ready(function($){
-	$('.clean-contact').click(function(){
-		$('#display_contact_name').hide();
-		$('#contact_name').text('');
-		$('#jform_subjectid').val('');
-		$('#jform_subject_name').val('');
-		$('#jform_subject_street').val('');
-		$('#jform_subject_zip').val('');
-		$('#jform_subject_location').val('');
-		$('#jform_subject_phone').val('');
-		$('#jform_subject_email').val(''); 
-		$('#jform_subject_name').show();
-	});
-	$('.table-items-list').nestable({ dragClass : "table-item dd-dragel" , maxDepth : 1 });
-});
-</script>
+ 
     

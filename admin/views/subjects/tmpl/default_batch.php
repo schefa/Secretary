@@ -81,13 +81,7 @@ defined('_JEXEC') or die;
             </div>
 		</div>
         
-        <script type="text/javascript">
-        jQuery.noConflict();
-        jQuery( document ).ready(function( $ ) {
-        	var secretary_fields = [];
-        	Secretary.Fields( secretary_fields );
-        });
-        </script>
+        <script type="text/javascript">Secretary.printFields( [] );</script>
 
 	</div>
 

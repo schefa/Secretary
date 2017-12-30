@@ -116,12 +116,12 @@ class com_secretaryInstallerScript
 					$this->message .= '<p>'.JText::_('Database is up to date!').'</p>';
 				}
 						
-				// Major Change in 1.5.0 
-				if(version_compare($this->installedVersion, '1.5.0') <= 0 ) {
-					self::$_helper->_update15();
-				}
+				// Major Changes
 				if(version_compare($this->installedVersion, '2.0.4') <= 0 ) {
-					self::$_helper->_update_2_0_5();
+				    self::$_helper->_update_2_0_5();
+				}
+				if(version_compare($this->installedVersion, '3.1.9') <= 0 ) {
+				    self::$_helper->_update_3_2_0();
 				}
 			
 				break;

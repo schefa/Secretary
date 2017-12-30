@@ -99,19 +99,10 @@ class SecretaryViewAccountings extends JViewLegacy
     
 	protected function getJS()
 	{
-		$document = JFactory::getDocument();
+	    $document = JFactory::getDocument();
+	    $document->addScript(SECRETARY_MEDIA_PATH .'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
 		
 		$document->addScriptDeclaration("
-		
-		jQuery(document).ready(function($){
-			$('#documents_category').change(function(){
-				var value = $(this).val();
-				$('#documents_catID').val(value);
-				$('form').get(0).setAttribute('action', 'index.php?option=com_secretary&view=accountings&account='+value); 
-				this.form.submit();
-			});
-		});
-		
 		Joomla.orderTable = function() {
 				table = document.getElementById('sortTable');
 				direction = document.getElementById('directionTable');

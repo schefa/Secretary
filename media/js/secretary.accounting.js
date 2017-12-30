@@ -13,6 +13,13 @@
 	
 	function readyFn() { 
 
+		$('#documents_category').change(function(){
+			var value = $(this).val();
+			$('#documents_catID').val(value);
+			$('form').get(0).setAttribute('action', 'index.php?option=com_secretary&view=accountings&account='+value); 
+			this.form.submit();
+		});
+		
 		Secretary.Accounting = {
 			
 			total : function() { return $('#acc_total_amount_total').val(); },

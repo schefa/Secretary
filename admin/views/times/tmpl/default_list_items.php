@@ -125,7 +125,7 @@ foreach ($this->items as $i => $item) :
 		$taskCount = 0;
 	?>
         
-        <div class="secretary-row fullwidth row<?php echo $i % 2 . ' times-list-'. $item->extension; ?> secretary-sort-row">
+        <div class="secretary-row fullwidth row<?php echo ($i % 2) . ' times-list-'. $item->extension; ?> secretary-sort-row">
             
 		<?php Secretary\HTML::_('times.listViewProject', $i , $item, $this->vorspannSecs, $this->intervall); ?>
 	

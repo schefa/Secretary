@@ -201,7 +201,7 @@ class SecretaryControllerAjax extends JControllerForm
 	{ 
 		$extension        = 'tasks';
 		$user             = JFactory::getUser();
-		$userContactId    = Secretary\Database::getQuery('subjects',$user->id,'created_by','id','loadResult');
+		$userContactId    = \Secretary\Database::getQuery('subjects',$user->id,'created_by','id','loadResult');
 		$action           = $this->app->input->getVar('action');
 		$itemID           = $this->app->input->getInt('itemID');
 		$projectID        = $this->app->input->getInt('pid');
@@ -269,6 +269,10 @@ class SecretaryControllerAjax extends JControllerForm
 		$this->app->close();
 	}
 	
+	/**
+	 * Load data field
+	 * Prints result as JSON
+	 */
 	public function getField()
 	{
 		$extension    = $this->app->input->post->getVar('extension');
@@ -279,7 +283,7 @@ class SecretaryControllerAjax extends JControllerForm
 		} else {
 			$default	= '';
 		}
-		$id			= $this->app->input->post->getInt('id');
+		$id   = $this->app->input->post->getInt('id');
 		if(!empty($id) && !empty($extension)) {
 			$ret = \Secretary\Helpers\Items::getField($id,$extension,$default); 
 			if(!empty($ret)) { echo json_encode($ret); }
@@ -289,6 +293,7 @@ class SecretaryControllerAjax extends JControllerForm
 	
 	/**
 	 * Universal search method
+	 * prints JSON result
 	 */
 	public function search()
 	{
@@ -296,8 +301,8 @@ class SecretaryControllerAjax extends JControllerForm
 	    $term      = $this->input->getString('term');
 	    $return    = '';
 	    
-	    
-	    if(in_array($section,['accounts','document_title','documents','locations','products','subjects'])) {
+	    if(in_array($section,['accounts','document_title','documents','locations','products','subjects']))
+	    {
 	        switch ($section) {
 	            case 'accounts':
 	                $return = \Secretary\Helpers\Accounts::getAccounts($term);

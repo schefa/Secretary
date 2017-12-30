@@ -307,56 +307,44 @@ class SecretaryInstall
 	
 	
 	/** ******************************************/
-	/** **************** 1.5.0 *******************/
+	/** ************ Major Changes ***************/
 	/** ******************************************/
 	
-	public function _update15() {
-		
-	    $db	= \JFactory::getDBO();
-		$db->setQuery('SELECT id,subject FROM `#__secretary_documents`');
-		$documents = $db->loadObjectList();
-		
-		foreach($documents as $document) {
-			if($subject = json_decode($document->subject)) {
-				if(!isset($subject[6])) {
-					$newSubjectOrder = array();
-					$ort = explode(" ", $subject[3] ,2);
-					$zip = "";
-					if(is_numeric($ort[0])) {
-						$zip = trim($ort[0]);
-						$location	= (!empty($ort[1])) ? trim($ort[1]) : '';
-					} else {
-						$location	= trim($ort[0]);
-					}
-			
-					$newSubjectOrder[0] = $subject[0];
-					$newSubjectOrder[1] = $subject[1];
-					$newSubjectOrder[2] = $subject[2];
-					$newSubjectOrder[3] = $zip;
-					$newSubjectOrder[4] = $location;
-					$newSubjectOrder[5] = $subject[4];
-					$newSubjectOrder[6] = $subject[5];
-					
-					$input = json_encode($newSubjectOrder);
-					$sql = $db->getQuery(true);
-					$sql->update($db->qn('#__secretary_documents'))
-						->set('subject = '.$db->quote($input))
-						->where('id ='. $db->escape($document->id));
-						
-					try {
-						$db->setQuery($sql);
-						$db->execute();
-					} catch (Exception $ex) {
-						throw new Exception($ex->getMessage());	
-					}
-				}
-			}
-		}
-		
+	public function _update_3_2_0()
+	{
+	    $db = \JFactory::getDBO();
+	    $location = 'https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';
+	    
+	    $query = $db->getQuery(true);
+	    
+	    $query = $db->getQuery(true);
+	    $query->select('name')
+	    ->from($db->qn('#__update_sites'))
+	    ->where($db->qn('name').'='.$db->quote('com_secretary'));
+	    $db->setQuery($query);
+	    $hasValue = $db->loadResult();
+	    
+	    if(!empty($hasValue )) {
+	        $query = $db->getQuery(true);
+	        $query->update('#__update_sites');
+	        $query->set('location = '.$db->quote($location));
+	        $query->where('name ='.$db->quote('com_secretary'));
+	        $db->setQuery($query);
+	        $db->execute();
+	    } else {
+	        $object = new stdClass();
+	        $object->name = 'com_secretary';
+	        $object->type = 'extension';
+	        $object->enabled = 1;
+	        $object->extra_query= $extra_query;
+	        $object->location= $location;
+	        $result = $db->insertObject('#__update_sites', $object);
+	    }
+	    
 	}
 	
-
-	public function _update_2_0_5(){
+	public function _update_2_0_5()
+	{
 	
 	    $db = \JFactory::getDBO();
 	    $query = $db->getQuery(true);

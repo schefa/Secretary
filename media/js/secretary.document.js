@@ -463,6 +463,23 @@
 			Secretary.Document.calculate.total();
 		});
 		
+		// Clears all contact information
+		$('.clean-contact').click(function(){
+			$('#display_contact_name').hide();
+			$('#contact_name').text('');
+			$('#jform_subjectid').val('');
+			$('#jform_subject_name').val('');
+			$('#jform_subject_street').val('');
+			$('#jform_subject_zip').val('');
+			$('#jform_subject_location').val('');
+			$('#jform_subject_phone').val('');
+			$('#jform_subject_email').val(''); 
+			$('#jform_subject_name').show();
+		});
+
+		// Enables jQuery Plugin to reorder products list by drag & drop
+		$('.table-items-list').nestable({ dragClass : "table-item dd-dragel" , maxDepth : 1 });
+		
 		$('.table-item-quantity').live('keyup change', function( event ) {
 			value = $(this).val().replace(',','.');
 			$(this).val(value);

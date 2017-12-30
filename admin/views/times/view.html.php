@@ -229,24 +229,12 @@ class SecretaryViewTimes extends JViewLegacy
 	
 	protected function getJS()
 	{
+		$document = JFactory::getDocument();
 		if($this->section == 'list')
 		{
 			JHtml::_('script', 'system/core.js', false, true);
 		
-			$document = JFactory::getDocument();
 			$document->addScriptDeclaration("
-			
-			jQuery(document).ready(function($){
-				$('.center input[type=\"checkbox\"]').click(function(){
-					if($(this).attr(\"checked\")) {
-						var extension = $(this).parent().data('extension');
-						$('#extension').val(extension);
-					} else {
-						$('#extension').val('');
-					}
-				});
-			});
-			
 			Joomla.orderTable = function() {
 					table = document.getElementById('sortTable');
 					direction = document.getElementById('directionTable');
@@ -259,6 +247,8 @@ class SecretaryViewTimes extends JViewLegacy
 					Joomla.tableOrdering(order, dirn, '');
 				}
 			");
+			
+			$document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.times.js?v='.SECRETARY_VERSION); 
 		}
 	}
 	
