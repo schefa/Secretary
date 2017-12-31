@@ -29,10 +29,10 @@ In order to make it free for everyone, this software is provided **WITHOUT ANY K
 If you are a developer you are free to submit a pull request with your code fix, as long as there is a clear description of what was not working for you, why and how you fixed it.
 
 ## COPYRIGHT AND DISCLAIMER
-Secretary for Joomla! Copyright (c) 2014-2017 Fjodor Schäfer
+Secretary for Joomla! Copyright (c) 2014-2017 Fjodor Schäfer, schefa.com
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under the terms of the MIT License.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the MIT License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+You should have received a copy of the MIT License along with this program. If not, see https://opensource.org/licenses/MIT.
