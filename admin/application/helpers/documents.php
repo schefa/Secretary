@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,6 @@
 namespace Secretary\Helpers;
 
 use JError;
-use JFactory;
 use JModelLegacy;
 use JText;
 use stdClass;
@@ -33,7 +32,7 @@ class Documents
 		if(!empty($pk))
 		{
 		    $db  = \Secretary\Database::getDBO();
-			$user = JFactory::getUser();
+		    $user = \Secretary\Joomla::getUser();
 			
 			// Item
 			$item = \Secretary\Database::getQuery('documents',$pk,'id','created_by,total,created');
@@ -59,7 +58,7 @@ class Documents
 				}
 				
 				$title = $item->created;
-				JFactory::getApplication()->enqueueMessage( JText::sprintf('COM_SECRETARY_PAIDUP_THAT_DOCUMENT', $title));	
+				\Secretary\Joomla::getApplication()->enqueueMessage( JText::sprintf('COM_SECRETARY_PAIDUP_THAT_DOCUMENT', $title));	
 				
 			} else {
 				JError::raiseError(1, JText::_('COM_SECRETARY_PERMISSION_FAILED'));	

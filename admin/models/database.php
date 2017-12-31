@@ -1,8 +1,6 @@
 <?php
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -27,11 +25,11 @@ class SecretaryModelDatabase extends JModelItem
      */
     public function __construct()
     { 
-        if (!JFactory::getUser()->authorise('core.admin','com_secretary')) {
+        if (!\Secretary\Joomla::getUser()->authorise('core.admin','com_secretary')) {
             throw new Exception( JText::_('JERROR_ALERTNOAUTHOR') , 500);
             return false;
         }
-        $this->app = JFactory::getApplication();
+        $this->app = \Secretary\Joomla::getApplication();
         parent::__construct();
     }
     
@@ -128,8 +126,8 @@ class SecretaryModelDatabase extends JModelItem
 		
 		JSession::checkToken() or jexit( 'Invalid Token' );
 		
-		$app		= JFactory::getApplication();
-		$user		= JFactory::getUser();
+		$app		= \Secretary\Joomla::getApplication();
+		$user		= \Secretary\Joomla::getUser();
 		$data			= $app->input->post->get('jform', array(), 'array');
 		$exportTables	= $data['exportTables'];
 		
@@ -273,7 +271,7 @@ class SecretaryModelDatabase extends JModelItem
 					$xml->writeElement('title', $table);
 					$xml->writeElement('link', JURI::current() );
 					$xml->writeElement('created', $time);
-					$xml->writeElement('user', JFactory::getUser()->username);
+					$xml->writeElement('user', \Secretary\Joomla::getUser()->username);
 					
 					foreach($items AS $item) {
 						$tmp = explode("_",$table);
@@ -438,7 +436,7 @@ class SecretaryModelDatabase extends JModelItem
 		
 		JSession::checkToken() or jexit( 'Invalid Token' );
 		
-		$app		= JFactory::getApplication(); 
+		$app		= \Secretary\Joomla::getApplication(); 
 		
 		$data			= $app->input->post->get('jform', array(), 'array');
 		$multiple_files	= $data['import'];
@@ -468,7 +466,7 @@ class SecretaryModelDatabase extends JModelItem
 					return false;
 				}
 			
-				$filePath	= JPATH_SITE. '/administrator/components/com_secretary/application/install/samples/'.$fileName;
+				$filePath	= SECRETARY_ADMIN_PATH.'/application/install/samples/'.$fileName;
 				
 				if (!$this->updateSQL($filePath)) {
 					$app->enqueueMessage(JText::sprintf('Not imported: %s', $fileName) , 'warning');
@@ -487,7 +485,7 @@ class SecretaryModelDatabase extends JModelItem
 	
 	private function _importUpload($single_file)
 	{
-		$app		= JFactory::getApplication();
+	    $app		= \Secretary\Joomla::getApplication();
 		$fileName	= $single_file['import']['name'];
 		$fileSize	= $single_file['import']['size'];
 		

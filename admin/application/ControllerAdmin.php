@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,12 +13,11 @@ namespace Secretary\Controller;
 // No direct access
 defined('_JEXEC') or die;
 
-use Secretary;
-use JFactory;
-use JRoute;
 use JControllerAdmin;
+use JRoute;
 use JSession;
 use JText;
+use Secretary;
 
 jimport('joomla.application.component.controlleradmin');
 
@@ -41,7 +40,7 @@ class Admin extends JControllerAdmin
 	    JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 	    $section = Secretary\Application::getSingularSection($this->view_list);
 	     
-	    if(JFactory::getUser()->authorise('core.delete', 'com_secretary.'.$section)) {
+	    if(\Secretary\Joomla::getUser()->authorise('core.delete', 'com_secretary.'.$section)) {
     	    $cid  = $this->input->post->get('cid', array(), 'array');
     	     
     	    require_once SECRETARY_ADMIN_PATH.'/models/'.$section.'.php';
@@ -61,7 +60,7 @@ class Admin extends JControllerAdmin
 	
 	public function setStates()
 	{
-	    $pks	= JFactory::getApplication()->input->get('cid', array(), 'array');
+	    $pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
 	    $this->setStatus($pks, $this->view);
 	    $this->setRedirect(JRoute::_($this->redirect_url, false));
 	    return true;

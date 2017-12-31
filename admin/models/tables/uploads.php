@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -34,7 +34,7 @@ class SecretaryTableUploads extends JTable
 		// Delete file
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
-		$app = JFactory::getApplication();
+		$app = \Secretary\Joomla::getApplication();
 		
 		if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 		$upload = Secretary\Database::getQuery('uploads', $pk );

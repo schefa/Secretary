@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewTimes extends JViewLegacy
 {
@@ -32,11 +32,11 @@ class SecretaryViewTimes extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-	    $user			= Secretary\Joomla::getUser();
-	    $jinput			= Secretary\Joomla::getApplication()->input;
-		$this->section	= $jinput->getCmd('section');
-		$this->view		= $jinput->getCmd('view');
-		$this->extension= $jinput->getCmd('extension');
+	    $user			= \Secretary\Joomla::getUser();
+	    $this->jinput	= \Secretary\Joomla::getApplication()->input;
+		$this->section	= $this->jinput->getCmd('section');
+		$this->view		= $this->jinput->getCmd('view');
+		$this->extension= $this->jinput->getCmd('extension');
 		$this->canDo	= \Secretary\Helpers\Access::getActions($this->view);
 		
 		if ( !$this->canDo->get('core.show')) {
@@ -73,7 +73,7 @@ class SecretaryViewTimes extends JViewLegacy
 		$this->categories	= $this->getCategories();
 		$this->states		= $this->getStates();
 		
-		if($jinput->getCmd('ext') == 'tasks') {
+		if($this->jinput->getCmd('ext') == 'tasks') {
 			$this->tasks = $this->get('Tasks');
 		}
 		
@@ -102,8 +102,7 @@ class SecretaryViewTimes extends JViewLegacy
 	
 	protected function getDay()
 	{
-		$jinput			= JFactory::getApplication()->input;
-		$this->day		= $jinput->getInt('day');
+		$this->day		= $this->jinput->getInt('day');
 		
 		$filterDay		= $this->state->get('filter.day');
 		if(empty($this->day) && !empty($filterDay))
@@ -115,8 +114,7 @@ class SecretaryViewTimes extends JViewLegacy
 	
 	protected function getWeek()
 	{
-		$jinput			= JFactory::getApplication()->input;
-		$this->week		= $jinput->getInt('week');
+		$this->week		= $this->jinput->getInt('week');
 		
 		if(!empty($this->day) && !empty($this->month) && !empty($this->year))
 			$this->week = \Secretary\Helpers\Times::getWeekOfDayMonth($this->day,$this->month,$this->year);
@@ -132,8 +130,7 @@ class SecretaryViewTimes extends JViewLegacy
 	
 	protected function getMonth()
 	{
-		$jinput			= JFactory::getApplication()->input;
-		$this->month	= $jinput->getInt('month');
+		$this->month	= $this->jinput->getInt('month');
 		
 		$filterMonth	= $this->state->get('filter.month');
 		if(empty($this->month) && !empty($filterMonth))
@@ -145,8 +142,7 @@ class SecretaryViewTimes extends JViewLegacy
 	
   	protected function getYear()
 	{
-		$jinput			= JFactory::getApplication()->input;
-		$this->year		= $jinput->getInt('year');
+		$this->year		= $this->jinput->getInt('year');
 		if(empty($this->year))
 			$this->year	= date("Y");
 	}

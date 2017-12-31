@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -140,8 +140,8 @@ class SecretaryControllerDocument extends JControllerForm
 	{ 
 	    $id		= $this->app->input->getInt('id',0);
 	    if($id > 0) {
-	        $user  = JFactory::getUser();
-			$data  = Secretary\Database::getQuery('documents',$id, 'id', '*', 'loadAssoc');
+	        $user  = \Secretary\Joomla::getUser();
+			$data  = \Secretary\Database::getQuery('documents',$id, 'id', '*', 'loadAssoc');
 			$data['subject'] = json_decode( $data['subject'] );
 			$data['subject'][6]	= $user->email;
 			$data['subject'][1]	= $user->name;

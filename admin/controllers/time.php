@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -19,7 +19,7 @@ class SecretaryControllerTime extends JControllerForm
     protected $app;
     
     public function __construct() {
-        $this->app 			= JFactory::getApplication();
+        $this->app 			= \Secretary\Joomla::getApplication();
         $this->section		= $this->app->input->getCmd('section', 'list');
         $this->pid			= $this->app->input->getInt('pid');
         $this->locationid	= $this->app->input->getInt('location_id');
@@ -37,7 +37,7 @@ class SecretaryControllerTime extends JControllerForm
 	protected function allowEdit($data = array(), $key = 'id')
 	{
 		if($this->extension == 'tasks') {
-			return JFactory::getUser()->authorise('core.edit.own', 'com_secretary.time');
+		    return \Secretary\Joomla::getUser()->authorise('core.edit.own', 'com_secretary.time');
 		} else {
 		    return \Secretary\Helpers\Access::allowEdit('time',$data, $key);
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -25,7 +25,7 @@ class SecretaryModelBusiness extends JModelAdmin
      */
 	public function __construct($config = array())
 	{
-	    $this->app = JFactory::getApplication();
+	    $this->app = \Secretary\Joomla::getApplication();
 		parent::__construct();
 	}
 	
@@ -103,7 +103,7 @@ class SecretaryModelBusiness extends JModelAdmin
 			$item->guv1				= json_decode($item->guv1);
 			$item->guv2				= json_decode($item->guv2);
 			
-			$item->owner = (!empty($item->owner)) ? $item->owner : JFactory::getUser()->id;
+			$item->owner = (!empty($item->owner)) ? $item->owner : \Secretary\Joomla::getUser()->id;
 		
 			self::$_item[$pk] = $item;
 		}
@@ -196,7 +196,7 @@ class SecretaryModelBusiness extends JModelAdmin
 	 */
 	public function setHome($id = 0)
 	{
-		$user = JFactory::getUser();
+	    $user = \Secretary\Joomla::getUser();
 		$db   = $this->getDbo();
 
 		// Access check 

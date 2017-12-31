@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -21,7 +21,7 @@ class JFormFieldSecretarySearch extends JFormFieldList
 	
 	public function getInput( )
 	{
-		$jinput		= JFactory::getApplication()->input;
+	    $jinput		= \Secretary\Joomla::getApplication()->input;
 		$html		= array();
 		$extension	= "";
 		$module		= "";

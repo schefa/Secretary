@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -19,7 +19,7 @@ $fields			      = $this->datafields['fields'];
 <div class="secretary-main-area">
 
 <?php
-$userId	= (int) Secretary\Database::getQuery('subjects', (int) JFactory::getUser()->id,'created_by','id','loadResult');
+$userId	= (int) Secretary\Database::getQuery('subjects', (int) \Secretary\Joomla::getUser()->id,'created_by','id','loadResult');
 if($userId <= 0) {
 	echo JText::_('COM_SECRETARY_MESSAGES_USER_NO_CONTACT');
 } else {

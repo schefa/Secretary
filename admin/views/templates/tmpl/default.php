@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,12 +11,12 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$user		= JFactory::getUser();
+$user		= \Secretary\Joomla::getUser();
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 $business	= Secretary\Application::company();
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 $modules = JFormHelper::loadFieldType('SecretarySections', false)->getIcons();
 
 $areas = array('documents','subjects','messages','newsletters','products');

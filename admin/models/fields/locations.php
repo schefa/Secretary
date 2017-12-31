@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -23,9 +23,8 @@ class JFormFieldLocations extends JFormFieldList
 	
 	public function getOptions( )
 	{
-		
-        $user		= JFactory::getUser();
-	 	$business	= Secretary\Application::company();
+	    $user		= \Secretary\Joomla::getUser();
+	 	$business	= \Secretary\Application::company();
 		$extension = (string) $this->element['extension'];
 		$html = array();
 		
@@ -54,9 +53,9 @@ class JFormFieldLocations extends JFormFieldList
 	
 	public function getLocations( $view, $not = NULL )
 	{
-        $user		= JFactory::getUser();
+	    $user		= \Secretary\Joomla::getUser();
 		$locations	= array();
-	 	$business	= Secretary\Application::company();
+	 	$business	= \Secretary\Application::company();
 		
 		$db		= \Secretary\Database::getDBO();
 		$query = $db->getQuery(true)

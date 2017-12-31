@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -159,7 +159,7 @@ class SecretaryModelMessages extends JModelList
 	{
 		$db		= \Secretary\Database::getDBO();
 		$query	= $db->getQuery(true);
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		
 		$createdbyToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (a.created_by AS INTEGER)': 'a.created_by';
 		$fieldStr = (Secretary\Database::getDbType() == 'postgresql') ? " (s.firstname || ' ' || s.lastname) " : 'CONCAT(s.firstname," ",s.lastname)';
@@ -250,7 +250,7 @@ class SecretaryModelMessages extends JModelList
 		$items = $db->loadObjectList();
 		
 		if(!empty($items)) {
-		    $user = JFactory::getUser();
+		    $user = \Secretary\Joomla::getUser();
 		    $userContact = Secretary\Database::getQuery('subjects',(int) $user->id,'created_by','id','loadResult');
 		    $userContactId = (isset($userContact)) ? (int) $userContact : -1;
             		    

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,9 +11,9 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$user = JFactory::getUser(); 
+$user = \Secretary\Joomla::getUser(); 
   
-$app	= JFactory::getApplication();
+$app = \Secretary\Joomla::getApplication();
 $toggleTaxRateColumn= (int) $app->getUserState('filter.toggleTaxRateColumn', 1);
 $taxSelection= ($toggleTaxRateColumn== 0) ? '' : ' taxSelection';
 ?>
@@ -129,7 +129,7 @@ $taxSelection= ($toggleTaxRateColumn== 0) ? '' : ' taxSelection';
                             <input id="jform_subject_name" <?php if(!empty($this->item->subject[1])) { echo 'style="display:none"'; } ?> type="text" name="jform[subject][1]"	value="<?php echo $this->item->subject[1]; ?>" placeholder="<?php echo JText::_('COM_SECRETARY_NAME'); ?>" class="hasTooltip" data-original-title="<?php echo JText::_('COM_SECRETARY_NAME'); ?>" />
                         </div>
                         
-                        <?php echo $this->subjectConnections; ?>
+                        <?php echo $this->relatedContacts; ?>
                         
                     </div>
 

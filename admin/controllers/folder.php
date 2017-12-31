@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -24,7 +24,7 @@ class SecretaryControllerFolder extends JControllerForm
 
 		if (empty($this->extension))
 		{
-			$this->extension = JFactory::getApplication()->input->getCmd('extension', 'documents');
+		    $this->extension = \Secretary\Joomla::getApplication()->input->getCmd('extension', 'documents');
 		}
 	}
 

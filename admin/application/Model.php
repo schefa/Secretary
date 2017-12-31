@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,6 @@ namespace Secretary;
 // No direct access
 defined('_JEXEC') or die; 
 
-use JFactory;
 
 class Model {
     
@@ -22,8 +21,7 @@ class Model {
      * 
      * @param string $name name of the model
      * @param string $prefix
-     * @param array $config
-     * @return unknown
+     * @param array $config 
      */
     public static function create($name,$prefix = 'SecretaryModel',array $config = array('ignore_request' => true))
     {
@@ -35,7 +33,7 @@ class Model {
         
         if ($model)
         {
-            $app = JFactory::getApplication();
+            $app = \Secretary\Joomla::getApplication();
             
             $model->setState('task', $app->input->getCmd('task'));
             $menu = $app->getMenu();

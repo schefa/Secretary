@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -30,7 +30,7 @@ class SecretaryTableSubject extends JTable
 	public function bind($array, $ignore = '')
 	{
 		$acl = JFactory::getACL();
-		$user = JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 	
 		if(!$user->authorise('core.admin', 'com_secretary.subject.'.$array['id'])){
 			$actions = $acl->getActions('com_secretary','subject');

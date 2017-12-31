@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -19,7 +19,7 @@ class SecretaryControllerProduct extends JControllerForm
     protected $app;
     
     public function __construct() {
-		$this->app       = JFactory::getApplication();
+        $this->app       = \Secretary\Joomla::getApplication();
 		$this->fileId	 = $this->app->input->getInt('secf');
 		$this->catid	 = $this->app->input->getInt('catid', '0');
         $this->view_list = 'products';

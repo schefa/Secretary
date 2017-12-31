@@ -1,13 +1,12 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
  * @copyright    Copyright (C) 2015-2017 Fjodor Schaefer. All rights reserved.
  * @license      MIT License
  */
-use Secretary\Debug;
  
 // No direct access
 
@@ -31,7 +30,7 @@ class SecretaryTableDocument extends JTable
      */
     public function bind($array, $ignore = '')
 	{
-        if (!JFactory::getUser()->authorise('core.admin', 'com_secretary.document.' . $array['id'])) {
+	    if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary.document.' . $array['id'])) {
             $actions = JFactory::getACL()->getActions('com_secretary', 'document');
             $default_actions = JFactory::getACL()->getAssetRules('com_secretary.document.' . $array['id'])->getData();
             $array_jaccess = array();
@@ -61,7 +60,7 @@ class SecretaryTableDocument extends JTable
         
 		$business = Secretary\Application::company();
 		$data['business']	= $business['id'];
-		$data['created_by']	= (!empty($this->created_by)) ? $this->created_by : JFactory::getUser()->id;
+		$data['created_by']	= (!empty($this->created_by)) ? $this->created_by : \Secretary\Joomla::getUser()->id;
 		// Override items in JSON
 		$itemsLoop	= count($data['items']);
 		$itemsRow	= array();
@@ -305,10 +304,10 @@ class SecretaryTableDocument extends JTable
         $result = parent::delete($pk);
         if ($result) {
 			
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_SECRETARY_DOCUMENT_DELETED_STATUS_UPLOADS'), 'warning');
+            \Secretary\Joomla::getApplication()->enqueueMessage(JText::_('COM_SECRETARY_DOCUMENT_DELETED_STATUS_UPLOADS'), 'warning');
 				
 			// Activity
-			\Secretary\Helpers\Activity::set('documents', 'deleted', $datas->catid, $pk, JFactory::getUser()->id);
+            \Secretary\Helpers\Activity::set('documents', 'deleted', $datas->catid, $pk, \Secretary\Joomla::getUser()->id);
 			
 			// Delete Products
 			$datas->fields = json_decode($datas->fields, true);

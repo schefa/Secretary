@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -22,7 +22,7 @@ class SecretaryControllerSubjects extends Secretary\Controller\Admin
     protected $redirect_url;
     
 	public function __construct() {
-	    $this->app		= JFactory::getApplication();
+	    $this->app		= \Secretary\Joomla::getApplication();
 	    $this->catid	= $this->app->input->getInt('catid');
 		$this->view		= $this->app->input->getCmd('view');
 		$this->redirect_url  = 'index.php?option=com_secretary&amp;view='.$this->view.'&amp;catid='. $this->catid;
@@ -44,8 +44,7 @@ class SecretaryControllerSubjects extends Secretary\Controller\Admin
 
 	public function addDocuments()
 	{
-
-	    $pks	= JFactory::getApplication()->input->get('cid', array(), 'array');
+	    $pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
 	    $this->setRedirect(JRoute::_('index.php?option=com_secretary&amp;view=document&layout=edit&amp;catid='. $this->catid.'&amp;subject=['.implode(",",$pks).']', false));
 	} 
 	
@@ -56,7 +55,7 @@ class SecretaryControllerSubjects extends Secretary\Controller\Admin
 	
 	public function applyColumns()
 	{
-	    $app = JFactory::getApplication();
+	    $app = \Secretary\Joomla::getApplication();
 	
 	    $stockcolumns	= $app->input->get('chk_group', array(), 'array');
 	

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
  
 $this->datafields   = \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
 
-$user = JFactory::getUser(); 
+$user = \Secretary\Joomla::getUser(); 
 ?>
 
 <div class="secretary-main-container">

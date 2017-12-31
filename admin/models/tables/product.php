@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -29,7 +29,7 @@ class SecretaryTableProduct extends JTable
      */
     public function bind($array, $ignore = '')
     {
-        if (!JFactory::getUser()->authorise('core.admin', 'com_secretary.product.' . $array['id'])) {
+        if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary.product.' . $array['id'])) {
             $actions = JFactory::getACL()->getActions('com_secretary', 'product');
             $default_actions = JFactory::getACL()->getAssetRules('com_secretary.product.' . $array['id'])->getData();
             $array_jaccess = array();
@@ -57,7 +57,7 @@ class SecretaryTableProduct extends JTable
     public function prepareStore(&$data)
     {
 		
-		$data['created_by']	= (!empty($this->created_by)) ? $this->created_by : JFactory::getUser()->id;
+        $data['created_by']	= (!empty($this->created_by)) ? $this->created_by : \Secretary\Joomla::getUser()->id;
 			
 		// Data Fields
 		$data['fields']	= (isset($data['fields'])) ? \Secretary\Helpers\Items::saveFields($data['fields']) : FALSE;

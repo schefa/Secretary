@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -22,9 +22,9 @@ class JFormFieldUpload extends JFormFieldList
 	function getInput()
 	{
 		
-		$fileId			= JFactory::getApplication()->input->getInt('secf','');
-		$canUpload		= JFactory::getUser()->authorise('core.upload', 'com_secretary');
-		$documentSize	= Secretary\Application::parameters()->get('documentSize');
+	    $fileId			= \Secretary\Joomla::getApplication()->input->getInt('secf','');
+	    $canUpload		= \Secretary\Joomla::getUser()->authorise('core.upload', 'com_secretary');
+		$documentSize	= \Secretary\Application::parameters()->get('documentSize');
 		$imageWidth		= isset($this->element['width']) ? intval($this->element['width']) : 200;
 		
 		$html = array();

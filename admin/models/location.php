@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -31,8 +31,8 @@ class SecretaryModelLocation extends JModelAdmin
 	 */
     public function __construct($config = array())
 	{
-        $this->app          = JFactory::getApplication();
-        $this->business     = Secretary\Application::company();
+	    $this->app          = \Secretary\Joomla::getApplication();
+        $this->business     = \Secretary\Application::company();
         $this->extension    = $this->app->input->getCmd('extension');
         $this->catid        = $this->app->input->getInt('catid');
         parent::__construct($config);
@@ -78,7 +78,7 @@ class SecretaryModelLocation extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_secretary.edit.location.data', array());
+	    $data = \Secretary\Joomla::getApplication()->getUserState('com_secretary.edit.location.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
@@ -122,7 +122,7 @@ class SecretaryModelLocation extends JModelAdmin
 	public function save($data)
 	{
 		// Initialise variables;
-		$user	= JFactory::getUser();
+	    $user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$pk		= (!empty($data['id'])) ? $data['id'] : (int)$this->getState($this->getName().'.id');
 		

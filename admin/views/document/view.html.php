@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewDocument extends JViewLegacy
 {
@@ -60,7 +60,7 @@ class SecretaryViewDocument extends JViewLegacy
 		$this->business	= \Secretary\Application::company();
 		 
 		// Permission
-        $this->user     = JFactory::getUser();
+		$this->user     = \Secretary\Joomla::getUser();
 		$show = false;
 		if( $layout == "edit" && true === \Secretary\Helpers\Access::edit($this->view, $this->item->id, $this->item->created_by )) {
 			$show = true;
@@ -81,12 +81,12 @@ class SecretaryViewDocument extends JViewLegacy
 		}
 		
 		//Get Field options 
-		$this->genderoptions		=	JFormHelper::loadFieldType('gender', false)->getList( (int) $this->item->subject[0], 'jform[subject][0]' );
-		$this->entityoptions		=	JFormHelper::loadFieldType('entities', false)->getList();
-		$this->productUsageOption	=	JFormHelper::loadFieldType('productUsage', false)->getList( $this->item->productUsage );
-		$this->itemtemplates		=	JFormHelper::loadFieldType('templates', false)->getList( $this->item->template, 'jform[template]','',array("documents"));
+		$this->genderoptions		= JFormHelper::loadFieldType('gender', false)->getList( (int) $this->item->subject[0], 'jform[subject][0]' );
+		$this->entityoptions		= JFormHelper::loadFieldType('entities', false)->getList();
+		$this->productUsageOption	= JFormHelper::loadFieldType('productUsage', false)->getList( $this->item->productUsage );
+		$this->itemtemplates		= JFormHelper::loadFieldType('templates', false)->getList( $this->item->template, 'jform[template]','',array("documents"));
 		
-		$this->subjectConnections = $this->getConnections();
+		$this->relatedContacts      = $this->getConnections();
 		
 		if(isset($this->item->message['template'])) {
 			$this->emailtemplates	=	JFormHelper::loadFieldType('templates', false)->getList( $this->item->message['template'] , 'jform[fields][message][template]','',array("documents"));
@@ -98,21 +98,30 @@ class SecretaryViewDocument extends JViewLegacy
 		$this->item->datafields	= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
 		
 		$this->getJS();
+		
+		if($this->_layout == 'edit') {
+		    $this->getEditviewFiles();
+		}
+		
 		parent::display($tpl);
 	}
 	
-	protected function getConnections() {
-
+	/**
+	 * Method to get related contacts of the default contact
+	 * Usage for members of institutions
+	 * 
+	 * @return string
+	 */
+	protected function getConnections()
+	{
 	    $html = array();
-	    if($this->item->subjectid > 0 && isset($this->item->subject[7])) {
-	    
+	    if($this->item->subjectid > 0 && isset($this->item->subject[7]))
+	    {
 	        $subjectConnect = \Secretary\Helpers\Connections::getConnectionsSubjectData($this->item->subjectid);
-
 	        foreach($subjectConnect as $key=>$value) {
 	            $fullname = (!empty($value->note)) ? $value->fullname . " (".$value->note.")" : $value->fullname;
 	            $html[] = JHtml::_('select.option', $value->id, $fullname );
 	        }
-	    
 	    }
 	    
 	    $display = (!empty($html)) ? "block" : "none";
@@ -155,6 +164,17 @@ class SecretaryViewDocument extends JViewLegacy
 		
 		echo Secretary\Navigation::ToolbarItem('document.cancel', 'COM_SECRETARY_TOOLBAR_CLOSE', false, '' );
 		
+	}
+	
+	/**
+	 * Edit view needs additional files
+	 */
+	protected function getEditviewFiles()
+	{
+	    $document = JFactory::getDocument();
+	    $document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.accounting.js?v='.SECRETARY_VERSION);
+	    $document->addScript(SECRETARY_MEDIA_PATH.'/js/secretary.document.js?v='.SECRETARY_VERSION);
+	    $document->addScript(SECRETARY_MEDIA_PATH.'/assets/jquery/jquery.nestable.js');
 	}
 	
 	protected function getJS()

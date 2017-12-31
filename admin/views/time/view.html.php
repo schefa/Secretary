@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -44,7 +44,7 @@ class SecretaryViewTime extends JViewLegacy
 		$this->canDo	= \Secretary\Helpers\Access::getActions($this->view);
  
 		// Permission
-		$user = JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$show = false;
 		if( $this->layout == 'edit' && true === \Secretary\Helpers\Access::edit($this->view, $this->item->id, $this->item->created_by ) ) {
 		    $show = true;
@@ -121,10 +121,10 @@ class SecretaryViewTime extends JViewLegacy
 		
 		$contacts = array();
 		
-		$app 	= JFactory::getApplication();
+		$app 	= \Secretary\Joomla::getApplication();
 		$layout	= $app->input->getCmd('layout');
 		
-		$user = JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$userContact = ($user->id > 0) ? Secretary\Database::getQuery('subjects',$user->id,'created_by') : (object) array('id'=>-1);
 		$this->userAttendee = false;
 		

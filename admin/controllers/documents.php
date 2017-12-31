@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -37,7 +37,7 @@ class SecretaryControllerDocuments extends Secretary\Controller\Admin
 	public function acquit()
 	{
 		
-		if( !JFactory::getUser()->authorise('core.edit','com_secretary.document') ) {
+	    if( !\Secretary\Joomla::getUser()->authorise('core.edit','com_secretary.document') ) {
 			JError::raiseError(100, JText::_('COM_SECRETARY_PERMISSION_FAILED'));
 			return false;
 		}
@@ -49,7 +49,7 @@ class SecretaryControllerDocuments extends Secretary\Controller\Admin
 	
 	public function updateProducts()
 	{
-		if( !JFactory::getUser()->authorise('core.delete','com_secretary.product') ) {
+	    if( !\Secretary\Joomla::getUser()->authorise('core.delete','com_secretary.product') ) {
 			throw new Exception( JText::_('COM_SECRETARY_PERMISSION_FAILED'), 100);
 			return false;
 		}
@@ -69,7 +69,8 @@ class SecretaryControllerDocuments extends Secretary\Controller\Admin
 	
 	public function updateRepetitions()
 	{
-		if( !JFactory::getUser()->authorise('core.create','com_secretary.document') || !JFactory::getUser()->authorise('core.create','com_secretary.time') ) {
+	    $user = \Secretary\Joomla::getUser();
+	    if( !$user->authorise('core.create','com_secretary.document') || !$user->authorise('core.create','com_secretary.time') ) {
 			JError::raiseError(100, JText::_('COM_SECRETARY_PERMISSION_FAILED')); return false; }
 		
 			$pks	= $this->app->input->get('cid', array(), 'array');
@@ -88,7 +89,7 @@ class SecretaryControllerDocuments extends Secretary\Controller\Admin
 	
 	public function deleteRepetitions()
 	{
-		if( !JFactory::getUser()->authorise('core.delete','com_secretary.time') ) {
+	    if( !\Secretary\Joomla::getUser()->authorise('core.delete','com_secretary.time') ) {
 			JError::raiseError(100, JText::_('COM_SECRETARY_PERMISSION_FAILED')); return false; }
 		
 		$pks	= $this->app->input->get('cid', array(), 'array');

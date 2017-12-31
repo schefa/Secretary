@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewMessages extends JViewLegacy
 {
@@ -30,7 +30,7 @@ class SecretaryViewMessages extends JViewLegacy
 	public function display($tpl = null)
 	{
 	    
-	    $this->app          = JFactory::getApplication();
+	    $this->app          = \Secretary\Joomla::getApplication();
 		$this->categoryId	= $this->app->input->getInt('catid',0);
 		$this->contactID	= $this->app->input->getInt('contact_to');
 		$this->referTo      = $this->app->input->getInt('rid',0);
@@ -64,8 +64,8 @@ class SecretaryViewMessages extends JViewLegacy
 			return false;
 		}
 		
-		$this->user = JFactory::getUser();
-		$userContact = Secretary\Database::getQuery('subjects',(int) $this->user->id,'created_by','id','loadResult');
+		$this->user = \Secretary\Joomla::getUser();
+		$userContact = \Secretary\Database::getQuery('subjects',(int) $this->user->id,'created_by','id','loadResult');
 		$this->userContactId = (isset($userContact)) ? (int) $userContact : -1;
 		
 		$this->folders            = JFormHelper::loadFieldType('Categories', false)->getCategories( $this->view );

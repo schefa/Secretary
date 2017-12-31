@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -37,7 +37,7 @@ class SecretaryModelSubject extends JModelAdmin
 		    $menu = $this->app->getMenu()->getActive();
 		    $pk = (int) $menu->params->get('userprofile');
             if($pk > 0)
-                $this->userprofile = Secretary\Database::getQuery('subjects', JFactory::getUser()->id,'created_by', 'id','loadResult');
+                $this->userprofile = Secretary\Database::getQuery('subjects', \Secretary\Joomla::getUser()->id,'created_by', 'id','loadResult');
         }
 		
 		$this->params	= Secretary\Application::parameters();
@@ -195,7 +195,7 @@ class SecretaryModelSubject extends JModelAdmin
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
 		// Initialise variables; 
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable('Subject');
 		$key	= $table->getKeyName();
 		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');
@@ -373,8 +373,8 @@ class SecretaryModelSubject extends JModelAdmin
 	public function getContactMessages($contact_id) {
 	    $result = array();
 	    if($contact_id > 0) {
-	        $user = JFactory::getUser();
-	        $contact = Secretary\Database::getQuery('subjects', $user->id, 'created_by');
+	        $user = \Secretary\Joomla::getUser();
+	        $contact = \Secretary\Database::getQuery('subjects', $user->id, 'created_by');
 	        
 	        $contactToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (i.contact_to AS INTEGER)': 'i.contact_to';
 	        $createdByToStr = (Secretary\Database::getDbType() == 'postgresql') ? 'CAST (i.created_by AS INTEGER)': 'i.created_by';

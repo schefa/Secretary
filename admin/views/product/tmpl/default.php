@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,8 +11,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$user = JFactory::getUser();
-$business	= Secretary\Application::company('currency,taxvalue');
+$user = \Secretary\Joomla::getUser();
+$business	= \Secretary\Application::company('currency,taxvalue');
 $currency	= $business['currency'];
 
 $categoryTitle = Secretary\Database::getQuery('folders',$this->item->catid,'id','title','loadResult');

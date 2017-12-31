@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -10,7 +10,6 @@
 
 namespace Secretary\Helpers;
 
-use JFactory;
 use stdClass;
 
 // No direct access
@@ -193,8 +192,8 @@ class Connections
      * An item can be a subject or anything else 
      * This method is used to logically couple
      * 
-     * @param unknown $two
-     * @param unknown $note
+     * @param number $two
+     * @param string $note
      * @param boolean $both
      * @return boolean
      */

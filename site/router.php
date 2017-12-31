@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,8 @@
 
 defined('_JEXEC') or die;
 
-	/*
+/*
+#TODO
 class SecretaryRouter extends JComponentRouterBase
 {
 	public function build(&$query)
@@ -19,7 +20,7 @@ class SecretaryRouter extends JComponentRouterBase
 		$segments = array();
 
 		// Get a menu item based on Itemid or currently active
-		$app = JFactory::getApplication();
+		$app = \Secretary\Joomla::getApplication();
 		$menu = $app->getMenu();
 		$params = JComponentHelper::getParams('com_secretary');
 
@@ -100,7 +101,7 @@ class SecretaryRouter extends JComponentRouterBase
 		
         $vars['view'] =  $segments[0] ;
 
-        $app  = JFactory::getApplication();
+        $app  = \Secretary\Joomla::getApplication();
         $menu = $app->getMenu();
         $item = $menu->getActive();
         

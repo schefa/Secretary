@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -19,7 +19,7 @@ class SecretaryControllerTemplate extends JControllerForm
     protected $app;
     
     function __construct() {
-        $this->app          = JFactory::getApplication();
+        $this->app          = \Secretary\Joomla::getApplication();
         $this->catid		= $this->app->input->getInt('catid');
         $this->extension	= $this->app->input->getCmd('extension');
         $this->view_list    = 'templates';

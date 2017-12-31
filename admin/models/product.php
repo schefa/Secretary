@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -151,7 +151,7 @@ class SecretaryModelProduct extends JModelAdmin
 	public function save($data)
 	{
 		// Initialise variables; 
-		$user	= JFactory::getUser();
+	    $user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
 		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');

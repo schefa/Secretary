@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -24,7 +24,7 @@ class SecretaryControllerMessage extends JControllerForm
     protected $refer_to;
     
     public function __construct() {
-        $this->app      = JFactory::getApplication();
+        $this->app      = \Secretary\Joomla::getApplication();
         $this->catid	= $this->app->input->getInt('catid');
         $this->contact	= $this->app->input->getInt('contact');
         $this->layout	= $this->app->input->getCmd('layout');
@@ -39,7 +39,7 @@ class SecretaryControllerMessage extends JControllerForm
 	
 	protected function allowAdd($data = array())
 	{
-	    $user = JFactory::getUser();
+	    $user = \Secretary\Joomla::getUser();
 	    return $user->authorise('core.create','com_secretary.message') || count($user->getAuthorisedCategories($this->option, 'core.create'));
 	}
 	
@@ -136,7 +136,7 @@ class SecretaryControllerMessage extends JControllerForm
         $value	= $this->app->input->getInt('value');
     
         $contact_to = (int) Secretary\Database::getQuery('messages', (int) $itemID,'id','contact_to','loadResult');
-        $userId		= (int) Secretary\Database::getQuery('subjects', (int) JFactory::getUser()->id,'created_by','id','loadResult');
+        $userId		= (int) Secretary\Database::getQuery('subjects', (int) \Secretary\Joomla::getUser()->id,'created_by','id','loadResult');
     
         if(($contact_to === $userId) && ($itemID > 0) && ($value > 0)) {
             // Update Message Status

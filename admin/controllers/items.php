@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -44,7 +44,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 	
 	public function saveOrder()
 	{ 
-		$user  = JFactory::getUser();
+	    $user  = \Secretary\Joomla::getUser();
 		$order = $this->app->input->get('order', array(), 'array');
 	    $msg   = JText::_('COM_SECRETARY_ORDERING_SAVED_FAILED');
 	    if($user->authorise('core.admin', 'com_secretary') && !empty($order)) {
@@ -72,7 +72,7 @@ class SecretaryControllerItems extends Secretary\Controller\Admin
 	    JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 	    
 	    $files = $this->app->input->get('cid', array(), 'array');
-		$user  = JFactory::getUser();
+	    $user  = \Secretary\Joomla::getUser();
 
 		if($user->authorise('core.delete', 'com_secretary')) {
 		    $x = 0;

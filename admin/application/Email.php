@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -25,7 +25,7 @@ class Email
 	public static function emailMessage( $data )
 	{
 	    
-		$user = JFactory::getUser(); 
+	    $user = \Secretary\Joomla::getUser(); 
 		$business	= Application::company();
 		
 		$result = array('link' => 'index.php?option=com_secretary&view=messages&layout=talk&id='.$data['id'].'&catid='.$data['catid'], 
@@ -84,7 +84,7 @@ class Email
 	 */
 	public static function emailDocument( $data )
 	{
-		$user       = JFactory::getUser(); 
+	    $user       = \Secretary\Joomla::getUser(); 
 		$business	= \Secretary\Application::company();
 		
 		$result = array('link' => 'index.php?option=com_secretary&task=document.edit&id='.$data['id'].'&catid='.$data['catid'], 
@@ -152,7 +152,7 @@ class Email
 	public static function sendEmail($data, $contact_to, $contact_to_email, $subject, $emailText, $attachment = '')
 	{
 		
-		$app = JFactory::getApplication();
+	    $app = \Secretary\Joomla::getApplication();
 
 		if ($contact->email == '' && $contact->user_id != 0)
 		{
@@ -206,12 +206,12 @@ class Email
 	 * @param string $emailText
 	 * @param string $attachment
 	 * @throws Exception
-	 * @return boolean|boolean|JException
+	 * @return boolean
 	 */
 	public static function email($contact_to, $contact_to_email, $headline, $emailText, $attachment = '')
 	{
-		$app		= JFactory::getApplication();
-		$user		= JFactory::getUser();
+	    $app		= \Secretary\Joomla::getApplication();
+	    $user		= \Secretary\Joomla::getUser();
 		
 		if(!isset($contact_to) || !isset($contact_to_email) || !isset($headline) || !isset($emailText))
 			return false;

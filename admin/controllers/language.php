@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  * @author      Fjodor Schaefer - https://www.schefa.com
  */
@@ -17,7 +17,7 @@ class SecretaryControllerLanguage extends JControllerForm
     
 	public function __construct($config = array())
 	{
-		if(!JFactory::getUser()->authorise('core.admin', 'com_secretary'))
+	    if(!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary'))
 		    die;
 		
 		$this->app = \Secretary\Joomla::getApplication();

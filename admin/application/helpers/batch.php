@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,8 +11,7 @@
 namespace Secretary\Helpers;
 
 use JArrayHelper;
-use JError;
-use JFactory;
+use JError; 
 use JText;
 
 // No direct access
@@ -25,7 +24,7 @@ class Batch
 	{
 		// Permission
 		$section = \Secretary\Application::getSingularSection($view);
-		if( !JFactory::getUser()->authorise('core.edit','com_secretary.'.$section) ) {
+		if( !\Secretary\Joomla::getUser()->authorise('core.edit','com_secretary.'.$section) ) {
 			JError::raiseError(100, JText::_('COM_SECRETARY_PERMISSION_FAILED'));
 			return false;
 		}
@@ -102,7 +101,7 @@ class Batch
 		}
 		
 		// Add Fields
-		$input	= JFactory::getApplication()->input;
+		$input	= \Secretary\Joomla::getApplication()->input;
 		$data	= $input->get('jform','','RAW');
 		if (count($data['fields']) > 1)
 		{
@@ -129,7 +128,7 @@ class Batch
 	private static function createContactsinGroups($view , $messages_ids, $ids)
 	{
 	    $db   = \Secretary\Database::getDBO();
-		$app = JFactory::getApplication();
+	    $app = \Secretary\Joomla::getApplication();
 		foreach($messages_ids AS $messages_id)
 		{
 			$message = \Secretary\Database::getQuery('messages',$messages_id,'id','created_by,created_by_alias');
@@ -171,7 +170,7 @@ class Batch
 	{
 	    $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
-	    $app = JFactory::getApplication();
+	    $app = \Secretary\Joomla::getApplication();
 	    
 	    // Update the reset flag
 	    $query->update($db->quoteName('#__secretary_'. $view))
@@ -192,6 +191,7 @@ class Batch
 	
 	public static function batchCopyTasksToProject($view , $tasks_ids, $projectID)
 	{
+	    $app = \Secretary\Joomla::getApplication();
 	    $db   = \Secretary\Database::getDBO();
 	     
 	    // Get the tasks
@@ -211,7 +211,7 @@ class Batch
 	               try {
 	                   $result = $db->insertObject('#__secretary_tasks', $object);
 	               } catch (\RuntimeException $e) {
-	                   JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+	                   $app->enqueueMessage($e->getMessage(), 'error');
 	                   return false;
 	               }
 	            }
@@ -224,6 +224,7 @@ class Batch
 	
 	public static function batchStates($view , $entries_ids, $ids)
 	{
+	    $app = \Secretary\Joomla::getApplication();
 	    $db   = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
 
@@ -240,7 +241,7 @@ class Batch
 		}
 		catch (\RuntimeException $e)
 		{
-			JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+			$app->enqueueMessage($e->getMessage(), 'error');
 			return false;
 		}
 
@@ -250,6 +251,7 @@ class Batch
 
 	public static function batchTemplate($view , $entries_ids, $ids)
 	{
+	    $app = \Secretary\Joomla::getApplication();
 	    $db   = \Secretary\Database::getDBO();
 	    $query = $db->getQuery(true);
 	
@@ -266,7 +268,7 @@ class Batch
 	    }
 	    catch (\Exception $e)
 	    {
-	        JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+	        $app->enqueueMessage($e->getMessage(), 'error');
 	        return false;
 	    }
 	
@@ -292,8 +294,8 @@ class Batch
 
 		$table = $this->getTable();
 		$db = $this->getDbo();
-		$user = JFactory::getUser();
-		$extension = JFactory::getApplication()->input->get('extension', '', 'word');
+		$user = \Secretary\Joomla::getUser();
+		$extension = \Secretary\Joomla::getApplication()->input->get('extension', '', 'word');
 		$i = 0;
 
 		// Check that the parent exists
@@ -469,8 +471,8 @@ class Batch
 		$table = $this->getTable();
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
-		$user = JFactory::getUser();
-		$extension = JFactory::getApplication()->input->get('extension', '', 'word');
+		$user = \Secretary\Joomla::getUser();
+		$extension = \Secretary\Joomla::getApplication()->input->get('extension', '', 'word');
 
 		// Check that the parent exists.
 		if ($parentId)

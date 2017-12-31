@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
  
 // Get Business Data
-$user			= JFactory::getUser();
+$user			= \Secretary\Joomla::getUser();
 $currency		= $this->business['currencySymbol'];
 $listOrder		= $this->state->get('list.ordering');
 $listDirn		= $this->state->get('list.direction');

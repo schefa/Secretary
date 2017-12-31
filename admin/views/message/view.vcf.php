@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -37,7 +37,7 @@ class SecretaryViewMessage extends JViewLegacy
 		
 		$card_name = ($item->firstname ? ' ' . $item->firstname : '') .  $item->lastname ;
 		JFactory::getDocument()->setMimeEncoding('text/directory', true);
-		JFactory::getApplication()->setHeader('Content-disposition', 'attachment; filename="' . $card_name . '.vcf"', true);
+		\Secretary\Joomla::getApplication()->setHeader('Content-disposition', 'attachment; filename="' . $card_name . '.vcf"', true);
 
 		$vcard = array();
 		$vcard[] .= 'BEGIN:VCARD';

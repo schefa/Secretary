@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$user		= JFactory::getUser();
+$user		= \Secretary\Joomla::getUser();
 $userId		= (int) Secretary\Database::getQuery('subjects', (int) $user->id,'created_by','id','loadResult');
 
 $canDelete	= $user->authorise('core.delete', 'com_secretary');
@@ -58,7 +58,7 @@ $col = empty( $this->otherTalks) ? '12' : '9';
                         </a>
                 		<?php } ?>
                             
-                		<?php if(JFactory::getApplication()->isAdmin()) { ?> 
+                		<?php if(\Secretary\Joomla::getApplication()->isAdmin()) { ?> 
                         <a class="pull-left btn btn-default" target="_blank" href="<?php echo JUri::root(true) ."/index.php?option=com_secretary&view=messages&layout=talk&rid=".$this->referTo."&catid=".$this->categoryId."&k=".md5($this->talks[0]->id.$this->talks[0]->created); ?>"><i class="fa fa-link"></i>&nbsp;Public Link</a>
                         <?php } ?>
                     

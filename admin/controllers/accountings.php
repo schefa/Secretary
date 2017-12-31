@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -23,7 +23,7 @@ class SecretaryControllerAccountings extends Secretary\Controller\Admin
 	protected $redirect_url = 'index.php?option=com_secretary';
 	
 	public function __construct() {
-		$this->app		    = JFactory::getApplication();
+	    $this->app		    = \Secretary\Joomla::getApplication();
 		$this->accountId	= $this->app->input->getInt('account');
 		$this->view			= $this->app->input->getCmd('view');
 		$this->extension	= $this->app->input->getCmd('extension');

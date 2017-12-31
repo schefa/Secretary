@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -20,7 +20,7 @@ $db     = Secretary\Database::getDbo();
 $prefix = $db->getPrefix();
 
 
-$directory = JPATH_SITE. '/administrator/components/com_secretary/application/install/samples';
+$directory = SECRETARY_ADMIN_PATH.'/application/install/samples';
 $scanned_directory = array_diff(scandir($directory), array('..','.','.DS_STORE','_notes','index.html'));
 ?>
 

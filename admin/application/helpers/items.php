@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,6 @@
 namespace Secretary\Helpers;
 
 use JEditor;
-use JFactory;
 use JHtml;
 use JText;
 use stdClass;
@@ -106,7 +105,7 @@ class Items
 				$html = JHtml::_('select.genericlist',$options, $name,'','value','text',\Secretary\Utilities::cleaner($standard));
 				break;
 			case 'sql':
-				$canManage = JFactory::getUser()->authorise('core.admin');
+			    $canManage = \Secretary\Joomla::getUser()->authorise('core.admin');
 				if($canManage == 1) {
 				    $db   = \Secretary\Database::getDBO();
 					$db->setQuery( $object->values );

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -26,7 +26,7 @@ class SecretaryModelFolder extends JModelAdmin
 	 */
     public function __construct($config = array())
 	{
-        $this->app = JFactory::getApplication();
+	    $this->app = \Secretary\Joomla::getApplication();
 		$this->extension = $this->app->input->getCmd('extension');
         parent::__construct($config);
     }
@@ -202,7 +202,7 @@ class SecretaryModelFolder extends JModelAdmin
 		$pk			= (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName() . '.id');
 				
 		// Access
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		if(!(\Secretary\Helpers\Access::checkAdmin())) {
 			if ( !$user->authorise('core.create', 'com_secretary.'.$data['extension']) || ( !$user->authorise('core.create', 'com_secretary.folder') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.folder.'.$pk) ) ) )
 			{

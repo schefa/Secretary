@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -12,8 +12,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
-
-JFormHelper::addFieldPath(JPATH_SITE . '/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewProducts extends JViewLegacy
 {
@@ -33,7 +32,7 @@ class SecretaryViewProducts extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$app				= JFactory::getApplication();
+	    $app				= \Secretary\Joomla::getApplication();
 		$this->state		= $this->get('State');
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');

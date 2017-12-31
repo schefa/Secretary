@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -30,7 +30,7 @@ class SecretaryTableFolder extends JTable
     public function bind($array, $ignore = '')
     {
 		
-        if (!JFactory::getUser()->authorise('core.admin', 'com_secretary.folder.' . $array['id'])) {
+        if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary.folder.' . $array['id'])) {
             $actions = JFactory::getACL()->getActions('com_secretary', 'folder');
             $default_actions = JFactory::getACL()->getAssetRules('com_secretary.folder.' . $array['id'])->getData();
             $array_jaccess = array();
@@ -81,7 +81,7 @@ class SecretaryTableFolder extends JTable
 		// Prepare
 		$business	            = Secretary\Application::company();
 		$data['business']		= (!empty($this->business)) ? $this->business : (int) $business['id'];
-		$data['created_by']		= (!empty($this->created_by)) ? $this->created_by : JFactory::getUser()->id;
+		$data['created_by']		= (!empty($this->created_by)) ? $this->created_by : \Secretary\Joomla::getUser()->id;
 		$data['created_time']	= (!empty($this->created_time)) ? $this->created_time : date('Y-m-d h:i:s');
 		$data['level']			= (isset($this->level)) ? $this->level : 1;
 		$data['description']	= Secretary\Utilities\Text::ripTags( $data['description'] );

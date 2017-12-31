@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -31,7 +31,7 @@ class SecretaryViewReports extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$app			= JFactory::getApplication();
+	    $app			= \Secretary\Joomla::getApplication();
 		$this->view		= $app->input->getCmd('view');
 		$this->canDo	= \Secretary\Helpers\Access::getActions($this->view);
 		$this->business	= Secretary\Application::company(); 

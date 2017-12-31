@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -127,7 +127,7 @@ class SecretaryModelTime extends JModelAdmin
 		if(empty(self::$_item[$pk]) && ($item = parent::getItem($pk)))
 		{
 			
-			$user				= JFactory::getUser();
+		    $user				= \Secretary\Joomla::getUser();
 			$item->extension	= (empty($item->extension)) ? $this->extension : $item->extension;
 			$item->created_by	= (isset($item->created_by)) ? $item->created_by : $user->id;
 			
@@ -170,7 +170,7 @@ class SecretaryModelTime extends JModelAdmin
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
 		$db     = \Secretary\Database::getDBO(); 
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
 		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');
@@ -308,7 +308,7 @@ class SecretaryModelTime extends JModelAdmin
 		
 		if(empty($this->pid)) $this->pid = (int) $id;
 		
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		$db = \Secretary\Database::getDBO();
 		$query = $db->getQuery(true);
 		$query->select("id,title")

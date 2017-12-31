@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -10,7 +10,6 @@
 
 namespace Secretary\Helpers;
 
-use JFactory;
 use JText;
 use stdClass;
 
@@ -41,7 +40,7 @@ class Messages
 		$message = new stdClass();
 		$message->business			= (int) $business['id'];
 		$message->created_by_alias	= \Secretary\Utilities::cleaner($data['subject'][1]) .' '. \Secretary\Utilities::cleaner($data['subject'][2]);
-		$message->created_by		= (int) JFactory::getUser()->id;
+		$message->created_by		= (int) \Secretary\Joomla::getUser()->id;
 		$message->created 			= date('Y-m-d h:i:s');
 		$message->subject			= \Secretary\Utilities::cleaner($data['fields']['message']['subject']);
 		$message->message			= \Secretary\Utilities::cleaner($data['fields']['message']['text']);
@@ -80,7 +79,7 @@ class Messages
 	public static function getChatOnlineUsers( $ref = FALSE )
 	{ 
 	    $db   = \Secretary\Database::getDBO();
-	    $user  = JFactory::getUser(); 
+	    $user  = \Secretary\Joomla::getUser(); 
 	    $cids  = [$user->id];
 	    
 	    if(!empty($ref)) {
@@ -157,12 +156,12 @@ class Messages
 	    $itemId    = $data->getInt('item');
 	    $stateId   = $data->getInt('status');
 
-	    $user		= JFactory::getUser();
+	    $user		= \Secretary\Joomla::getUser();
 	    $userId		= (int) \Secretary\Database::getQuery('subjects', (int) $user->id,'created_by','id','loadResult');
 	    
 	    $return    = false;
 
-	    $canEditState	= JFactory::getUser()->authorise('core.edit.state', 'com_secretary.message');
+	    $canEditState	= \Secretary\Joomla::getUser()->authorise('core.edit.state', 'com_secretary.message');
 	    if(true === $canEditState) {
 	        
 	        $db   = \Secretary\Database::getDBO();
@@ -200,8 +199,8 @@ class Messages
 	    $contact_to_alias = $refer->contact_to_alias;
 	    $referto          = $refer->refer_to;
 	    
-	    $user      = JFactory::getUser();
-	    $canCreate	= JFactory::getUser()->authorise('core.create', 'com_secretary.message');
+	    $user      = \Secretary\Joomla::getUser();
+	    $canCreate	= $user->authorise('core.create', 'com_secretary.message');
 	    
 	    if($user->id > 0) {
 	       $userContact = \Secretary\Database::getQuery('subjects', intval($user->id),'created_by','id','loadResult');
@@ -213,7 +212,7 @@ class Messages
 	       $userContact = \Secretary\Utilities::cleaner($name);
 	       $createdByAlias = \Secretary\Utilities::cleaner($email);
 
-	       if(JFactory::getApplication()->isSite() && (md5($refer->id.$refer->created) == $key))
+	       if(\Secretary\Joomla::getApplication()->isSite() && (md5($refer->id.$refer->created) == $key))
 	           $canCreate = true;
 	    }
 	    
@@ -256,7 +255,7 @@ class Messages
 	    
 	    if(!isset($id)) return $return;
 	    
-	    $canDelete	= JFactory::getUser()->authorise('core.delete', 'com_secretary.message');
+	    $canDelete	= \Secretary\Joomla::getUser()->authorise('core.delete', 'com_secretary.message');
 	    if(true === $canDelete) {
 	        $db   = \Secretary\Database::getDBO();
 	        $db->setQuery('DELETE FROM #__secretary_messages WHERE '.$db->qn('id').'='. intval($id));

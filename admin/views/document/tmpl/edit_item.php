@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$app	= JFactory::getApplication();
+$app	= \Secretary\Joomla::getApplication();
 $toggleTaxRateColumn= (int) $app->getUserState('filter.toggleTaxRateColumn', 1);
 $taxrateClass = ($toggleTaxRateColumn== 0) ? 'none' : 'block';
 ?>

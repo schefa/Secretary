@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -76,7 +76,7 @@ abstract class Access
 	
 	public static function show($section, $id = 0, $created_by = '' )
 	{
-		$user = \JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$section = (!empty($section)) ? ( '.'.$section) : '';
 		
 		if(\Secretary\Helpers\Access::checkAdmin())
@@ -126,7 +126,7 @@ abstract class Access
 	{
 		 
 		$recordId = (int) isset($data[$key]) ? $data[$key] : '';
-		$user     = \JFactory::getUser();
+		$user     = \Secretary\Joomla::getUser();
 		$asset    = 'com_secretary.'.$section;
 		
 		if ($user->authorise('core.edit', $asset)) {
@@ -163,7 +163,7 @@ abstract class Access
 	 */
 	public static function canDelete($record, $view)
 	{
-		$user = \JFactory::getUser();
+	    $user = \Secretary\Joomla::getUser();
 		if (!empty($record->id))
 		{
 			return $user->authorise('core.delete', 'com_secretary.'.$view .'.' . (int) $record->id);
@@ -236,7 +236,7 @@ abstract class Access
      */
     public static function restoreDefaultSectionAssets()
     {
-        if(!\JFactory::getUser()->authorise('core.admin', 'com_secretary') ) 
+        if(!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary') ) 
             return false;
         
         $db = \Secretary\Database::getDBO();
@@ -287,7 +287,7 @@ abstract class Access
      */
     public static function setParentIdAssets($assetName,$section)
     {
-        if(!\JFactory::getUser()->authorise('core.admin', 'com_secretary') )
+        if(!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary') )
             return false;
         
         $db = \Secretary\Database::getDBO();
@@ -311,7 +311,7 @@ abstract class Access
      */
     public static function updateSecretaryRules()
     {
-        if(!\JFactory::getUser()->authorise('core.admin', 'com_secretary') )
+        if(!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary') )
             return false;
         
         // Set Rules for secretary_settings

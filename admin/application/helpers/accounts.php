@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -10,7 +10,6 @@
 
 namespace Secretary\Helpers;
 
-use JFactory;
 use JTable;
 use JText;
 
@@ -28,7 +27,7 @@ class Accounts
 	public static function prepareAccounting ( $entry_id, $currency, $accounting, $total, $title = "")
 	{
 		$business = \Secretary\Application::company();
-		$userID = JFactory::getUser()->id;
+		$userID = \Secretary\Joomla::getUser()->id;
 		$soll = array();
 		$haben = array();
 		

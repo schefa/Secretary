@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -29,7 +29,7 @@ class HttpClient
 
     public function execute()
     {
-        $application = JFactory::getApplication();
+        $application = \Secretary\Joomla::getApplication();
     
         $ch = curl_init($this->url);
         curl_setopt_array($ch, array(

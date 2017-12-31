@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -38,7 +38,7 @@ class SecretaryViewDocument extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		$jinput			= JFactory::getApplication()->input;
+		$jinput			= \Secretary\Joomla::getApplication()->input;
 		$section		= $jinput->getCmd('view');
 		$layout			= $jinput->getCmd('layout');
 		
@@ -48,7 +48,7 @@ class SecretaryViewDocument extends JViewLegacy
 		$this->canDo	= \Secretary\Helpers\Access::getActions($section);
 		
 		// Permission
-		$user = JFactory::getUser();
+		$user   = \Secretary\Joomla::getUser();
 		$check	= \Secretary\Helpers\Access::edit($section, $this->item->id, $this->item->created_by );
 		
 		$show = false;
@@ -70,7 +70,6 @@ class SecretaryViewDocument extends JViewLegacy
 		if (count($errors = $this->get('Errors'))) {
 		    throw new Exception( implode("\n", $errors), 404); return false;
 		}
-		
 		
 		// Get Business Data
 		$this->business	= Secretary\Application::company();

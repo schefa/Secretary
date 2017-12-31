@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -29,7 +29,7 @@ class SecretaryTableTemplate extends JTable
      */
     public function bind($array, $ignore = '')
 	{
-        if (!JFactory::getUser()->authorise('core.admin', 'com_secretary.template.' . $array['id'])) {
+	    if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary.template.' . $array['id'])) {
             $actions = JFactory::getACL()->getActions('com_secretary', 'template');
             $default_actions = JFactory::getACL()->getAssetRules('com_secretary.template.' . $array['id'])->getData();
             $array_jaccess = array();

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -12,19 +12,18 @@ namespace Secretary {
     
     use JFactory;
     use JRegistry;
-    use JText;
     
     if(!defined('SECRETARY_ADMIN_PATH')) define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR .'/components/com_secretary');
     
     // No direct access
     defined('_JEXEC') or die; 
+         
+    \Secretary\Application::loadFunctionsFromFolder( SECRETARY_ADMIN_PATH.'/application/'); 
+    \Secretary\Application::loadFunctionsFromFolder( SECRETARY_ADMIN_PATH.'/application/helpers/');
+    \Secretary\Application::loadFunctionsFromFolder( SECRETARY_ADMIN_PATH.'/application/utilities/');
     
-    \Secretary\Application::loadFunctionsFromFolder( JPATH_ADMINISTRATOR .'/components/com_secretary/application/'); 
-    \Secretary\Application::loadFunctionsFromFolder( JPATH_ADMINISTRATOR .'/components/com_secretary/application/helpers/');
-    \Secretary\Application::loadFunctionsFromFolder( JPATH_ADMINISTRATOR .'/components/com_secretary/application/utilities/');
-    
-    require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/pdf/pdf.php';
-    require_once JPATH_ADMINISTRATOR .'/components/com_secretary/application/webservice/Webservice.php';
+    require_once SECRETARY_ADMIN_PATH.'/application/pdf/pdf.php';
+    require_once SECRETARY_ADMIN_PATH.'/application/webservice/Webservice.php';
     
     /**
      * PHP doesnt support enumerator

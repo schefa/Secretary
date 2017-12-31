@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -29,7 +29,7 @@ class SecretaryTableTask extends JTable
      */
     public function bind($array, $ignore = '')
 	{
-        if (!JFactory::getUser()->authorise('core.admin', 'com_secretary.task.' . $array['id'])) {
+	    if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary.task.' . $array['id'])) {
             $actions = JFactory::getACL()->getActions('com_secretary', 'task');
             $default_actions = JFactory::getACL()->getAssetRules('com_secretary.task.' . $array['id'])->getData();
             $array_jaccess = array();
@@ -101,9 +101,9 @@ class SecretaryTableTask extends JTable
     /**
      * Rebuilds tasks
      * 
-     * @param unknown $pk
-     * @param unknown $parentid
-     * @param unknown $level
+     * @param number $pk
+     * @param number $parentid
+     * @param number $level
      * @return boolean
      */
 	public function rebuildLevel($pk, $parentid, $level = null )

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen', 'select');
 
-$app = JFactory::getApplication();
+$app = \Secretary\Joomla::getApplication();
 
 $input = $app->input;
 $assoc = JLanguageAssociations::isEnabled();

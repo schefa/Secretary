@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -18,8 +18,8 @@ $waitPing = $this->params->get('messages_waitPing',10000);
 if(false === $enableChat)
     return;
 
-$user		= JFactory::getUser();
-$userId		= (int) Secretary\Database::getQuery('subjects', (int) $user->id,'created_by','id','loadResult');
+$user		= \Secretary\Joomla::getUser();
+$userId		= (int) \Secretary\Database::getQuery('subjects', (int) $user->id,'created_by','id','loadResult');
 
 $messages_unread = Secretary\Application::parameters()->get('messages_unread', 9);
 
@@ -88,7 +88,7 @@ $this->document->addScriptDeclaration('
                     echo JText::sprintf('COM_SECRETARY_SWITCH_TO',$t) ?>
                     </a>
                     
-            		<?php if(JFactory::getApplication()->isAdmin()) { ?> 
+            		<?php if(\Secretary\Joomla::getApplication()->isAdmin()) { ?> 
                     <a class="pull-left btn btn-default margin-right" target="_blank" href="<?php echo JUri::root(true) ."/index.php?option=com_secretary&view=messages&layout=chat&rid=".$this->referTo."&catid=".$this->categoryId."&k=".md5($this->talks[0]->id.$this->talks[0]->created); ?>"><i class="fa fa-link"></i>&nbsp;Public Link</a>
                     <?php } ?>
                         

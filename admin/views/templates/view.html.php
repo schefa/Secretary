@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewTemplates extends JViewLegacy
 {
@@ -78,7 +78,7 @@ class SecretaryViewTemplates extends JViewLegacy
 			$html[] = Secretary\Navigation::ToolbarItem('template.add', JText::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR',$addEventText), false, 'newentry');
 		}
 
-		if ($this->extension == 'newsletters' && JFactory::getUser()->authorise('com_secretary.message','core.create')) {
+		if ($this->extension == 'newsletters' && \Secretary\Joomla::getUser()->authorise('com_secretary.message','core.create')) {
 			$html[] = Secretary\Navigation::ToolbarItem('templates.sendLetter', 'COM_SECRETARY_SEND', true, 'default', 'fa-send');
 		}
 

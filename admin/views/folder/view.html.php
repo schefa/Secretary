@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
-JFormHelper::addFieldPath(JPATH_SITE . '/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewFolder extends JViewLegacy
 {
@@ -45,7 +45,7 @@ class SecretaryViewFolder extends JViewLegacy
 		}
 		
 		// Permission
-		$user = JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$show = false;
 		if( $this->layout == 'edit' && true === \Secretary\Helpers\Access::edit($this->view, $this->item->id,$this->item->created_by ) ) {
 		    $show = true;

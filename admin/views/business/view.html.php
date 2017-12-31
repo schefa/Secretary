@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewBusiness extends JViewLegacy
 {
@@ -52,7 +52,7 @@ class SecretaryViewBusiness extends JViewLegacy
 		}
 
         if (isset($this->item->checked_out)) {
-		    $this->checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == JFactory::getUser()->get('id'));
+            $this->checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == \Secretary\Joomla::getUser()->get('id'));
         } else {
             $this->checkedOut = false;
         }

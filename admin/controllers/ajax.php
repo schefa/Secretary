@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -200,7 +200,7 @@ class SecretaryControllerAjax extends JControllerForm
 	public function projectTimer()
 	{ 
 		$extension        = 'tasks';
-		$user             = JFactory::getUser();
+		$user             = \Secretary\Joomla::getUser();
 		$userContactId    = \Secretary\Database::getQuery('subjects',$user->id,'created_by','id','loadResult');
 		$action           = $this->app->input->getVar('action');
 		$itemID           = $this->app->input->getInt('itemID');
@@ -420,7 +420,7 @@ class SecretaryControllerAjax extends JControllerForm
 	 */
 	public function updatePermission()
 	{ 
-	    $user	= JFactory::getUser();
+	    $user	= \Secretary\Joomla::getUser();
 	    if($user->authorise('core.admin','com_secretary'))
 	    {
 	        $db = \Secretary\Database::getDBO();

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -23,7 +23,7 @@ class SecretaryControllerTimes extends Secretary\Controller\Admin
     protected $redirect_url;
 	
 	public function __construct() {
-	    $this->app		= JFactory::getApplication();
+	    $this->app		= \Secretary\Joomla::getApplication();
 	    $this->catid	= $this->app->input->getInt('catid');
 	    $this->view		= $this->app->input->getCmd('view', 'times');
 		$this->redirect_url = 'index.php?option=com_secretary&amp;view='.$this->view.'&amp;catid='. $this->catid;
@@ -99,7 +99,7 @@ class SecretaryControllerTimes extends Secretary\Controller\Admin
 	public function updateRepetitions()
 	{
 		
-		if( !JFactory::getUser()->authorise('core.create','com_secretary.time') ) {
+	    if( !\Secretary\Joomla::getUser()->authorise('core.create','com_secretary.time') ) {
 			JError::raiseError(100, JText::_('COM_SECRETARY_PERMISSION_FAILED'));
 			return false;
 		}

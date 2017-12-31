@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,7 @@
 // No direct access
 defined('_JEXEC') or die; 
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewMessage extends JViewLegacy
 {
@@ -97,7 +97,7 @@ class SecretaryViewMessage extends JViewLegacy
 	
 	protected function _prepareDocument()
 	{
-		$app     = JFactory::getApplication();
+	    $app     = \Secretary\Joomla::getApplication();
 		$menus   = $app->getMenu();
 		$pathway = $app->getPathway();
 		$title   = null;

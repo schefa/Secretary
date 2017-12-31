@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 $extension = 'times';
 
-$user = JFactory::getUser();
+$user = \Secretary\Joomla::getUser();
 
 $status = Secretary\Database::getQuery('status',$this->item->state,'id','title','loadResult');
 ?>
@@ -84,7 +84,7 @@ $status = Secretary\Database::getQuery('status',$this->item->state,'id','title',
 						<?php if(!empty( $this->contacts)) { ?>
                         	<ul>
                             <?php foreach( $this->contacts AS $idx => $contact) {
-								$subject = Secretary\Database::getQuery('subjects',$contact->id,'id','firstname,lastname'); ?>
+								$subject = \Secretary\Database::getQuery('subjects',$contact->id,'id','firstname,lastname'); ?>
 								<li>
 									<a href="index.php?option=com_secretary&view=subject&id=<?php echo $contact->id; ?>"><?php echo $subject->firstname.' '.$subject->lastname; ?></a>
                                     <a target="_blank" href="index.php?option=com_secretary&view=message&layout=edit&contact=<?php echo $contact->id;?>"><i class="fa fa-envelope-o"></i></a>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -20,7 +20,7 @@ class JFormFieldTasks extends JFormFieldList
 	
 	protected function getOptions()
 	{
-		$app = JFactory::getApplication();
+	    $app = \Secretary\Joomla::getApplication();
 		$db	 = \Secretary\Database::getDBO();
 		$pid = $app->input->getInt('pid','');
 		
@@ -29,9 +29,9 @@ class JFormFieldTasks extends JFormFieldList
 			$pid = Secretary\Database::getQuery('tasks', (int) $id,'id',$db->qn('projectID'),'loadResult');
 		}
 		
-        $user	= JFactory::getUser(); 
+		$user	= \Secretary\Joomla::getUser(); 
 		$tasks	= array();
-	 	$business	= Secretary\Application::company();
+	 	$business	= \Secretary\Application::company();
 		
 		$query = $db->getQuery(true)
 				->select($db->qn(array("id","title","parentID","level","state")))

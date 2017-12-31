@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -16,8 +16,8 @@ $lang = JFactory::getLanguage();
 $lang->load('joomla', JPATH_ADMINISTRATOR);
 $lang->load('com_secretary', JPATH_ADMINISTRATOR);
 
-$user	= JFactory::getUser();
-$app	= JFactory::getApplication();
+$user	= \Secretary\Joomla::getUser();
+$app	= \Secretary\Joomla::getApplication();
 $view	= $app->input->getCmd('view','dashboard');
 $task	= $app->input->getCmd('task');
 $layout	= $app->input->getCmd('layout');

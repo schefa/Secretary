@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -96,7 +96,7 @@ class SecretaryModelMessage extends JModelAdmin
     	        $pk = (!empty($pk)) ? $pk : (int) $this->getState('message.id');
     	        $tid = $this->app->input->getInt('tid');
     	        $cid = $this->app->input->getInt('cid'); 
-    	        $user = JFactory::getUser();
+    	        $user = \Secretary\Joomla::getUser();
 	            	
 	            if(empty($cid) || empty($tid))
 	            {
@@ -171,7 +171,7 @@ class SecretaryModelMessage extends JModelAdmin
     	        $item->catid = (int) (empty($item->catid)) ? $this->catid : $item->catid; 
     	        $item->template = (!empty($item->template)) ? $item->template : 0;
     	        
-    	        $user = JFactory::getUser();
+    	        $user = \Secretary\Joomla::getUser();
     	        $userContact = Secretary\Database::getQuery('subjects',(int) $user->id,'created_by','id','loadResult');
     	        $item->created_by = (isset($item->created_by)) ? $item->created_by : (int) $userContact;
     	
@@ -198,8 +198,8 @@ class SecretaryModelMessage extends JModelAdmin
 	    JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 	
 	    // Initialise variables; 
-	    $user	= JFactory::getUser();
-	    $userId	= Secretary\Database::getQuery('subjects', (int) JFactory::getUser()->id,'created_by','id','loadResult');
+	    $user	= \Secretary\Joomla::getUser();
+	    $userId	= \Secretary\Database::getQuery('subjects', (int) \Secretary\Joomla::getUser()->id,'created_by','id','loadResult');
 	
 	    $table	= $this->getTable();
 	    $pk		= (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName().'.id');
@@ -279,7 +279,7 @@ class SecretaryModelMessage extends JModelAdmin
 	public function storeMessage($tid, $cid, $contact, $data)
 	{
 		// Initialise variables;
-		$user	= JFactory::getUser();
+	    $user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
 		

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -9,8 +9,6 @@
  */
 
 namespace Secretary;
-
-use JFactory;
 
 require_once SECRETARY_ADMIN_PATH .'/application/ControllerAdmin.php';
 

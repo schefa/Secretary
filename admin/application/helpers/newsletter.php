@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -10,9 +10,7 @@
 
 namespace Secretary\Helpers;
 
-use JFactory;
 use JText;
-use stdClass;
 
 // No direct access
 defined('_JEXEC') or die; 
@@ -74,6 +72,7 @@ abstract class Newsletter
     
     public static function addContactToNewsletter($contactid , $newsletterid)
     {
+        $app = \Secretary\Joomla::getApplication();
         $db   = \Secretary\Database::getDBO();
         
         $db->setQuery('SELECT * FROM #__secretary_newsletter WHERE '.$db->qn('listID').'='. (int) $newsletterid.' AND '.$db->qn('contactID').'='. (int) $contactid);
@@ -89,7 +88,7 @@ abstract class Newsletter
                 $result = $db->query();
                 return $result;
             } catch (\RuntimeException $e) {
-                JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                $app->enqueueMessage($e->getMessage(), 'error');
                 return false;
             }
         } else {
@@ -99,6 +98,7 @@ abstract class Newsletter
     
     public static function removeContactFromAllNewsletters($contactid )
     {
+        $app = \Secretary\Joomla::getApplication();
         $db   = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
         
@@ -109,13 +109,14 @@ abstract class Newsletter
             $result = $db->query();
             return $result;
         } catch (\RuntimeException $e) {
-            JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            $app->enqueueMessage($e->getMessage(), 'error');
             return false;
         }
     }
     
     public static function removeContactFromNewsletter($contactid,$newsletter_id)
     {
+        $app = \Secretary\Joomla::getApplication();
         $db   = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
         if(!empty($exists)) {
@@ -127,7 +128,7 @@ abstract class Newsletter
                 $result = $db->query();
                 return $result;
             } catch (\RuntimeException $e) {
-                JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                $app->enqueueMessage($e->getMessage(), 'error');
                 return false;
             }
         } else {
@@ -172,14 +173,14 @@ abstract class Newsletter
             \Secretary\Helpers\Newsletter::removeContactFromNewsletter($contactid,(int) $newsletter_id);
         
         // Set New
-        $upd = $db->getQuery(true);
-        $upd->update($db->qn("#__secretary_subjects"))
-        ->set($db->qn("fields")."=". $db->quote($oldFields))
-        ->where($db->qn("id")."=". $db->escape($contactid));
+        $updateQuery = $db->getQuery(true);
+        $updateQuery->update($db->qn("#__secretary_subjects"));
+        $updateQuery->set($db->qn("fields")."=". $db->quote($oldFields));
+        $updateQuery->where($db->qn("id")."=". $db->escape($contactid));
         
         try {
-            $db->setQuery($upd);
-            $db->query();
+            $db->setQuery($updateQuery);
+            $db->execute();
         } catch (\RuntimeException $e) {
             $app->enqueueMessage($e->getMessage(), 'error');
             return JText::_('COM_SECRETARY_ERROR_OCCURED');
@@ -190,15 +191,15 @@ abstract class Newsletter
     
     public static function refreshNewsletterListToContacts($newsletterListID , $contacts, $batch = false)
     {
-        $app  = JFactory::getApplication();
+        $app  = \Secretary\Joomla::getApplication();
         $db   = \Secretary\Database::getDBO();
         $contactsIds	= array_unique($contacts);
         
         // Geld field ID
         $query = $db->getQuery(true);
-        $query->select('id,title')
-        ->from($db->qn("#__secretary_fields"))
-        ->where($db->qn("hard")." LIKE ". $db->quote("newsletter"));
+        $query->select('id,title');
+        $query->from($db->qn("#__secretary_fields"));
+        $query->where($db->qn("hard")." LIKE ". $db->quote("newsletter"));
         $db->setQuery($query);
         $field = $db->loadObject();
         

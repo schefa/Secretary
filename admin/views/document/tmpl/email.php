@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -12,10 +12,10 @@
 defined('_JEXEC') or die;
 
 JHTML::_('behavior.formvalidator');
-$app	= JFactory::getApplication();
+$app	= \Secretary\Joomla::getApplication();
 $adminmail	= $app->getCfg('mailfrom');
 
-$user = JFactory::getUser();
+$user = \Secretary\Joomla::getUser();
  
 
 if(!empty($this->item->message['text'])) {
@@ -70,7 +70,7 @@ if(!empty($this->item->subject[6])) {
     <div class="control-group">	
         <div class="control-label"><?php echo JText::_('COM_SECRETARY_ATTACHMENT');?></div>
         <?php 
-		$path = JPATH_SITE.'/administrator/components/com_secretary/uploads/'.$this->business['id'].'/emails/';
+        $path = SECRETARY_ADMIN_PATH.'/uploads/'.$this->business['id'].'/emails/';
 		$filename = strtolower($this->item->document_title) .'-'.$this->item->createdEntry.'.pdf';
 		jimport('joomla.filesystem.file');
 		if (JFile::exists($path . $filename)){

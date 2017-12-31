@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -25,12 +25,12 @@ class SecretaryControllerDatabase extends JControllerForm
 	 * @param array $config 
 	 */
 	public function __construct($config = array()) {
-	    $this->app        = JFactory::getApplication();
+	    $this->app        = \Secretary\Joomla::getApplication();
 	    if(!in_array($this->app->input->getCmd('task'), self::$whiteTasks)) {
 			die();	
 		}
 		
-		if (!JFactory::getUser()->authorise('core.admin','com_secretary')) {
+		if (!\Secretary\Joomla::getUser()->authorise('core.admin','com_secretary')) {
 			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR') , 500);
 			return false;
 		} 
@@ -94,8 +94,8 @@ class SecretaryControllerDatabase extends JControllerForm
 		$msg = "";
 
 		// Initialise variables.
-		$app	= JFactory::getApplication();
-		$user	= JFactory::getUser();
+		$app	= \Secretary\Joomla::getApplication();
+		$user	= \Secretary\Joomla::getUser();
 		$model	= $this->getModel('Database', 'SecretaryModel');
 		
 		if (!$user->authorise('core.admin','com_secretary')) {

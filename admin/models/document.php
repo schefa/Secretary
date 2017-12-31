@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -37,7 +37,7 @@ class SecretaryModelDocument extends JModelAdmin
 	 */
 	public function __construct($config = array())
 	{
-		$jinput	= JFactory::getApplication()->input;
+	    $jinput	= \Secretary\Joomla::getApplication()->input;
 		$this->catid		= $jinput->getInt('catid');
 		$this->locationId	= $jinput->getInt('location');
 		
@@ -61,7 +61,7 @@ class SecretaryModelDocument extends JModelAdmin
 	 */
 	protected function populateState()
 	{
-		$pk = JFactory::getApplication()->input->getInt('id');
+	    $pk = \Secretary\Joomla::getApplication()->input->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
 		
 		$params = Secretary\Application::parameters();
@@ -103,7 +103,7 @@ class SecretaryModelDocument extends JModelAdmin
 	 */
 	protected function loadFormData()
 	{
-		$data = JFactory::getApplication()->getUserState('com_secretary.edit.document.data', array());
+	    $data = \Secretary\Joomla::getApplication()->getUserState('com_secretary.edit.document.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
 			
@@ -350,10 +350,10 @@ class SecretaryModelDocument extends JModelAdmin
 	{
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$pk		= (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName().'.id');
-		$this->_uploadFile	= JFactory::getApplication()->input->files->get('jform');
+		$this->_uploadFile	= \Secretary\Joomla::getApplication()->input->files->get('jform');
             
 		// Access
 		if(!(\Secretary\Helpers\Access::checkAdmin())) {
@@ -461,7 +461,7 @@ class SecretaryModelDocument extends JModelAdmin
 		$footer  = \Secretary\Helpers\Templates::transformText($defaultTemplate->footer,array('subject'=>$data['subjectid']), $templateInfoFields );
 		
 		$filename = strtolower($templateInfoFields['document-title']).'-'.$data['createdEntry'].'.pdf';
-		$path = JPATH_SITE.'/administrator/components/com_secretary/uploads/'.$this->business['id'].'/emails/';
+		$path = SECRETARY_ADMIN_PATH.'/uploads/'.$this->business['id'].'/emails/';
 		//create folder if not exists
 		jimport('joomla.filesystem.folder');
 		if (!JFolder::exists($path)){
@@ -476,7 +476,7 @@ class SecretaryModelDocument extends JModelAdmin
 		$config = array('title'=>$templateInfoFields['document-title'],'output'=>array($path.$filename, 'F'),'dpi'=>$defaultTemplate->dpi,'format'=>$defaultTemplate->format,'header'=>$header,'footer'=>$footer,'margins'=>$defaultTemplate->margins);
 
 		// Get Strategy
-		require_once JPATH_SITE . '/administrator/components/com_secretary/application/pdf/pdf.php';
+		require_once SECRETARY_ADMIN_PATH.'/application/pdf/pdf.php';
 		$pdf = Secretary\PDF::getInstance();
 		$pdf->execute($body,$defaultTemplate->css, $config);
 		 

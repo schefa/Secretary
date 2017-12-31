@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -22,7 +22,7 @@ class SecretaryControllerMarkets extends JControllerAdmin
     protected $redirect_url;
     
 	public function __construct() {
-	    $this->app		= JFactory::getApplication();
+	    $this->app		= \Secretary\Joomla::getApplication();
 	    $this->catid	= $this->app->input->getInt('catid',0);
 		$this->view		= 'markets';
 		$this->redirect_url = 'index.php?option=com_secretary&amp;view='.$this->view.'&amp;catid='. $this->catid;

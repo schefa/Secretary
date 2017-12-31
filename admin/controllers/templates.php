@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -23,7 +23,7 @@ class SecretaryControllerTemplates extends Secretary\Controller\Admin
     protected $redirect_url;
     
 	public function __construct() {
-	    $this->app		= JFactory::getApplication();
+	    $this->app		= \Secretary\Joomla::getApplication();
 	    $this->catid	= $this->app->input->getInt('catid');
 	    $this->extension	= $this->app->input->getCmd('extension');
 		$this->view		= 'templates';
@@ -63,7 +63,7 @@ class SecretaryControllerTemplates extends Secretary\Controller\Admin
 	 */
 	public function sendLetter()
 	{
-		if (JFactory::getUser()->authorise('com_secretary.message','core.create')) {
+	    if (\Secretary\Joomla::getUser()->authorise('com_secretary.message','core.create')) {
 		    $pks	= $this->app->input->get('cid', array(), 'array');
 		    $count	= 0;
 		     

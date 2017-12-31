@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -16,8 +16,8 @@ $doc = JFactory::getDocument();
 $margins = explode(";",$this->defaultTemplate->margins);
 ?>
 
-<div id = "scoped-content">
-<style type="text/css">
+<div id = "scoped-content">  
+<style type="text/css" media="print">
 @media print {
   body * {
     visibility: hidden;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -159,7 +159,7 @@ $owner              = Secretary\Database::getJDataResult('users',(int) $this->it
                             
                             <div class="fields-items"></div>
                             <div class="field-add-container clearfix">
-                            	<?php echo Secretary\HTML::_('datafields.listOptions', 'businesses' ); ?>
+                            	<?php echo Secretary\HTML::_('datafields.listOptions', 'businesses' ); ?>  
                                 <div id="field-add" counter="<?php echo 0 + $this->datafields['count']; ?>"><span class="fa fa-plus"></span> <?php echo JText::_('COM_SECRETARY_NEW'); ?></div>
                             </div>
                         </div>

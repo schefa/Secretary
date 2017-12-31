@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -26,12 +26,12 @@ class SecretaryViewProduct extends JViewLegacy
 	 */
 	public function display($tpl = 'pdf')
 	{
-		$jinput			= JFactory::getApplication()->input;
+	    $jinput			= \Secretary\Joomla::getApplication()->input;
 		$section		= $jinput->getCmd('view');
 		$this->item	    = $this->get('Item');
 
 		// Permission
-		$user = JFactory::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$check	= \Secretary\Helpers\Access::edit($section, $this->item->id, $this->item->created_by );
 		if( $this->_layout == 'edit' && !$check ) {
 			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR'), 500);

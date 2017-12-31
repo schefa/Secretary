@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -27,7 +27,7 @@ class JFormFieldSecretarystatus extends JFormFieldList
 		
 		if (!empty($this->element['extension'])) {
 			$extension = (string) $this->element['extension'];
-		} elseif ($mod	= JFactory::getApplication()->input->getCmd('module')) {
+		} elseif ($mod	= \Secretary\Joomla::getApplication()->input->getCmd('module')) {
 			$extension =  $mod;
 		} else {
 			$extension = $extension;	

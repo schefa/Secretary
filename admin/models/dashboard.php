@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -72,7 +72,7 @@ class SecretaryModelDashboard extends JModelList
     public function getItems()
 	{
         $items	= parent::getItems();
-		$user	= JFactory::getUser();
+        $user	= \Secretary\Joomla::getUser();
 		
 		if(!empty($items)) {
 				
@@ -104,7 +104,7 @@ class SecretaryModelDashboard extends JModelList
 		$dispatcher = JEventDispatcher::getInstance();
 		$pks = (array) $pks;
 		$table = JTable::getInstance('Activities', 'SecretaryTable');
-		$user	= JFactory::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		
 		JPluginHelper::importPlugin('content');
 		

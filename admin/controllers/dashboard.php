@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -18,7 +18,7 @@ class SecretaryControllerDashboard extends Secretary\Controller\Admin
 	 public function delete()
 	 {
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-		$cid = JFactory::getApplication()->input->get('cid', array(), 'array');
+		$cid = \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
 		 
 		if (!is_array($cid) || count($cid) < 1)
 		{

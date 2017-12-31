@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(JPATH_SITE .'/administrator/components/com_secretary/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
 
 class SecretaryViewBusinesses extends JViewLegacy
 {
@@ -64,7 +64,7 @@ class SecretaryViewBusinesses extends JViewLegacy
 			$html[] = Secretary\Navigation::ToolbarItem('business.add', JText::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR',$addEventText), false, 'newentry' );
 		}
 		
-		if(!empty($this->items[0]) && JFactory::getUser()->authorise('com_secretary','core.admin')) {
+		if(!empty($this->items[0]) && \Secretary\Joomla::getUser()->authorise('com_secretary','core.admin')) {
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.delete', 'COM_SECRETARY_TOOLBAR_DELETE', true, 'default', 'fa-trash');
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.setDefault', 'COM_SECRETARY_TOOLBAR_SET_HOME', true, 'default', 'fa-star');
 		}

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -22,7 +22,7 @@ class SecretaryModelAccounting extends JModelAdmin
 
     public function __construct($config = array())
 	{
-		$app 				= JFactory::getApplication();
+	    $app 				= \Secretary\Joomla::getApplication();
 		$this->extension	= $app->input->getCmd('extension','accounting');
 		$this->business		= Secretary\Application::company();
         parent::__construct($config);
@@ -41,7 +41,7 @@ class SecretaryModelAccounting extends JModelAdmin
 	
 	public function getForm($data = array(), $loadData = true)
 	{
-		$app	= JFactory::getApplication();
+	    $app	= \Secretary\Joomla::getApplication();
 		$form	= $this->loadForm('com_secretary.'.$this->extension,$this->extension, array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) return false;
 		return $form;
@@ -53,7 +53,7 @@ class SecretaryModelAccounting extends JModelAdmin
 		if(empty(self::$_item[$pk]) && ($item = parent::getItem($pk)))
 		{
 				
-			$data	= JFactory::getApplication()->getUserState('com_secretary.edit.'.$this->extension.'.data', array());
+		    $data	= \Secretary\Joomla::getApplication()->getUserState('com_secretary.edit.'.$this->extension.'.data', array());
 			
 			if($this->extension == 'accounting') {
 					
@@ -93,8 +93,8 @@ class SecretaryModelAccounting extends JModelAdmin
 	
 	protected function loadFormData()
 	{
-		$business	= Secretary\Application::company();
-		$app		= JFactory::getApplication();
+		$business	= \Secretary\Application::company();
+		$app		= \Secretary\Joomla::getApplication();
 		$data		= $app->getUserState('com_secretary.edit.'.$this->extension.'.data', array());
 		
 		if (empty($data)) {
@@ -128,8 +128,8 @@ class SecretaryModelAccounting extends JModelAdmin
 	{
 		
 		// Initialise variables;
-		$app	= JFactory::getApplication();
-		$user	= JFactory::getUser();
+	    $app	= \Secretary\Joomla::getApplication();
+	    $user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
 		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');

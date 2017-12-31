@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -38,7 +38,7 @@ class SecretaryViewItem extends JViewLegacy
 		if($id > 0) {
 			
 		    $item = Secretary\Database::getQuery('uploads', intval($id) ,'id','business,title,folder');
-			$file = JPATH_ADMINISTRATOR . '/components/com_secretary/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
+		    $file = SECRETARY_ADMIN_PATH.'/uploads/'.$item->business .'/'.$item->folder .'/'.$item->title;
 			$filename = $item->title;
 			
 		} elseif($docId > 0) {

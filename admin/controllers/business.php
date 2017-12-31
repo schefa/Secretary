@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -34,8 +34,8 @@ class SecretaryControllerBusiness extends JControllerForm
 	
 	public function csample()
 	{ 
-		$user	= JFactory::getUser();
-		$business = Secretary\Application::company();
+	    $user	= \Secretary\Joomla::getUser();
+		$business = \Secretary\Application::company();
 		
 		if ( !(\Secretary\Helpers\Access::checkAdmin()) || isset($business) )
 		{
@@ -81,7 +81,7 @@ class SecretaryControllerBusiness extends JControllerForm
 			}
 		}
 		
-		JFactory::getApplication()->enqueueMessage(JText::_('COM_SECRETARY_INSTALL_SAMPLE_DATA_INSTALLED'), 'notice');
+		\Secretary\Joomla::getApplication()->enqueueMessage(JText::_('COM_SECRETARY_INSTALL_SAMPLE_DATA_INSTALLED'), 'notice');
 		$this->setRedirect(JRoute::_('index.php?option=com_secretary&view='.$this->view_list , false));
     }
 	
@@ -105,7 +105,7 @@ class SecretaryControllerBusiness extends JControllerForm
 			$html[] = '<p>'.JText::_("COM_SECRETARY_TUTORIAL_FAQ_LOOK_INSIDE").'</p>';
 			
 			$message = implode("",$html);
-			JFactory::getApplication()->enqueueMessage($message, 'notice');
+			\Secretary\Joomla::getApplication()->enqueueMessage($message, 'notice');
 			$this->setRedirect(JRoute::_('index.php?option=com_secretary&view='.$this->view_list , false));
 		}
 	}

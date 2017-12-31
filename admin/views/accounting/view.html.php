@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -65,9 +65,9 @@ class SecretaryViewAccounting extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		JFactory::getApplication()->input->set('hidemainmenu', true);
+	    \Secretary\Joomla::getApplication()->input->set('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
+	    $user		= \Secretary\Joomla::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));

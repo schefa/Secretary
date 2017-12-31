@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -11,7 +11,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-$user = JFactory::getUser(); 
+$user = \Secretary\Joomla::getUser(); 
 
 $canChange	= $user->authorise('core.edit.state', 'com_secretary');
 $listOrder	= $this->escape($this->state->get('list.ordering'));

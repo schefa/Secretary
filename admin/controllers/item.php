@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -68,7 +68,7 @@ class SecretaryControllerItem extends JControllerForm
 
 	public function openFileDownload()
 	{ 
-		$user	= JFactory::getUser();
+	    $user	= \Secretary\Joomla::getUser();
 		$id		= $this->app->input->getInt('id');
 		$canDownload = false;
 		

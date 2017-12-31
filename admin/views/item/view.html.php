@@ -2,7 +2,7 @@
 use Dompdf\Exception;
 
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -87,7 +87,7 @@ class SecretaryViewItem extends JViewLegacy
 	protected function addToolbar()
 	{
 
-		$user		= JFactory::getUser();
+	    $user		= \Secretary\Joomla::getUser();
 		if(isset($this->item->id)) $isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {
 		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));

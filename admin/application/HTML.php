@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -42,7 +42,7 @@ class HTML
 		$className =  "Secretary\HTML\\" .ucfirst($file);
 		if (!class_exists($className))
 		{
-			$path = JPATH_ROOT . '/administrator/components/com_secretary/application/html/'. strtolower($file) . '.php';
+		    $path = SECRETARY_ADMIN_PATH.'/application/html/'. strtolower($file) . '.php';
 			
 			if ($path)
 			{

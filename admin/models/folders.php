@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -41,7 +41,7 @@ class SecretaryModelFolders extends JModelList
 			);
 		}
 
-		$this->app        = JFactory::getApplication();
+		$this->app        = \Secretary\Joomla::getApplication();
 		$this->extension  = $this->app->input->getCmd('extension');
 		$this->business   = Secretary\Application::company();
 		parent::__construct($config);

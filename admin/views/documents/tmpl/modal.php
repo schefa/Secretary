@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     3.0.0
+ * @version     3.2.0
  * @package     com_secretary
  *
  * @author       Fjodor Schaefer (schefa.com)
@@ -17,7 +17,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 
 <div class="row-fluid secretary-contacts-modal">
 
-<form action="<?php echo JRoute::_('index.php?option=com_secretary&view=documents&layout=modal&tmpl=component&excluded=' . JFactory::getApplication()->input->get('excluded', '', 'BASE64'));?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_secretary&view=documents&layout=modal&tmpl=component&excluded=' . \Secretary\Joomla::getApplication()->input->get('excluded', '', 'BASE64'));?>" method="post" name="adminForm" id="adminForm">
 	<fieldset class="filter">
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="secretary-search btn-group pull-left">
