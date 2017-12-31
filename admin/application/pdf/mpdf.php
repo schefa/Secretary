@@ -5,7 +5,7 @@
  *
  * @author       Fjodor Schaefer (schefa.com)
  * @copyright    Copyright (C) 2015-2017 Fjodor Schaefer. All rights reserved.
- * @license      GNU General Public License version 2 or later.
+ * @license      MIT License
  */
 
 namespace Secretary\PDF;
