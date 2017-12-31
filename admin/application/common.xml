@@ -15,7 +15,7 @@
 	
 	<target name="_clean">
 		<delete includeEmptyDirs="true">
-		  <fileset dir="${builddir}/${NAME_SHORT}" includes="**/*" excludes="*.*"/>
+		  <fileset dir="${builddir}/${NAME_SHORT}" includes="**/*" excludes="*.*,LICENSE"/>
 		</delete>
 	</target>
 
