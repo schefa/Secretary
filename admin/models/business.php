@@ -189,7 +189,7 @@ class SecretaryModelBusiness extends JModelAdmin
 		\Secretary\Helpers\Activity::set('businesses', $activityAction, 0, $newID );
 		
 		if (isset($table->id)) {
-			$this->setState($this->getName().'.id', $table->$pkName);
+		    $this->setState($this->getName().'.id', $newID);
 		}
 
 		$this->cleanCache();
