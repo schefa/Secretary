@@ -99,8 +99,8 @@ class MPDFStrategy implements IPDFStrategy
     
     private function mpdf6($html,$css,$config = array())
     {
-        $libPath = JPATH_LIBRARIES. '/mpdf/mpdf.php'; 
-    
+        $libPath = JPATH_LIBRARIES. '/mpdf/mpdf.php';
+        
         if(file_exists($libPath)) {
             require_once $libPath;
         } else {

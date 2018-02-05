@@ -96,7 +96,10 @@ $canCheckin	= $user->authorise('core.manage',		'com_secretary');
             	<?php echo  JText::_(Secretary\Database::getQuery('status',$item->closeTask,'id','title','loadResult')); ?>
             </td>
             
-            <td><?php echo Secretary\HTML::_('status.state', $item->id, $i, $item->extension.'.' ); ?></td>
+            <td>
+            <?php $state = array('title' => $item->title,'class' => $item->class,'description' => $item->description,'icon' => $item->icon ); ?>
+            <?php echo Secretary\HTML::_('status.state', $item, $i, $item->extension , false, $state ); ?>
+            </td>
             <td><div class="secretary-status-tooltip-preview-triagle"></div><div class="secretary-status-tooltip-preview"><?php echo JText::_($item->description); ?></div></td>
             <td><?php if( $item->extension !='root') echo $modules[$item->extension]; ?></td>
             

@@ -76,14 +76,6 @@ class Admin extends JControllerAdmin
 	    }
 	}
 	
-	public function setStates()
-	{
-	    $pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
-	    $this->setStatus($pks, $this->view);
-	    $this->setRedirect(JRoute::_($this->redirect_url, false));
-	    return true;
-	}
-	
 	/**
 	 * Checkin action
 	 * 
@@ -109,6 +101,14 @@ class Admin extends JControllerAdmin
 	        $this->setRedirect(JRoute::_($this->redirect_url, false), $message);
 	    }
 	    return $return;
+	}
+	
+	public function setStates()
+	{
+	    $pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
+	    $this->setStatus($pks, $this->view);
+	    $this->setRedirect(JRoute::_($this->redirect_url, false));
+	    return true;
 	}
 	
 	public function setStatus( $pks, $view )

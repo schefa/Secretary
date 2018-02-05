@@ -153,7 +153,7 @@ $listDirn	= $this->state->get('list.direction');
             <td class="table-left-border"><?php echo $item->entry_id; ?></td>
             
             <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-            <td class="center"><?php echo Secretary\HTML::_('status.state', $item->state, $i, 'accountings.', false, $state); ?></td>
+            <td class="center"><?php echo Secretary\HTML::_('status.state', $item, $i, 'accountings.', false, $state); ?></td>
             
         </tr>
         <?php endforeach; ?>

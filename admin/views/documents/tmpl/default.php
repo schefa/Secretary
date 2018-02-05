@@ -196,7 +196,7 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
         
                             <td class="center">
                                 <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-                                <?php echo Secretary\HTML::_('status.state', $item->state, $i, 'documents.', $item->canChange, $state ); ?>
+                                <?php echo Secretary\HTML::_('status.state', $item, $i, 'documents', $item->canChange, $state ); ?>
                             </td>
                             
                         </tr>
@@ -246,11 +246,11 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
             <div class="row-fluid">
                 <h3 class="documents-sidebar-title"><?php echo JText::_('COM_SECRETARY_FILTER'); ?><button class="btn headline-sidebar-button" type="submit"><?php echo JText::_('COM_SECRETARY_FILTER_DATE_GO'); ?></button></h3>
                 <div class="filter-date clearfix">
-                    <label><?php echo JText::_('COM_SECRETARY_TIMES_STARTDATE'); ?></label>
+                    <label><?php echo JText::_('COM_SECRETARY_FILTER_DATE_START'); ?></label>
                     <?php echo JHTML::_('calendar', $this->state->get('start_date'), 'start_date', 'start_date', "%Y-%m-%d", array('class'=>'form-control input-date')); ?>
                 </div>
                 <div class="filter-date clearfix">
-                    <label><?php echo JText::_('COM_SECRETARY_TIMES_ENDDATE'); ?></label>
+                    <label><?php echo JText::_('COM_SECRETARY_FILTER_DATE_END'); ?></label>
                     <?php echo JHTML::_('calendar', $this->state->get('end_date'), 'end_date', 'end_date', "%Y-%m-%d", array('class'=>'form-control input-date')); ?>
                 </div>
             </div>   
@@ -345,5 +345,5 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
 
 </form>
 </div>
-
+ 
 <?php echo Secretary\HTML::modal(); ?>

@@ -37,6 +37,11 @@ defined('_JEXEC') or die;
 
 <div class="changelog">
 
+<h4>3.2.2 (2018-02-05)</h4>
+<ul> 
+<li><span class="badge badge-info">Remake</span> / <span class="badge badge-success">AJAX status change at runtime</span></li>
+</ul>
+
 <h4>3.1.0 (2017-10-01)</h4>
 <ul> 
 <li><span class="badge badge-info">Remake</span> / <span class="badge badge-success">Code Cleanup</span></li>

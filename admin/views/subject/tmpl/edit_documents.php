@@ -80,7 +80,7 @@ defined('_JEXEC') or die;
             <td>
             <?php
             $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon );
-            echo Secretary\HTML::_('status.state', $item->state, $i, 'documents.', false, $state );
+            echo Secretary\HTML::_('status.state', $item, $i, 'documents', false, $state );
             ?>
             </td>
         </tr>

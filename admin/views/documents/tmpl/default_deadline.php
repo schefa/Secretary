@@ -122,7 +122,7 @@ defined('_JEXEC') or die;
 
             <td class="center">
                 <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-                <?php echo Secretary\HTML::_('status.state', $item->state, $i, 'documents.', $item->canChange, $state ); ?>
+                <?php echo Secretary\HTML::_('status.state', $item, $i, 'documents.', $item->canChange, $state ); ?>
             </td>
 
             <td class="center secretary-deadline-td">

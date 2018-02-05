@@ -160,7 +160,7 @@ $foldersLink = $user->authorise('core.show','com_secretary.folder');
                     
                     <td class="center">
                         <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-                        <?php echo Secretary\HTML::_('status.state', $item->state, $i, 'subjects.', $item->canChange,$state ); ?>
+                        <?php echo Secretary\HTML::_('status.state', $item, $i, 'subjects', $item->canChange, $state ); ?>
                     </td>
                     
                     <td>

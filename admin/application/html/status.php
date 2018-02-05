@@ -41,8 +41,10 @@ defined('_JEXEC') or die;
 class Status
 {
 	
-	public static function state($value = 0, $i, $taskPrefix = '', $canChange = FALSE, $state = array() )
+    public static function state($item, $i, $taskPrefix = '', $canChange = FALSE, $state = array() )
 	{
+	    $value = (isset($item->state)) ? $item->state : 0;
+	    
 		// Liste von Buttons. Bei Klick soll das Gegenteil ermöglicht werden, also wenn Open, dann Schließen
 		// use closeTask 
 		if(empty($state)) $state = Database::getQuery('status', (int) $value , 'id', '*', 'loadAssoc');
@@ -50,16 +52,16 @@ class Status
 		// Task ist das Gegenteil. 
 		$html = '';
 		
-		$style = substr($taskPrefix, 0, -1);
+		$style = $taskPrefix;
 		$style = (!empty($style)) ? 'status-'.$style : '';
 		
 		if ($canChange) {
-			$html   = '<a href="javascript:void(0);" class="hasTooltip secretary-state '.$style.' '.$state['class'].'"
-							onclick="return listItemTask(\'cb'.$i.'\',\''. $taskPrefix .'setStates\')"
+			$html   = '<div class="secretary-status-button" data-id="'. $item->id .'" data-section="'. $taskPrefix .'">
+                        <span class="hasTooltip secretary-state '.$style.' '.$state['class'].'"
 							data-original-title="'.JText::_($state['description']).'">
 								<span class="secretary-state-icon fa fa-'.$state['icon'].'"></span>
 								<span class="secretary-state-title">'. JText::_($state['title']) .'</span>
-							</a>';
+							</span></div>';
 		} else {
 			$html   = '<div class="secretary-state '.$style.' '.$state['class'].'">
 							<span class="secretary-state-icon fa fa-'.$state['icon'].'"></span>

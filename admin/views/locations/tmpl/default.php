@@ -156,7 +156,7 @@ $listDirn	= $this->state->get('list.direction');
                     <td class="center hidden-phone"><?php echo (int) $item->id; ?></td>
                     
                     <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-					<td><?php echo Secretary\HTML::_('status.state', $item->state, $i, 'locations.', $item->canChange, $state ); ?></td>
+					<td><?php echo Secretary\HTML::_('status.state', $item, $i, 'locations', $item->canChange, $state ); ?></td>
                     
                     <td><a class="hasTooltip" data-original-title="<?php echo JText::_('COM_SECRETARY_ACL_SHOW'); ?>" title="<?php echo JText::_('COM_SECRETARY_ACL_SHOW'); ?>"  href="<?php echo JRoute::_('index.php?option=com_secretary&view=location&id='.(int) $item->id); ?>"><i class="fa fa-newspaper-o"></i></a></td>
                     

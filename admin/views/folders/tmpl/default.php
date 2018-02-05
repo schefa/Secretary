@@ -154,7 +154,7 @@ $sections = array('documents','subjects','products','times','messages','markets'
                             <span class="lbl"></span>
                         </td>
                         <td class="center">
-                            <?php echo Secretary\HTML::_('status.state', $item->state, $i, 'folders.', $item->canChange ); ?>
+                            <?php echo Secretary\HTML::_('status.state', $item, $i, 'folders', $item->canChange ); ?>
                         </td>
                         <td>
                             <?php echo str_repeat('<span class="gi">&mdash;</span>', $item->level - 1) ?>

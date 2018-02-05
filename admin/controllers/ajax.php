@@ -52,6 +52,7 @@ class SecretaryControllerAjax extends JControllerForm
 	    'saveProgress',
 	    'search',
 	    'searchSubjectLocation',
+	    'setStates',
 	    'toggleSidebar',
 	    'toggleTaxRateColumn',
 	    'update',
@@ -373,6 +374,50 @@ class SecretaryControllerAjax extends JControllerForm
 			if(!empty($ret)) { echo $ret; }
 		}
 		$this->app->close();
+	}
+	
+	/**
+	 * Sets status on runtime
+	 */
+	public function setStates()
+	{
+	    $view	= $this->input->post->get('section','','RAW');
+	    $id     = $this->input->post->getInt('id');
+	    
+	    if( !(\Secretary\Helpers\Access::getActions($view)) )
+	        die;
+	        
+        $db = Secretary\Database::getDBO();
+        $db->setQuery( "SELECT ".$db->qn("closeTask")." FROM ".$db->qn("#__secretary_status")."
+                WHERE id = (SELECT state FROM ".$db->qn("#__secretary_".$db->escape($view))." WHERE id = ".$db->escape($id).") ");
+        $closeTask = $db->loadResult();
+        
+        $query	= $db->getQuery(true);
+        $query->update($db->quoteName('#__secretary_'.$db->escape($view)))
+        ->set($db->quoteName('state') . ' = ' .$db->escape($closeTask) )
+        ->where($db->quoteName('id') . ' = ' . $db->escape($id) );
+        
+        $db->setQuery($query);
+        $db->execute();
+	     
+        // Item 
+        $user = \Secretary\Joomla::getUser();
+        $new        = \Secretary\Database::getQuery($view, $id);
+        $singleView = \Secretary\Application::getSingularSection($view);
+        
+        // ACL
+        $canChange = false;
+        if(isset($new->created_by) && ($user->id == $new->created_by && $user->authorise('core.edit.own', 'com_secretary.'.$singleView)) || $user->authorise('core.edit', 'com_secretary.'.$singleView)) {
+            $canChange	= true;
+        } else { $canChange = $user->authorise('core.edit.state', 'com_secretary.'.$singleView); }
+        
+        // Print Button
+        $stateItem  = \Secretary\Database::getQuery('status', $new->state,'id','title AS status_title,icon,description AS tooltip,class');
+        $state = [ 'title' => $stateItem->status_title,'class' => $stateItem->class,'description' => $stateItem->tooltip,'icon' => $stateItem->icon ];
+        
+        echo Secretary\HTML::_('status.state', $new, 0, 'documents', $canChange, $state );
+        
+	    $this->app->close();
 	}
 	
 	/**

@@ -507,7 +507,23 @@ Secretary.printFields = function(fields) {
 	        $(this).toggleClass('active');
 			$('.chk_items_container').slideToggle();
 	    });
-	
+
+		$('.secretary-status-button').click(function(){
+			var element = $(this); 
+			element.empty();
+			element.html('<div class="loading-gif" style="height:30px"></div>');
+			var url = 'index.php?option=com_secretary&task=ajax.setStates';
+			var data =  {'section' : element.data('section'), 'id' :  element.data('id') };
+			$.ajax({
+	            type: "POST",
+	            url: url,
+	            data: data,
+			}).done(function(response) {
+				element.empty();
+				element.html(response);
+	        });
+		});
+		
 		$('.secretary-sort .move-up').click(function(){
 			var parent = $(this).closest('.secretary-row-inner').parent();
 			if(parent.hasClass('secretary-sort-row')) {

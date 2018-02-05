@@ -189,7 +189,7 @@ $areas = array('documents','subjects','messages','newsletters','products');
                     <td class="center hidden-phone"><?php echo (int) $item->id; ?></td>
                     
                     <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-					<td><?php echo Secretary\HTML::_('status.state', $item->state, $i, 'templates.', $canChange, $state ); ?></td>
+					<td><?php echo Secretary\HTML::_('status.state', $item, $i, 'templates', $canChange, $state ); ?></td>
                     
                     <td width="1%">
 						<?php if(COM_SECRETARY_PDF) { ?>
