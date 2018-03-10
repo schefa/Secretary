@@ -32,7 +32,7 @@ namespace Secretary {
     use JRegistry;
     
     if(!defined('SECRETARY_ADMIN_PATH')) define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR .'/components/com_secretary');
-    
+     
     // No direct access
     defined('_JEXEC') or die; 
          
@@ -204,6 +204,7 @@ namespace Secretary {
          * @param string $folder name of the folder where the files are
          */
         public static function loadFunctionsFromFolder($folder) {
+            
             if (is_dir($folder) && $handle = opendir($folder)) {
                 while (false !== ($entry = readdir($handle))) {
                     if ($entry != "." && $entry != ".." && strpos($entry,'.php') !== false ) {

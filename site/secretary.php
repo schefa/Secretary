@@ -34,15 +34,15 @@ $lang = JFactory::getLanguage();
 $lang->load('joomla', JPATH_ADMINISTRATOR);
 $lang->load('com_secretary', JPATH_ADMINISTRATOR);
 
+// Framework
+require_once  JPATH_ADMINISTRATOR .'/components/com_secretary/application/Secretary.php';
+
 $user	= \Secretary\Joomla::getUser();
 $app	= \Secretary\Joomla::getApplication();
 $view	= $app->input->getCmd('view','dashboard');
 $task	= $app->input->getCmd('task');
 $layout	= $app->input->getCmd('layout');
 $parts  = explode(".",$task);
-
-// Framework
-require_once  JPATH_ADMINISTRATOR .'/components/com_secretary/application/Secretary.php';
 
 $single = Secretary\Application::getSingularSection($view);
 $canSee	= $user->authorise('core.show','com_secretary.'.$single);
