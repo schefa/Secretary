@@ -2,8 +2,8 @@
 <project>
 	
 	<property environment="env"/>
-	<property name="source" value="."/> 
-	<property name="builddir" value="../Github"/>
+	<property name="source" value="../../../"/> 
+	<property name="builddir" value="../../../../Github"/>
 	<property name="release" value="${builddir}/_package"/>
 	<property name="verbose" value="false"/>
 	

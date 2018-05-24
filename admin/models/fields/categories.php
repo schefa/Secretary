@@ -28,6 +28,8 @@
  
 // No direct access
 defined('JPATH_BASE') or die;
+ 
+if(!defined('SECRETARY_ADMIN_PATH')) define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR .'/components/com_secretary');
 
 jimport('joomla.html.html');
 jimport('joomla.form.formfield');
