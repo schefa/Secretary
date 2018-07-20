@@ -22,7 +22,7 @@ Secretary is a Joomla component that allows you to manage your digital office lo
 Download the latest <a href="https://github.com/schefa/Secretary/releases">release</a> and install the zip-file via Joomla Backend
 
 ## Documentation
-Deutsch: https://www.schefa.com/de/secretary/docs
+Deutsch: https://www.schefa.com/de/secretary/docs  
 English: https://www.schefa.com/en/secretary/docs
 
 ## Free of charge - No support
