@@ -236,12 +236,14 @@ class SecretaryModelItem extends JModelAdmin
 					  
 					unset($data['id']); 
 					
+					/*
 					if(empty($data['downloadID'])) {
 						$this->setError('Download ID missing');
 						return false;
 					} else {
 						$this->updateDownloadId($data['downloadID']);
 					}
+					*/
 					
 					$data['products_columns'] = $this->getAcceptedCols($data, 'products_columns',\Secretary\Helpers\Products::$selectedColumns);
 					$data['contacts_columns'] = $this->getAcceptedCols($data, 'contacts_columns',\Secretary\Helpers\Subjects::$selectedColumns);

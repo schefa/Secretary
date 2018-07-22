@@ -49,11 +49,14 @@ defined('_JEXEC') or die;
     <div class="secretary_tab_pane" style="display:block;" id="settings_general">
     
     	<table class="table">
-        	<tbody>  
+        	<tbody> 
+				<?php /*
             	<tr>
                 	<td><?php echo $this->form->getLabel('downloadID'); ?></td>
                 	<td colspan="2"><?php echo $this->form->getInput('downloadID'); ?></td> 
                 </tr>
+				*/ ?>
+				
             	<tr class="noborder">
                 	<td colspan="3">&nbsp;</td>
                 </tr>

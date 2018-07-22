@@ -98,7 +98,7 @@ class Messages
 	{ 
 	    $db   = \Secretary\Database::getDBO();
 	    $user  = \Secretary\Joomla::getUser(); 
-	    $cids  = [$user->id];
+	    $cids  = array($user->id);
 	    
 	    if(!empty($ref)) {
 	    	
