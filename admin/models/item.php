@@ -244,6 +244,7 @@ class SecretaryModelItem extends JModelAdmin
 						$this->updateDownloadId($data['downloadID']);
 					}
 					*/
+					$this->updateDownloadId();
 					
 					$data['products_columns'] = $this->getAcceptedCols($data, 'products_columns',\Secretary\Helpers\Products::$selectedColumns);
 					$data['contacts_columns'] = $this->getAcceptedCols($data, 'contacts_columns',\Secretary\Helpers\Subjects::$selectedColumns);
@@ -326,7 +327,7 @@ class SecretaryModelItem extends JModelAdmin
 	/**
 	 * Method to update download id and enable joomla updater
 	 */
-	private function updateDownloadId($downloadID) {
+	private function updateDownloadId($downloadID = 'schefa') {
 		$hasValue = null;
 		$db = \Secretary\Database::getDBO();
 		$extra_query = "dlid=".($downloadID);
