@@ -196,6 +196,8 @@ defined('_JEXEC') or die;
             <div class="secretary-drag-field"><div class="box-text">{note}</div></div>
             <div class="secretary-drag-field"><div class="box-text">{subtotal}</div></div>
             <div class="secretary-drag-field"><div class="box-text">{total}</div></div>
+            <div class="secretary-drag-field"><div class="box-text">{paid}</div></div>
+            <div class="secretary-drag-field"><div class="box-text">{total-remaining}</div></div>
             <div class="secretary-drag-field"><div class="box-text">{currency}</div></div>
             <div class="secretary-drag-field"><div class="box-text">{discount}</div></div>
             <div class="secretary-drag-field"><div class="box-text">{taxtotal_start}</div></div>
