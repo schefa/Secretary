@@ -37,6 +37,10 @@ defined('_JEXEC') or die;
 
 <div class="changelog">
 
+<h4>This file will not be updated anymore. Please check https://github.com/schefa/Secretary for changelog</h4> 
+
+<hr>
+
 <h4>3.2.4 (2018-03-10)</h4>
 <ul> 
 <li><span class="badge badge-info">Bugfix</span> / <span class="badge badge-warning">Frontend views</span></li>
