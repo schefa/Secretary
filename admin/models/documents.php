@@ -220,11 +220,15 @@ class SecretaryModelDocuments extends JModelList
 		$isAdmin = \Secretary\Helpers\Access::checkAdmin();
 		$userContact = ($this->user->id > 0) ? Secretary\Database::getQuery('subjects',$this->user->id,'created_by') : (object) array('id'=>-1);
 		if(!$isAdmin 
-		    && (!$this->user->authorise('core.show.other', 'com_secretary.document') || !$this->user->authorise('core.show', 'com_secretary.document'))
+		    && (!$this->user->authorise('core.show.other', 'com_secretary.document') && !$this->user->authorise('core.show', 'com_secretary.document'))
 		    && (!empty($userContact) && $userContact->id > 0)) {
 	        $query->where($db->qn('a.subjectid').'='.intval($userContact->id));
+	    } elseif($this->user->authorise('core.show', 'com_secretary.document') 
+	            && !$this->user->authorise('core.show.other', 'com_secretary.document')) {
+	        // show the user their own document if they're not allowed to view documents from others
+            $query->where($db->qn('a.created_by').'='.intval($this->user->id));
 	    }
-
+        
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
@@ -268,13 +272,16 @@ class SecretaryModelDocuments extends JModelList
         foreach (self::$items as $item) {
             
             // START Permission Check
-            $canSee = false; $item->canChange = false; $item->canCheckin = false; $item->canEdit = false;
+            $canSee = false;
+            $item->canChange = false;
+            $item->canCheckin = false;
+            $item->canEdit = false;
             if($this->user->id == $item->created_by 
                 || $this->user->authorise('core.show.other', 'com_secretary.document') 
                 || (!empty($userContact) && $userContact->id == $item->subjectid))
-            {
+            { 
                 $canSee = true;
-                if( $this->user->authorise('core.edit.own', 'com_secretary.document.'.$item->id)
+                if( ($this->user->authorise('core.edit.own', 'com_secretary.document') && $this->user->id == $item->created_by )
                     || $this->user->authorise('core.edit', 'com_secretary.document')) {
                 $item->canEdit = true; $item->canChange	= true; $item->canCheckin = true;
                 }
