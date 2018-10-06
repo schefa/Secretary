@@ -28,8 +28,6 @@
 
 namespace Secretary\PDF;
 
-use mPDF;
-
 // No direct access
 defined('_JEXEC') or die;
 
@@ -38,7 +36,6 @@ class MPDFStrategy implements IPDFStrategy
 
     public function output($html,$css,$config = array())
     {
-        
         $pdfParameter = \Secretary\Application::parameters()->get('pdf');
         if(isset($pdfParameter)) {
             switch ($pdfParameter) {
@@ -56,7 +53,6 @@ class MPDFStrategy implements IPDFStrategy
     private function mpdf7($html,$css,$config = array())
     {
         require_once JPATH_LIBRARIES . '/vendor/autoload.php';
-        
         
         $header = isset($config['header']) ? $config['header'] : '';
         $footer = isset($config['footer']) ? $config['footer'] : '';

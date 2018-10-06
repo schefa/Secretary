@@ -71,7 +71,7 @@ defined('_JEXEC') or die;
                 	<?php 
                 	$options = array();
                 	$options[] = JHtml::_('select.option','0',JText::_('COM_SECRETARY_SELECT_OPTION'));
-                	$options[] = JHtml::_('select.option','mpdf','mPDF');
+                	$options[] = JHtml::_('select.option','mpdf','mPDF 6');
                 	$options[] = JHtml::_('select.option','mpdf7','mPDF 7');
                 	$options[] = JHtml::_('select.option','dompdf','Dompdf');
                 	
