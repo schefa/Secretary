@@ -31,6 +31,11 @@ defined('_JEXEC') or die;
 
 $user = Secretary\Joomla::getUser();
 $foldersLink = $user->authorise('core.show','com_secretary.folder');
+
+if ( !extension_loaded ( "Calendar" )){
+    throw new Exception('PHP Calendar is not enabled. Installation required. http://php.net/manual/en/book.calendar.php');
+    die;
+}
 ?>
 
 <div class="secretary-times secretary-main-container">

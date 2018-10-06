@@ -125,8 +125,10 @@ class Accounts
 					$accounting_entry['created'] = date('Y-m-d H:i:s');
 					
 					// Bind & Store 
-					if (!$table->bind($accounting_entry)) { $this->setError($table->getError()); return false; }
-					if (!$table->store()) { $this->setError($table->getError()); return false; }
+					if (!$table->bind($accounting_entry) || !$table->store()) { 
+					    throw new \Exception($table->getError()); 
+					    return false;
+					}
 					$table->reset();
 					
 					// Auf Konto buchen

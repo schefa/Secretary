@@ -43,7 +43,7 @@ class PDF
     /**
      * Instance. Only open one object at the time
      * 
-     * @return Instance
+     * @return Object
      */
     public static function getInstance() {
         if(null === static::$instance) {
