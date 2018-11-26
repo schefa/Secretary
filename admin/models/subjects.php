@@ -194,9 +194,11 @@ class SecretaryModelSubjects extends JModelList
 				$search = $db->Quote('' . $db->escape($search, true) . '%');
 				if(!empty($letter))
 					$search = $db->Quote(strtoupper($letter) . $db->escape($search, true) . '%');
-				
+                
+                $search = str_replace(" ","%",$search);
+
 				$query->where(' ( (a.lastname LIKE ' . $search . ' OR a.firstname LIKE ' . $search . ' ) OR CONCAT(firstname,lastname) LIKE ' . str_replace(" ","",$search) .') ');
-				
+                 
 			}
 			
 			if(!empty($this->zip)) {
