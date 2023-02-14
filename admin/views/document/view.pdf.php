@@ -68,7 +68,7 @@ class SecretaryViewDocument extends JViewLegacy
 		}
 		
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
 		    throw new Exception( implode("\n", $errors), 404); return false;
 		}
 		

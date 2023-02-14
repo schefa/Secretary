@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -33,37 +34,36 @@ jimport('joomla.application.component.controllerform');
 
 class SecretaryControllerFolder extends JControllerForm
 {
-	
+
 	protected $extension;
-	
+
 	public function __construct($config = array())
 	{
 		parent::__construct($config);
 
-		if (empty($this->extension))
-		{
-		    $this->extension = \Secretary\Joomla::getApplication()->input->getCmd('extension', 'documents');
+		if (empty($this->extension)) {
+			$this->extension = \Secretary\Joomla::getApplication()->input->getCmd('extension', 'documents');
 		}
 	}
 
 	public function getModel($name = 'Folder', $prefix = 'SecretaryModel', $config = array('ignore_request' => true))
 	{
-	    return Secretary\Model::create($name,$prefix,$config);
+		return Secretary\Model::create($name, $prefix, $config);
 	}
-	
+
 	protected function allowEdit($data = array(), $key = 'id')
 	{
-	    $return = \Secretary\Helpers\Access::allowEdit('folder',$data, $key);
+		$return = \Secretary\Helpers\Access::allowEdit('folder', $data, $key);
 		return $return;
 	}
-	
+
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
 	{
 		$append = parent::getRedirectToItemAppend($recordId);
 		$append .= '&extension=' . $this->extension;
 		return $append;
 	}
-	
+
 	protected function getRedirectToListAppend()
 	{
 		$append = parent::getRedirectToListAppend();
@@ -73,9 +73,9 @@ class SecretaryControllerFolder extends JControllerForm
 
 	public function batch($model = null)
 	{
-	    JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-	    $model = $this->getModel('Folder');
-	    $this->setRedirect(JRoute::_('index.php?option=com_secretary&view='. $this->view_list . $this->getRedirectToListAppend(), false));
-	    return parent::batch($model);
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$model = $this->getModel('Folder');
+		$this->setRedirect(JRoute::_('index.php?option=com_secretary&view=' . $this->view_list . $this->getRedirectToListAppend(), false));
+		return parent::batch($model);
 	}
 }

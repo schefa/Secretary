@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -123,7 +124,7 @@ class SecretaryRouter extends JComponentRouterBase
         $menu = $app->getMenu();
         $item = $menu->getActive();
         
-        $count = count($segments);
+        $count = count($segments ?? []);
         switch( $segments[0] )
         {
             default :

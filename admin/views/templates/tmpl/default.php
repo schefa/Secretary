@@ -217,7 +217,7 @@ $areas = array('documents','subjects','messages','newsletters','products');
                     <?php 
 					$catData = Secretary\Database::getQuery('folders',$item->catid,'id','fields','loadResult');
 					if($fields = json_decode($catData)) {
-						echo count($fields);	
+						echo count($fields ?? []);	
 					}
 					?>
                     </td>

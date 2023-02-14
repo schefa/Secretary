@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -27,92 +28,81 @@
  */
 
 namespace Secretary;
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class HTML
 {
-	
+
 	protected static $functions = array();
 	public static function register($key, $function)
 	{
-		if (is_callable($function))
-		{
+		if (is_callable($function)) {
 			self::$functions[$key] = $function;
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static function _($key)
 	{
-		if (array_key_exists($key, self::$functions))
-		{
+		if (array_key_exists($key, self::$functions)) {
 			return self::call(self::$functions[$key], func_get_args());
 		}
-		
-		$parts		= explode('.', $key);
-		$file		= $parts[0];
-		$function	= isset($parts[1]) ? $parts[1] : null;
-		
+
+		$parts = explode('.', $key);
+		$file = $parts[0];
+		$function = isset($parts[1]) ? $parts[1] : null;
+
 		// Get Class
-		$className =  "Secretary\HTML\\" .ucfirst($file);
-		if (!class_exists($className))
-		{
-		    $path = SECRETARY_ADMIN_PATH.'/application/html/'. strtolower($file) . '.php';
-			
-			if ($path)
-			{
+		$className = "Secretary\HTML\\" . ucfirst($file);
+		if (!class_exists($className)) {
+			$path = SECRETARY_ADMIN_PATH . '/application/html/' . strtolower($file) . '.php';
+
+			if ($path) {
 				require_once $path;
-				
-				if (!class_exists($className))
-				{
+
+				if (!class_exists($className)) {
 					throw new \Exception(sprintf('Class %s not found.', $className), 500);
 				}
-			}
-			else
-			{
+			} else {
 				throw new \Exception(sprintf('%s not found.', $file), 500);
 			}
 		}
-		
+
 		$callFunction = array($className, $function);
-		if (is_callable($callFunction))
-		{ 
+		if (is_callable($callFunction)) {
 			self::register($key, $callFunction);
 			return self::call($callFunction, func_get_args());
-		}
-		else
-		{
+		} else {
 			throw new \InvalidArgumentException(sprintf('Function %s::%s not found.', $className, $function), 500);
 		}
 	}
-	
+
 	protected static function call($function, $args)
 	{
-		if (!is_callable($function))
-		{
-			throw new \InvalidArgumentException('Function not supported '. $function, 500);
+		if (!is_callable($function)) {
+			throw new \InvalidArgumentException('Function not supported ' . $function, 500);
 		}
-		
+
 		array_shift($args); // Delete function name
-		
+
 		$params = array();
 		foreach ($args as &$arg)
-			$params[] = &$arg;
-		
+			$params[] = & $arg;
+
 		// Calls the function with additional parameter
 		return call_user_func_array($function, $params);
 	}
-	
+
 	/**
 	 * Modal dialog
 	 * 
 	 * @param string $selector
 	 * @return string
 	 */
-	public static function modal( $selector = 'a.open-modal')
+	public static function modal($selector = 'a.open-modal')
 	{
 		$html = array();
 		$html[] = '<div class="secretary-modal secretary-modal-outer" style="display:none;"><div class="secretary-modal-inner"></div></div>';
@@ -131,7 +121,7 @@ class HTML
 					$(this).parents('.secretary-modal-inner:first').empty();
                 });
 				
-                $('".$selector."').click(function() { 
+                $('" . $selector . "').click(function() { 
                     var url = $(this).data('url');
                     $('.secretary-modal-outer .secretary-modal-inner').addClass(' loading-gif');
                     $('.secretary-modal-outer').show();
@@ -144,8 +134,7 @@ class HTML
                 });
             })(jQuery);
 		</script>";
-		
+
 		return implode('', $html);
 	}
-	 
 }

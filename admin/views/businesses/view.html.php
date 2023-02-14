@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,13 +26,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
 
 class SecretaryViewBusinesses extends JViewLegacy
 {
@@ -41,7 +42,7 @@ class SecretaryViewBusinesses extends JViewLegacy
 	protected $state;
 	protected $states;
 	protected $view;
-	
+
 	/**
 	 * Method to display the View
 	 *
@@ -50,44 +51,43 @@ class SecretaryViewBusinesses extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-	    $app		        = \Secretary\Joomla::getApplication();
+		$app		        = \Secretary\Joomla::getApplication();
 		$this->view         = $app->input->getCmd('view');
-		
+
 		$this->state		= $this->get('State');
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
-		$this->states		= JFormHelper::loadFieldType('Secretarystatus', false)->getOptions('root'); 
+		$this->states		= JFormHelper::loadFieldType('Secretarystatus', false)->getOptions('root');
 
 		$this->canDo	= \Secretary\Helpers\Access::getActions($this->view);
-		if ( !$this->canDo->get('core.show')) {
-			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR') , 500);
+		if (!$this->canDo->get('core.show')) {
+			throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 500);
 			return false;
-		} elseif (count($errors = $this->get('Errors'))) {
-		    throw new Exception(implode("\n", $errors));
-		    return false;
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
+			throw new Exception(implode("\n", $errors));
+			return false;
 		}
-		
+
 		parent::display($tpl);
 	}
-	
+
 	/**
 	 * Method to create the Toolbar
 	 */
 	protected function addToolbar()
 	{
-		$html = array(); 
-		
+		$html = array();
+
 		if ($this->canDo->get('core.create')) {
 			$addEventText = JText::_('COM_SECRETARY_BUSINESS');
-			$html[] = Secretary\Navigation::ToolbarItem('business.add', JText::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR',$addEventText), false, 'newentry' );
+			$html[] = Secretary\Navigation::ToolbarItem('business.add', JText::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR', $addEventText), false, 'newentry');
 		}
-		
-		if(!empty($this->items[0]) && \Secretary\Joomla::getUser()->authorise('com_secretary','core.admin')) {
+
+		if (!empty($this->items[0]) && \Secretary\Joomla::getUser()->authorise('com_secretary', 'core.admin')) {
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.delete', 'COM_SECRETARY_TOOLBAR_DELETE', true, 'default', 'fa-trash');
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.setDefault', 'COM_SECRETARY_TOOLBAR_SET_HOME', true, 'default', 'fa-star');
 		}
-		
+
 		echo implode("\n", $html);
 	}
-	
 }

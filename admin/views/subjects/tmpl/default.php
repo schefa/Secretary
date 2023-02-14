@@ -123,7 +123,7 @@ $foldersLink = $user->authorise('core.show','com_secretary.folder');
                 	<th colspan="<?php echo 4; ?>">
                 	<span class="custom-columns-btn btn-link"><?php echo JText::_('COM_SECRETARY_COLUMNS_ADAPT')?></span>    
                 	</th>
-                	<th colspan="<?php echo count($this->acceptedColumns); ?>"></th>
+                	<th colspan="<?php echo count($this->acceptedColumns ?? []); ?>"></th>
                 </tr>
                 <tr>
                     <th width="1%" class="hidden-phone">
@@ -210,7 +210,7 @@ $foldersLink = $user->authorise('core.show','com_secretary.folder');
             
             <tfoot class="table-list-pagination">
             <tr>
-                <td colspan="<?php echo count(get_object_vars($this->items[0])) ?>">
+                <td colspan="<?php echo count(get_object_vars($this->items[0]) ?? []) ?>">
                     <div class="pull-left"><?php echo $this->pagination->getListFooter(); ?></div>
                 </td>
             </tr>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -28,21 +29,21 @@
 
 namespace Secretary\HTML;
 
-require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH . '/application/HTML.php';
 
 use JFactory;
 use JSession;
 use JHtml;
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class Search
 {
-	
-	public static function contacts ($class = NULL )
+
+	public static function contacts($class = NULL)
 	{
-		
+
 		// Build the script.
 		$script = array();
 
@@ -89,16 +90,15 @@ class Search
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
-		$link	= 'index.php?option=com_secretary&amp;view=subjects&amp;layout=modal&amp;tmpl=component&amp;'. JSession::getFormToken().'=1';
-		
-		return '<a class="modal btn-select-contacts '.$class.' pull-right hasTooltip" title="'.JHtml::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
-		
+
+		$link	= 'index.php?option=com_secretary&amp;view=subjects&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
+
+		return '<a class="modal btn-select-contacts ' . $class . ' pull-right hasTooltip" title="' . JHtml::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG') . '"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
 	}
-	
-	public static function documents ($class = NULL )
+
+	public static function documents($class = NULL)
 	{
-		
+
 		// Build the script.
 		$script = array();
 
@@ -116,17 +116,16 @@ class Search
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
-		$link	= 'index.php?option=com_secretary&amp;view=documents&amp;layout=modal&amp;tmpl=component&amp;'.JSession::getFormToken().'=1';
-		
-		return '<a class="modal '.$class.'" href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
-		
+
+		$link	= 'index.php?option=com_secretary&amp;view=documents&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
+
+		return '<a class="modal ' . $class . '" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
 	}
-	
-	
-	public static function locations ($class = NULL,$extension = NULL)
+
+
+	public static function locations($class = NULL, $extension = NULL)
 	{
-		
+
 		// Build the script.
 		$script = array();
 
@@ -142,11 +141,9 @@ class Search
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
-		$link	= 'index.php?option=com_secretary&amp;view=locations&amp;extension='.$extension.'&amp;layout=modal&amp;tmpl=component&amp;'.JSession::getFormToken().'=1';
-		
-		return '<a class="modal '.$class.'" href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
-		
+
+		$link	= 'index.php?option=com_secretary&amp;view=locations&amp;extension=' . $extension . '&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
+
+		return '<a class="modal ' . $class . '" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
 	}
-	
 }

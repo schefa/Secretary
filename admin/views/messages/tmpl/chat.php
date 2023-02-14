@@ -111,7 +111,7 @@ $this->document->addScriptDeclaration('
                     <?php } ?>
                         
         			<div class="pull-left btn-group btn-default secretary-online-users">
-        				<div class="btn online">Online: <strong>{{ online.total || '<?php echo count($this->online); ?>' }}</strong></div>
+        				<div class="btn online">Online: <strong>{{ online.total || '<?php echo count($this->online ?? []); ?>' }}</strong></div>
         				<div class="btn secretary-online-users-list">
             			<div class="pull-left" ng-repeat="user in onlineUsers.list">{{ user.name }}<i ng-show="!$last">,&nbsp;</i></div>
             			</div>

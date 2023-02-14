@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -34,37 +35,37 @@ jimport('joomla.form.form');
 
 class SecretaryModelItem extends JModelAdmin
 {
-    protected $app;
+	protected $app;
 	protected $business;
 	protected $extension;
 	protected $item;
-	
+
 	/**
 	 * Class constructor
 	 * 
 	 * @param array $config
 	 */
-    public function __construct($config = array())
+	public function __construct($config = array())
 	{
 		$this->app 			= \Secretary\Joomla::getApplication();
-		$this->extension	= $this->app->input->getCmd('extension','status');
+		$this->extension	= $this->app->input->getCmd('extension', 'status');
 		$this->business		= Secretary\Application::company();
-        parent::__construct($config);
-    }
-	
-    /**
-     * {@inheritDoc}
-     * @see \Joomla\CMS\MVC\Model\AdminModel::populateState()
-     */
+		parent::__construct($config);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Joomla\CMS\MVC\Model\AdminModel::populateState()
+	 */
 	protected function populateState()
 	{
-	    $pk = $this->app->input->getInt('id');
+		$pk = $this->app->input->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
-		
+
 		$params = Secretary\Application::parameters();
 		$this->setState('params', $params);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\BaseDatabaseModel::getTable()
@@ -72,7 +73,7 @@ class SecretaryModelItem extends JModelAdmin
 	public function getTable($type = 'Status', $prefix = 'SecretaryTable', $config = array())
 	{
 		$type = $this->extension;
-		return JTable::getInstance( $type , $prefix, $config);
+		return JTable::getInstance($type, $prefix, $config);
 	}
 
 	/**
@@ -81,104 +82,104 @@ class SecretaryModelItem extends JModelAdmin
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
-		$form = $this->loadForm('com_secretary.'. $this->extension, $this->extension, array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) return false; 
-		
-		if($this->extension == 'settings') {
-			foreach( $this->getItem()->params as $key => $val) {
+		$form = $this->loadForm('com_secretary.' . $this->extension, $this->extension, array('control' => 'jform', 'load_data' => $loadData));
+		if (empty($form)) return false;
+
+		if ($this->extension == 'settings') {
+			foreach ($this->getItem()->params as $key => $val) {
 				$form->setFieldAttribute($key, 'default', $val);
 			}
 		}
-			
+
 		return $form;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 */
 	protected function loadFormData()
 	{
-	    $data = $this->app->getUserState('com_secretary.edit.'.$this->extension.'.data', array());
+		$data = $this->app->getUserState('com_secretary.edit.' . $this->extension . '.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
-			
-			if(isset($data->title)) {
-				$data->title = Secretary\Utilities::cleaner($data->title,true);
+
+			if (isset($data->title)) {
+				$data->title = Secretary\Utilities::cleaner($data->title, true);
 			}
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\AdminModel::getItem()
 	 */
 	public function getItem($pk = null)
-	{  
-	    
+	{
+
 		if (empty($this->_item) && ($item = parent::getItem($pk))) {
-		
-			if(empty($item->business))
+
+			if (empty($item->business))
 				$item->business = $this->business['id'];
-		
+
 			switch ($this->extension) {
-				case ('fields') :
+				case ('fields'):
 					$item->title = JText::_($item->title);
-					if(!empty($item->values) && ($values = json_decode($item->values))) {
-					    if(is_array($values)) {
-    						$newValues = array();
-    						foreach($values AS $value) 
-    							$newValues[] = JText::_($value);
-    						$item->values = json_encode($newValues);
-					    }
+					if (!empty($item->values) && ($values = json_decode($item->values))) {
+						if (is_array($values)) {
+							$newValues = array();
+							foreach ($values as $value)
+								$newValues[] = JText::_($value);
+							$item->values = json_encode($newValues);
+						}
 					}
 
-					if($item->type === 'html') {
-					    $item->standard = strip_tags($item->standard,\Secretary\Helpers\Items::$allowedHTML);
+					if ($item->type === 'html') {
+						$item->standard = strip_tags($item->standard, \Secretary\Helpers\Items::$allowedHTML);
 					} else {
-					    $item->standard = strip_tags($item->standard);
+						$item->standard = strip_tags($item->standard);
 					}
-					
+
 					break;
-					
-				case ('status') :
+
+				case ('status'):
 					$item->title = JText::_($item->title);
 					$item->description = JText::_($item->description);
-					
-					if(empty($item->extension)) {
-					    $module	= $this->app->input->getCmd('module', 'system');
+
+					if (empty($item->extension)) {
+						$module	= $this->app->input->getCmd('module', 'system');
 						$item->extension = $module;
 					}
 					break;
-					
-				case ('uploads') :
+
+				case ('uploads'):
 					$item->upload = $item->id;
-					if(!empty($item->id) && !empty($item->title)) {	
-						$item->link = '/administrator/components/com_secretary/uploads/'.$item->business.'/'. $item->folder.'/'.$item->title;
+					if (!empty($item->id) && !empty($item->title)) {
+						$item->link = '/administrator/components/com_secretary/uploads/' . $item->business . '/' . $item->folder . '/' . $item->title;
 					}
 					break;
-					
-				case 'settings' : 
 
-				    $item->params['products_columns'] = (isset($item->params['products_columns'])) ? ($item->params['products_columns']) : (\Secretary\Helpers\Products::$selectedColumns);
-				    
-				    if(is_array($item->params['products_columns']))
-				        $item->params['products_columns'] = json_encode($item->params['products_columns']);
+				case 'settings':
 
-			        $item->params['contacts_columns'] = (isset($item->params['contacts_columns'])) ? ($item->params['contacts_columns']) : (\Secretary\Helpers\Subjects::$selectedColumns);
-			        
-			        if(is_array($item->params['contacts_columns']))
-			            $item->params['contacts_columns'] = json_encode($item->params['contacts_columns']);
-			        
-				    break;
+					$item->params['products_columns'] = (isset($item->params['products_columns'])) ? ($item->params['products_columns']) : (\Secretary\Helpers\Products::$selectedColumns);
+
+					if (is_array($item->params['products_columns']))
+						$item->params['products_columns'] = json_encode($item->params['products_columns']);
+
+					$item->params['contacts_columns'] = (isset($item->params['contacts_columns'])) ? ($item->params['contacts_columns']) : (\Secretary\Helpers\Subjects::$selectedColumns);
+
+					if (is_array($item->params['contacts_columns']))
+						$item->params['contacts_columns'] = json_encode($item->params['contacts_columns']);
+
+					break;
 			}
 			$this->_item = $item;
 		}
-		
+
 		return $this->_item;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\AdminModel::save()
@@ -186,56 +187,56 @@ class SecretaryModelItem extends JModelAdmin
 	public function save($data)
 	{
 		// Initialise variables; 
-	    $user	= \Secretary\Joomla::getUser();
+		$user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
-		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');
-		
+		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName() . '.id');
+
 		// Access checks.
-		if (!$user->authorise('core.admin', 'com_secretary'))
-		{
+		if (!$user->authorise('core.admin', 'com_secretary')) {
 			throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 			return false;
 		}
-			
+
 		// Allow an exception to be thrown.
-		try
-		{ 
-    		// Load the row if saving an existing record.
-    		if ($pk > 0) { $table->load($pk); }
-    		
+		try {
+			// Load the row if saving an existing record.
+			if ($pk > 0) {
+				$table->load($pk);
+			}
+
 			switch ($this->extension) {
-					
-				case 'activities' :
+
+				case 'activities':
 					$data['business'] = $this->business['id'];
 					break;
-					
-				case 'fields' :
-					if($data['type'] == 'list') {
+
+				case 'fields':
+					if ($data['type'] == 'list') {
 						$reOrder = array();
-						foreach($data['values'] as $value) {
+						foreach ($data['values'] as $value) {
 							$reOrder[$value['key']] = $value['value'];
 						}
 						$data['values']	= json_encode($reOrder);
 					}
-					
-					if(empty($data['title'])) {
-            			$this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', 'No Title'));
-					    return false;
+
+					if (empty($data['title'])) {
+						$this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', 'No Title'));
+						return false;
 					}
-					
-					if(empty($data['hard'])) {
-					    $data['hard'] = str_replace(' ','',strtolower($data['title']));
+
+					if (empty($data['hard'])) {
+						$data['hard'] = str_replace(' ', '', strtolower($data['title']));
 					}
 					break;
-					
+
 				case 'settings':
-					
-				    // Get the original POST data
-				    $data	= $this->app->input->post->getVar('jform', array(), 'post', 'array');
-					  
-					unset($data['id']); 
-					
+
+					// Get the original POST data
+					$data	= $this->app->input->post->getVar('jform', array(), 'post', 'array');
+
+					unset($data['id']);
+
 					/*
 					if(empty($data['downloadID'])) {
 						$this->setError('Download ID missing');
@@ -245,41 +246,32 @@ class SecretaryModelItem extends JModelAdmin
 					}
 					*/
 					$this->updateDownloadId();
-					
-					$data['products_columns'] = $this->getAcceptedCols($data, 'products_columns',\Secretary\Helpers\Products::$selectedColumns);
-					$data['contacts_columns'] = $this->getAcceptedCols($data, 'contacts_columns',\Secretary\Helpers\Subjects::$selectedColumns);
+
+					$data['products_columns'] = $this->getAcceptedCols($data, 'products_columns', \Secretary\Helpers\Products::$selectedColumns);
+					$data['contacts_columns'] = $this->getAcceptedCols($data, 'contacts_columns', \Secretary\Helpers\Subjects::$selectedColumns);
 					$data['params'] = json_encode($data);
-					
+
 					\Secretary\Helpers\Access::restoreDefaultSectionAssets();
 					break;
-					
-				case 'status' :
-					if(empty($data['id']) && $data['extension'] == 'accountings') {
-						$this->setError(JText::_('Not possible to create more status for accounting. Edit the existing'));
-						return false;	
-					}
-					break;
-					
-				case 'uploads' :
+
+				case 'uploads':
 					$data['created'] = date('Y-m-d hh:mm:ss');
-					if($data['id'] > 0) {
-					    $item = Secretary\Database::getQuery('uploads',$this->item->id,'id','id,extension,itemID,business,title,folder');
+					if ($data['id'] > 0) {
+						$item = Secretary\Database::getQuery('uploads', $this->item->id, 'id', 'id,extension,itemID,business,title,folder');
 						$data['created'] = $item->created;
 						$data['folder'] = $item->folder;
 						$data['title'] = $item->title;
 					}
-				
+
 					$data['business'] = $this->business['id'];
 					// Update Upload Document 
-					if( $user->authorise('core.upload', 'com_secretary') )
-					{
-					    $files	= $this->app->input->files->get('jform');
-						if(isset($files['upload']['name']) && !empty($files['upload']['name']))
-						{
-							$data['title'] = date('Y-m-d') .'_'. $files['upload']['name'];
+					if ($user->authorise('core.upload', 'com_secretary')) {
+						$files	= $this->app->input->files->get('jform');
+						if (isset($files['upload']['name']) && !empty($files['upload']['name'])) {
+							$data['title'] = date('Y-m-d') . '_' . $files['upload']['name'];
 							$data['folder'] = Secretary\Application::getSingularSection($data['extension']);
-							\Secretary\Helpers\Uploads::upload( $data['folder'], $data['extension'], $data['upload_title'], $pk );
-						} elseif(!isset($data['upload_title'])) {
+							\Secretary\Helpers\Uploads::upload($data['folder'], $data['extension'], $data['upload_title'], $pk);
+						} elseif (!isset($data['upload_title'])) {
 							$this->setError(JText::_('COM_SECRETARY_NO_FILE_SELECTED'));
 							return false;
 						}
@@ -291,59 +283,55 @@ class SecretaryModelItem extends JModelAdmin
 					$data['folder'] = (isset($table->folder)) ? $table->folder : $data['folder'];
 					$data['extension'] = (isset($table->extension)) ? $table->extension : $data['extension'];
 					break;
-				
 			}
-			
+
 			// Bind the data.
 			if (!$table->bind($data)) {
 				$this->setError($table->getError());
 				return false;
 			}
-			
+
 			// Store the data.
 			if (!$table->store()) {
 				$this->setError($table->getError());
 				return false;
 			}
-				
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$this->setError($e->getMessage());
 			return false;
 		}
-		
+
 		$pkName = $table->getKeyName();
 
 		if (isset($table->$pkName)) {
-			$this->setState($this->getName().'.id', $table->$pkName);
+			$this->setState($this->getName() . '.id', $table->$pkName);
 		}
 
 		$this->cleanCache();
 		return true;
-		
-	} 
-	
+	}
+
 	/**
 	 * Method to update download id and enable joomla updater
 	 */
-	private function updateDownloadId($downloadID = 'schefa') {
+	private function updateDownloadId($downloadID = 'schefa')
+	{
 		$hasValue = null;
 		$db = \Secretary\Database::getDBO();
-		$extra_query = "dlid=".($downloadID);
-		
+		$extra_query = "dlid=" . ($downloadID);
+
 		$query = $db->getQuery(true);
 		$query->select('name')
-		->from($db->qn('#__update_sites'))
-		->where($db->qn('name').'='.$db->quote('com_secretary'));
+			->from($db->qn('#__update_sites'))
+			->where($db->qn('name') . '=' . $db->quote('com_secretary'));
 		$db->setQuery($query);
 		$hasValue = $db->loadResult();
-		
-		if(!empty($hasValue )) {
+
+		if (!empty($hasValue)) {
 			$query = $db->getQuery(true);
 			$query->update('#__update_sites');
-			$query->set('extra_query = '.$db->quote($extra_query));
-			$query->where('name ='.$db->quote('com_secretary'));
+			$query->set('extra_query = ' . $db->quote($extra_query));
+			$query->where('name =' . $db->quote('com_secretary'));
 			$db->setQuery($query);
 			$db->execute();
 		} else {
@@ -351,26 +339,29 @@ class SecretaryModelItem extends JModelAdmin
 			$object->name = 'com_secretary';
 			$object->type = 'extension';
 			$object->enabled = 1;
-			$object->extra_query= $extra_query;
-			$object->location='https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';  
+			$object->extra_query = $extra_query;
+			$object->location = 'https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';
 			$result = $db->insertObject('#__update_sites', $object);
 		}
 	}
-	
-	private function getAcceptedCols(&$data, $dataFieldName, $allCols, $standardIfEmpty = 'title') {
 
-	    $ac = array();
-	    if(isset($data[$dataFieldName])) {
-    	    foreach($allCols as $name => $value) {
-    	        if((in_array($name,$data[$dataFieldName])))
-    	           $ac[] = $name;
-    	    }
-	    }
-	    if(empty($ac)) { $ac = array($standardIfEmpty); }
-	    	
-	    return ($ac);
+	private function getAcceptedCols(&$data, $dataFieldName, $allCols, $standardIfEmpty = 'title')
+	{
+
+		$ac = array();
+		if (isset($data[$dataFieldName])) {
+			foreach ($allCols as $name => $value) {
+				if ((in_array($name, $data[$dataFieldName])))
+					$ac[] = $name;
+			}
+		}
+		if (empty($ac)) {
+			$ac = array($standardIfEmpty);
+		}
+
+		return ($ac);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\BaseDatabaseModel::cleanCache()
@@ -379,5 +370,4 @@ class SecretaryModelItem extends JModelAdmin
 	{
 		parent::cleanCache('com_secretary');
 	}
-	
 }

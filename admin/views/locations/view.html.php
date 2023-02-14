@@ -69,7 +69,7 @@ class SecretaryViewLocations extends JViewLegacy
 		if ( !$this->canDo->get('core.show')) {
 		    echo '<div class="alert alert-danger">'. JText::_('JERROR_ALERTNOAUTHOR').'</div>';
 		    return false;
-		} elseif (count($errors = $this->get('Errors'))) {
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
 		    throw new Exception(implode("\n", $errors));
 		    return false;
 		}

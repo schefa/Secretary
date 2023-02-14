@@ -71,7 +71,7 @@ class SecretaryViewFolders extends JViewLegacy
 		$this->states		= $this->getStates();
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
 			JError::raiseError(404, implode("\n", $errors)); return false;
 		}
 		

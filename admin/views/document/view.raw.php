@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -47,7 +48,7 @@ class SecretaryViewDocument extends JViewLegacy
 	protected $checkedOut;
 	protected $info;
 	protected $fields;
-	
+
 	/**
 	 * Method to display the View
 	 *
@@ -59,54 +60,55 @@ class SecretaryViewDocument extends JViewLegacy
 		$jinput			= \Secretary\Joomla::getApplication()->input;
 		$section		= $jinput->getCmd('view');
 		$layout			= $jinput->getCmd('layout');
-		
+
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('Item');
 		$this->form		= $this->get('Form');
 		$this->canDo	= \Secretary\Helpers\Access::getActions($section);
-		
+
 		// Permission
 		$user   = \Secretary\Joomla::getUser();
-		$check	= \Secretary\Helpers\Access::edit($section, $this->item->id, $this->item->created_by );
-		
+		$check	= \Secretary\Helpers\Access::edit($section, $this->item->id, $this->item->created_by);
+
 		$show = false;
-		if( $layout == "edit" && true === $check) {
-		    $show = true;
-		} elseif($layout != "edit") {
-		    $subjectUserId = Secretary\Database::getQuery('subjects', $this->item->subjectid,'id', 'created_by','loadResult');
-		    if(false !== \Secretary\Helpers\Access::show($section,$this->item->id,$this->item->created_by))
-		        $show = true;
-		        if(false !== \Secretary\Helpers\Access::show($section,$this->item->id,$subjectUserId))
-		            $show = true;
+		if ($layout == "edit" && true === $check) {
+			$show = true;
+		} elseif ($layout != "edit") {
+			$subjectUserId = Secretary\Database::getQuery('subjects', $this->item->subjectid, 'id', 'created_by', 'loadResult');
+			if (false !== \Secretary\Helpers\Access::show($section, $this->item->id, $this->item->created_by))
+				$show = true;
+			if (false !== \Secretary\Helpers\Access::show($section, $this->item->id, $subjectUserId))
+				$show = true;
 		}
-		
-		if( !$show) {
-		    throw new Exception( JText::_('JERROR_ALERTNOAUTHOR'),500); return false;
+
+		if (!$show) {
+			throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 500);
+			return false;
 		}
-		
+
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
-		    throw new Exception( implode("\n", $errors), 404); return false;
+		if (count(($errors = $this->get('Errors')) ?? [])) {
+			throw new Exception(implode("\n", $errors), 404);
+			return false;
 		}
-		
+
 		// Get Business Data
 		$this->business	= Secretary\Application::company();
-		
+
 		//Get Field options
 		JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
-		$this->genderoptions		=	JFormHelper::loadFieldType('gender', false)->getList( $this->item->subject[0], 'jform[subject][0]' );
+		$this->genderoptions		=	JFormHelper::loadFieldType('gender', false)->getList($this->item->subject[0], 'jform[subject][0]');
 		$this->entityoptions		=	JFormHelper::loadFieldType('entities', false)->getList();
-		$this->productUsageOption	=	JFormHelper::loadFieldType('productUsage', false)->getList( $this->item->productUsage );
-		$this->itemtemplates		=	JFormHelper::loadFieldType('templates', false)->getList( $this->item->template, 'jform[template]');
-		
-		$this->emailtemplates		=	JFormHelper::loadFieldType('templates', false)->getList( $this->item->message['template'] , 'jform[fields][message][template]');
-		if( $this->item->message['template'] != 0)
+		$this->productUsageOption	=	JFormHelper::loadFieldType('productUsage', false)->getList($this->item->productUsage);
+		$this->itemtemplates		=	JFormHelper::loadFieldType('templates', false)->getList($this->item->template, 'jform[template]');
+
+		$this->emailtemplates		=	JFormHelper::loadFieldType('templates', false)->getList($this->item->message['template'], 'jform[fields][message][template]');
+		if ($this->item->message['template'] != 0)
 			$this->emailTemplate	= \Secretary\Helpers\Templates::getTemplate($this->item->message['template']);
-		
-		if(!empty($this->item->template))
-			$this->defaultTemplate		= \Secretary\Helpers\Templates::getTemplate($this->item->template); 
-			
+
+		if (!empty($this->item->template))
+			$this->defaultTemplate		= \Secretary\Helpers\Templates::getTemplate($this->item->template);
+
 		parent::display($tpl);
 	}
-	
 }

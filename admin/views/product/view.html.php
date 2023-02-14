@@ -70,7 +70,7 @@ class SecretaryViewProduct extends JViewLegacy
 		}
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
             throw new Exception(implode("\n", $errors));
 		}
 
@@ -135,7 +135,7 @@ class SecretaryViewProduct extends JViewLegacy
 			} 
 		}
 		$this->suppliers_ids = array_keys($contacts);
-		$this->contactsCounts = count($contacts);
+		$this->contactsCounts = count($contacts ?? []);
 		$contacts = json_encode( $contacts );
 		
 		$document = JFactory::getDocument();

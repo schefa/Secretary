@@ -66,7 +66,7 @@ class SecretaryViewProducts extends JViewLegacy
 		if ( !$this->canDo->get('core.show')) {
 		    $app->enqueueMessage( JText::_('JERROR_ALERTNOAUTHOR'), 'error');
 		    return false;
-		} elseif (count($errors = $this->get('Errors'))) {
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
 		    throw new Exception(implode("\n", $errors));
 		    return false;
 		}

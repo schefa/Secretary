@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -30,7 +31,7 @@ namespace Secretary;
 
 class Exception extends \Exception
 {
-    
+
     /**
      * Class constructor
      *
@@ -41,5 +42,4 @@ class Exception extends \Exception
     {
         parent::__construct($message, $code);
     }
-    
 }

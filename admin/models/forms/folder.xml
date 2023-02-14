@@ -1,37 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" />
 		<field name="asset_id" type="hidden" filter="unset"/>
 		<field name="parent_id" type="categories" label="COM_SECRETARY_CATEGORIES_FIELD_PARENT_LABEL" description="COM_SECRETARY_CATEGORIES_FIELD_PARENT_DESC" class="form-control"/>
-		
 		<field name="ordering" type="hidden" filter="unset"/>
 		<field name="level" type="hidden" filter="unset"/>
 		<field name="extension" type="hidden" label="COM_SECRETARY_EXTENSION" />
-		
-		<field name="title" type="text" label="COM_SECRETARY_CATEGORIES_TITLE" description="COM_SECRETARY_CATEGORIES_TITLE_DESC" class="fullwidth" required="true"  filter="Secretary\Utilities::cleaner" />
+		<field name="title" type="text" label="COM_SECRETARY_CATEGORIES_TITLE" description="COM_SECRETARY_CATEGORIES_TITLE_DESC" class="fullwidth" required="true" filter="Secretary\Utilities::cleaner" />
 		<field name="alias" type="text" class="fullwidth" label="COM_SECRETARY_CATEGORIES_ALIAS" size="40" filter="Secretary\Utilities::cleaner" />
-		<field name="description" type="textarea" class="fullwidth" label="COM_SECRETARY_BUSINESS_DEFAULTNOTE" filter="Secretary\Utilities::cleaner"  />
-		
+		<field name="description" type="textarea" class="fullwidth" label="COM_SECRETARY_BUSINESS_DEFAULTNOTE" filter="Secretary\Utilities::cleaner" />
 		<field name="state" type="secretarystatus" extension="folders" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" />
-		
 		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
-		
 		<field name="features" type="hidden" />
 		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
 		<field name="number" type="text" label="COM_SECRETARY_NUMBER" description="COM_SECRETARY_FOLDER_NUMBER_DESC" class="inputbox fullwidth" />
-		
 		<field name="buttonspacer" label="JGLOBAL_ACTION_PERMISSIONS_LABEL" description="JGLOBAL_ACTION_PERMISSIONS_DESCRIPTION" type="spacer" />
-		
 		<field name="checked_out" type="hidden" filter="unset"/>
 		<field name="checked_out_time" type="hidden" filter="unset"/>
-	
 		<field name="created_by" type="user" label="JGLOBAL_FIELD_CREATED_BY_LABEL" desc="JGLOBAL_FIELD_CREATED_BY_DESC" />
 		<field name="created_time" type="text" label="JGLOBAL_CREATED_DATE" class="readonly" filter="unset" readonly="true" />
-	
 		<field name="template" type="templates" label="COM_SECRETARY_TEMPLATE" default="0" />
 		<field name="access" type="access" label="COM_SECRETARY_ACCESS" />
 		<field id="rules" name="rules" type="rules" label="JFIELD_RULES_LABEL" translate_label="false" filter="rules" validate="rules" class="inputbox" component="com_secretary" section="folder"/>
 	</fieldset>
-
 </form>

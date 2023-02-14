@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,22 +26,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class SecretaryTableSubject extends JTable
 {
-    
-    /**
-     * Class constructor
-     *
-     * @param mixed $db
-     */
-	public function __construct(&$db) {
+
+	/**
+	 * Class constructor
+	 *
+	 * @param mixed $db
+	 */
+	public function __construct(&$db)
+	{
 		parent::__construct('#__secretary_subjects', 'id', $db);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::bind()
@@ -49,46 +51,46 @@ class SecretaryTableSubject extends JTable
 	{
 		$acl = JFactory::getACL();
 		$user = \Secretary\Joomla::getUser();
-	
-		if(!$user->authorise('core.admin', 'com_secretary.subject.'.$array['id'])){
-			$actions = $acl->getActions('com_secretary','subject');
-			$default_actions = $acl->getAssetRules('com_secretary.subject.'.$array['id'])->getData();
+
+		if (!$user->authorise('core.admin', 'com_secretary.subject.' . $array['id'])) {
+			$actions = $acl->getActions('com_secretary', 'subject');
+			$default_actions = $acl->getAssetRules('com_secretary.subject.' . $array['id'])->getData();
 			$array_jaccess = array();
-			foreach($actions as $action){
-				if(isset($default_actions[$action->name]))
+			foreach ($actions as $action) {
+				if (isset($default_actions[$action->name]))
 					$array_jaccess[$action->name] = $default_actions[$action->name];
 			}
 			$array['rules'] = \Secretary\Helpers\Access::JAccessRulestoArray($array_jaccess);
 		}
-		
-        //Bind the rules for ACL where supported.
-        if (isset($array['rules']) && is_array($array['rules'])) {
-            $array['rules'] = \Secretary\Helpers\Access::JAccessRulestoArray($array['rules']);
-            $this->setRules($array['rules']);
-        }
-		
+
+		//Bind the rules for ACL where supported.
+		if (isset($array['rules']) && is_array($array['rules'])) {
+			$array['rules'] = \Secretary\Helpers\Access::JAccessRulestoArray($array['rules']);
+			$this->setRules($array['rules']);
+		}
+
 		return parent::bind($array, $ignore);
-		
-    }
- 
-    /**
-     * Prepares data before saving it
-     * 
-     * @param array $data
-     */
-    public function prepareStore(&$data) {
-		
+	}
+
+	/**
+	 * Prepares data before saving it
+	 * 
+	 * @param array $data
+	 */
+	public function prepareStore(&$data)
+	{
+
 		//$data['created_by']	= ($this->created_by > 1) ? $this->created_by : 0;
 		$data['created']	= (isset($this->created) && ($this->created != '0000-00-00')) ? $this->created : date('Y-m-d');
-		
+
 		$business = Secretary\Application::company();
 		$data['business'] = (isset($this->business)) ? $this->business : (int) $business['id'];
-		
+
 		// Data Fields
 		$data['fields']	= (isset($data['fields'])) ? \Secretary\Helpers\Items::saveFields($data['fields']) : FALSE;
-		
+
 		// Google Maps
-		if(!empty($data['location'])) {
+		if (!empty($data['location'])) {
 			$coords = \Secretary\Helpers\Locations::getCoords($data['street'], $data['zip'], $data['location']);
 			$data['lat'] = $coords['lat'];
 			$data['lng'] = $coords['lng'];
@@ -96,14 +98,13 @@ class SecretaryTableSubject extends JTable
 			$data['lat'] = 0.0;
 			$data['lng'] = 0.0;
 		}
-		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::check()
 	 */
-    public function check()
+	public function check()
 	{
 		// No Contact
 		if (empty($this->lastname)) {
@@ -112,23 +113,24 @@ class SecretaryTableSubject extends JTable
 			return false;
 		}
 		// Wrong Email
-		if(!empty($this->email) && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+		if (!empty($this->email) && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
 			$this->setError('Invalid Email');
 			return false;
 		}
-			
+
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::_getAssetName()
 	 */
-	protected function _getAssetName() {
+	protected function _getAssetName()
+	{
 		$k = $this->_tbl_key;
 		return 'com_secretary.subject.' . (int) $this->$k;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::_getAssetParentId()
@@ -139,21 +141,22 @@ class SecretaryTableSubject extends JTable
 		$asset->loadByName('com_secretary.subject');
 		return $asset->id;
 	}
-	
+
 	/**
 	 * Delete and save activity
 	 *
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::delete()
 	 */
-    public function delete($pk = null) {
-        $this->load($pk);
-        $result = parent::delete($pk);
-        if ($result) {
+	public function delete($pk = null)
+	{
+		$this->load($pk);
+		$result = parent::delete($pk);
+		if ($result) {
 			// Remove in Newsletter Lists
 			\Secretary\Helpers\Newsletter::removeContactFromAllNewsletters($pk);
 			\Secretary\Helpers\Activity::set('subjects', 'deleted', $this->catid, $pk);
-        }
-        return $result;
-    }
+		}
+		return $result;
+	}
 }

@@ -78,7 +78,7 @@ class SecretaryViewTimes extends JViewLegacy
 		$this->listOffsetPast	= $this->state->get('filter.past');
 		
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
 			throw new Exception(implode("\n", $errors));
 		}
 		

@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
-		<field name="extension" type="secretarysections" label="COM_SECRETARY_SECTION" filter="safehtml" />	
-		<field name="title" type="text" label="COM_SECRETARY_TITLE" filter="safehtml" /> 
-		<field name="description" type="textarea" label="COM_SECRETARY_DESCRIPTION" filter="safehtml" /> 
-			
-		<field name="hard" type="text" label="COM_SECRETARY_FIELD_HARD" description="COM_SECRETARY_FIELD_HARD_DESC" filter="safehtml" /> 
-		
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" />
+		<field name="extension" type="secretarysections" label="COM_SECRETARY_SECTION" filter="safehtml" />
+		<field name="title" type="text" label="COM_SECRETARY_TITLE" filter="safehtml" />
+		<field name="description" type="textarea" label="COM_SECRETARY_DESCRIPTION" filter="safehtml" />
+		<field name="hard" type="text" label="COM_SECRETARY_FIELD_HARD" description="COM_SECRETARY_FIELD_HARD_DESC" filter="safehtml" />
 		<field name="type" type="datafields" label="COM_SECRETARY_FIELD_TYPE" class="form-control inputbox" />
-		<field name="values" type="textarea" label="Values" /> 
-		<field name="standard" type="textarea" label="Default" filter="safehtml" /> 
-		
+		<field name="values" type="textarea" label="Values" />
+		<field name="standard" type="textarea" label="Default" filter="safehtml" />
 		<field name="required" type="radio" class="btn-group secretary-group-radio" label="COM_SECRETARY_FIELDS_REQUIRED" description="COM_SECRETARY_FIELDS_REQUIRED_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		
 	</fieldset>
 </form>

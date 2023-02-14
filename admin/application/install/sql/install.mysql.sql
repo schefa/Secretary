@@ -1,61 +1,6 @@
 
 -- --------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `#__secretary_accounting` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entry_id` int(11) NOT NULL,
-  `business` int(11) NOT NULL,
-  `currency` varchar(20) DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  `title` varchar(123) NOT NULL DEFAULT '',
-  `state` int(11) NOT NULL DEFAULT '26',
-  `soll` varchar(255) NOT NULL COMMENT 'JSON of accounts : sum',
-  `haben` varchar(255) NOT NULL COMMENT 'JSON of accounts : sum',
-  `total` decimal(15,4) NOT NULL,
-  `upload` varchar(30) NOT NULL,
-  `fields` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_business_state` (`business`,`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `#__secretary_accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `business` int(11) NOT NULL,
-  `year` year(4) NOT NULL,
-  `kid` int(11) NOT NULL,
-  `budget` decimal(15,4) NOT NULL,
-  `soll` decimal(15,4) NOT NULL,
-  `haben` decimal(15,4) NOT NULL,
-  `history` text NOT NULL,
-  `fields` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_business_year` (`business`,`year`),
-  KEY `idx_kid` (`kid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `#__secretary_accounts_system` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `level` int(10) unsigned NOT NULL DEFAULT '0',
-  `ordering` int(10) unsigned NOT NULL DEFAULT '0',
-  `nr` varchar(30) NOT NULL,
-  `title` varchar(500) NOT NULL,
-  `description` text,
-  `type` varchar(32) NOT NULL DEFAULT '0',
-  `locked` tinyint(1) NOT NULL,
-  `fields` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_state` (`type`),
-  KEY `idx_parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `#__secretary_activities` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `extension` char(16) NOT NULL DEFAULT 'system',
@@ -230,11 +175,7 @@ INSERT IGNORE INTO  `#__secretary_fields` (`id`, `extension`, `title`, `descript
 (10, 'times', 'COM_SECRETARY_FIELD_TIMECOLOR', 'COM_SECRETARY_FIELD_TIMECOLOR_DESC', 'timeColor', 'color', '', '', 0),
 (11, 'newsletters', 'COM_SECRETARY_NEWSLETTER', 'COM_SECRETARY_NEWSLETTER_DESC', 'newsletter', 'sql', 'SELECT * FROM `#__secretary_folders` WHERE `extension` = ''newsletters''', '0', 0),
 (12, 'system', 'COM_SECRETARY_GENDER', '', 'anrede', 'list', '["COM_SECRETARY_GENDER_MR","COM_SECRETARY_GENDER_MRS",""]', '2', 0),
-(13, 'documents', 'COM_SECRETARY_EMAIL_TEMPLATE', 'COM_SECRETARY_EMAIL_TEMPLATE_DESC', 'emailtemplate', 'sql', 'SELECT * FROM `#__secretary_templates`', '1', 0),
-(14, 'documents', 'COM_SECRETARY_FIELD_SOLL', '', 'docsSoll', 'search', 'accounts_system', '0', 0),
-(15, 'documents', 'COM_SECRETARY_FIELD_HABEN', '', 'docsHaben', 'search', 'accounts_system', '0', 0),
-(16, 'documents', 'COM_SECRETARY_FIELD_SOLL_TAX', '', 'docsSollTax', 'accounts_tax', '19', '0', 0),
-(17, 'documents', 'COM_SECRETARY_FIELD_HABEN_TAX', '', 'docsHabenTax', 'accounts_tax', '19', '0', 0);
+(13, 'documents', 'COM_SECRETARY_EMAIL_TEMPLATE', 'COM_SECRETARY_EMAIL_TEMPLATE_DESC', 'emailtemplate', 'sql', 'SELECT * FROM `#__secretary_templates`', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -445,12 +386,7 @@ INSERT IGNORE INTO `#__secretary_status` (`id`, `extension`, `ordering`, `title`
 (21, 'times', 0, 'COM_SECRETARY_STATUS_PUBLISHED', 'COM_SECRETARY_STATUS_PUBLISHED_DESC', 20, 'publish', 'check-circle'),
 (22, 'times', 0, 'COM_SECRETARY_STATUS_ARCHIVED', 'COM_SECRETARY_STATUS_ARCHIVED_DESC', 20, '', 'archive'),
 (23, 'folders', 0, 'COM_SECRETARY_STATUS_UNPUBLISHED', 'COM_SECRETARY_STATUS_UNPUBLISHED_DESC', 24, 'unpublish', 'circle-thin'),
-(24, 'folders', 0, 'COM_SECRETARY_STATUS_PUBLISHED', 'COM_SECRETARY_STATUS_PUBLISHED_DESC', 23, 'publish', 'check-circle'),
-(25, 'accountings', 0, 'COM_SECRETARY_BUCHEN_LOCKED', 'COM_SECRETARY_BUCHEN_LOCKED_DESC', 26, 'locked', 'check-circle'),
-(26, 'accountings', 0, 'COM_SECRETARY_BUCHEN_PLANED', 'COM_SECRETARY_BUCHEN_PLANED_DESC', 25, 'pending', 'coffee'),
-(27, 'accountings', 0, 'COM_SECRETARY_BUCHEN_DONE', 'COM_SECRETARY_BUCHEN_DONE_DESC', 26, 'done', 'circle-thin'),
-(28, 'accountings', 0, 'COM_SECRETARY_STORNIERT_PLANED', 'COM_SECRETARY_STORNIERT_PLANED_DESC', 29, 'canceled-pending', 'coffee'),
-(29, 'accountings', 0, 'COM_SECRETARY_STORNIERT', 'COM_SECRETARY_STORNIERT_DESC', 28, 'canceled', 'trash');
+(24, 'folders', 0, 'COM_SECRETARY_STATUS_PUBLISHED', 'COM_SECRETARY_STATUS_PUBLISHED_DESC', 23, 'publish', 'check-circle');
 
 -- --------------------------------------------------------
 

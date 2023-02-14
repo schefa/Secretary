@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
-		<field name="title" type="text" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" /> 
-		<field name="ordering" type="text" label="COM_SECRETARY_ORDERING" filter="intval" /> 
-		<field name="description" type="text" label="COM_SECRETARY_STATUS_DESCRIPTION" filter="Secretary\Utilities::cleaner" /> 
-		
-		<field name="extension" type="secretarysections" label="COM_SECRETARY_MODULE" filter="Secretary\Utilities::cleaner" />		
-		
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" />
+		<field name="title" type="text" label="COM_SECRETARY_TITLE" filter="Secretary\Utilities::cleaner" />
+		<field name="ordering" type="text" label="COM_SECRETARY_ORDERING" filter="intval" />
+		<field name="description" type="text" label="COM_SECRETARY_STATUS_DESCRIPTION" filter="Secretary\Utilities::cleaner" />
+		<field name="extension" type="secretarysections" label="COM_SECRETARY_MODULE" filter="Secretary\Utilities::cleaner" />
 		<field name="closeTask" type="secretarystatus" label="COM_SECRETARY_CLOSETASK" description="COM_SECRETARY_CLOSETASK_DESC" class="form-control inputbox" />
-		<field name="class" type="text" label="COM_SECRETARY_CSSCLASS" filter="Secretary\Utilities::cleaner" /> 
-		<field name="icon" type="text" label="COM_SECRETARY_STATUS_ICON" filter="Secretary\Utilities::cleaner" /> 
-		
+		<field name="class" type="text" label="COM_SECRETARY_CSSCLASS" filter="Secretary\Utilities::cleaner" />
+		<field name="icon" type="text" label="COM_SECRETARY_STATUS_ICON" filter="Secretary\Utilities::cleaner" />
 	</fieldset>
 </form>

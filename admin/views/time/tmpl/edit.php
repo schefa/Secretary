@@ -31,7 +31,7 @@ defined('_JEXEC') or die;
  
 $template = (strpos($this->extension,"locations") === true) ? 'locations' : $this->extension;
 $this->datafields	= \Secretary\Helpers\Items::makeFieldsReadyForList($this->item->fields);
-$fields				= $this->datafields['fields'];
+$fields				= ($this->datafields && array_key_exists('fields', $this->datafields)) ? $this->datafields['fields'] : [];
 ?>
 
 <div class="secretary-main-container">

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
-		<field name="title" type="text" label="COM_SECRETARY_ENTITY_TITEL" filter="Secretary\Utilities::cleaner" /> 
-		<field name="description" type="text" label="COM_SECRETARY_ENTITY_LANG" filter="Secretary\Utilities::cleaner" /> 
-		
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" />
+		<field name="title" type="text" label="COM_SECRETARY_ENTITY_TITEL" filter="Secretary\Utilities::cleaner" />
+		<field name="description" type="text" label="COM_SECRETARY_ENTITY_LANG" filter="Secretary\Utilities::cleaner" />
 	</fieldset>
 </form>

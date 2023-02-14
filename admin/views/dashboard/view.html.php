@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,19 +26,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
-JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH.'/models/fields');
+JFormHelper::addFieldPath(SECRETARY_ADMIN_PATH . '/models/fields');
 
 class SecretaryViewDashboard extends JViewLegacy
 {
 	protected $items;
 	protected $pagination;
 	protected $state;
-	
+
 	/**
 	 * Method to display the View
 	 *
@@ -46,18 +47,17 @@ class SecretaryViewDashboard extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		
+
 		$this->pagination	= $this->get('Pagination');
 		$this->activities	= $this->get('Items');
 		$this->state		= $this->get('State');
 		$this->canDo		= \Secretary\Helpers\Access::getActions();
-		
+
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
 			throw new Exception(implode("\n", $errors));
 		}
-		
+
 		parent::display($tpl);
 	}
-	
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -35,28 +36,29 @@ $lang->load('joomla', JPATH_ADMINISTRATOR);
 $lang->load('com_secretary', JPATH_ADMINISTRATOR);
 
 // Framework
-require_once  JPATH_ADMINISTRATOR .'/components/com_secretary/application/Secretary.php';
+require_once  JPATH_ADMINISTRATOR . '/components/com_secretary/application/Secretary.php';
 
-$user	= \Secretary\Joomla::getUser();
-$app	= \Secretary\Joomla::getApplication();
-$view	= $app->input->getCmd('view','dashboard');
-$task	= $app->input->getCmd('task');
-$layout	= $app->input->getCmd('layout');
-$parts  = explode(".",$task);
+$user    = \Secretary\Joomla::getUser();
+$app    = \Secretary\Joomla::getApplication();
+$view    = $app->input->getCmd('view', 'dashboard');
+$task    = $app->input->getCmd('task');
+$layout    = $app->input->getCmd('layout');
+$parts  = explode(".", $task);
 
 $single = Secretary\Application::getSingularSection($view);
-$canSee	= $user->authorise('core.show','com_secretary.'.$single);
-if(in_array($view,array('dashboard')) || in_array($parts[0],array('ajax'))) 
-    $canSee = $user->authorise('core.show','com_secretary.business');
-if(($view === 'message' && $layout === 'form') OR $view === 'dashboard' OR $view === 'messages')
+$canSee    = $user->authorise('core.show', 'com_secretary.' . $single);
+if (in_array($view, array('dashboard')) || in_array($parts[0], array('ajax')))
+    $canSee = $user->authorise('core.show', 'com_secretary.business');
+if (($view === 'message' && $layout === 'form') or $view === 'dashboard' or $view === 'messages')
     $canSee = true;
-    
+
 /********************************************
  ************		Display       ************
  *********************************************/
-    
-if(true === boolval($canSee)) {
-    include_once ( JPATH_ADMINISTRATOR .'/components/com_secretary/secretary.php');
+
+if (true === boolval($canSee)) {
+    include_once(JPATH_ADMINISTRATOR . '/components/com_secretary/secretary.php');
 } else {
-    echo '<div class="alert alert-danger">'.JText::_('JERROR_ALERTNOAUTHOR').'</div>'; return false;
+    echo '<div class="alert alert-danger">' . JText::_('JERROR_ALERTNOAUTHOR') . '</div>';
+    return false;
 }

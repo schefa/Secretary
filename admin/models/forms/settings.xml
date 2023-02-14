@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="basic">
-	
 		<field id="id" name="id" type="hidden" size="10" readonly="true" />
 		<field name="params" type="textarea" label="COM_SECRETARY_PARAMETER" />
 		<field name="rules" type="textarea" label="COM_SECRETARY_PARAMETER" />
-		<field name="pdf" type="hidden" filter="integer" /> 
-		<field name="downloadID" class="fullwidth" type="text" label="COM_SECRETARY_AJOPSKLA"  description="COM_SECRETARY_AJOPSKLA_DESC" />
-		
+		<field name="pdf" type="hidden" filter="integer" />
+		<field name="downloadID" class="fullwidth" type="text" label="COM_SECRETARY_AJOPSKLA" description="COM_SECRETARY_AJOPSKLA_DESC" />
 	</fieldset>
-	 
 	<fieldset>
 		<field name="activityCreated" type="radio" class="btn-group secretary-group-radio" default="1" label="COM_SECRETARY_SETTINGS_ACTIVITY_CREATED" description="COM_SECRETARY_SETTINGS_ACTIVITY_CREATED_DESC">
 			<option value="1">JYES</option>
@@ -24,22 +21,17 @@
 			<option value="0">JNO</option>
 		</field>
 	</fieldset>
-	
 	<fieldset name="COM_SECRETARY_SETTINGS_GOOGLEMAPS">
-	
 		<field name="gMapsContacts" type="radio" class="btn-group secretary-group-radio" default="0" label="COM_SECRETARY_SUBJECTS" description="COM_SECRETARY_SETTINGS_GOOGLEMAPS_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
 		<field name="gMapsLocations" type="radio" class="btn-group secretary-group-radio" default="0" label="COM_SECRETARY_LOCATIONS" description="COM_SECRETARY_SETTINGS_GOOGLEMAPS_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
 		<field name="gMapsAPI" type="text" class="form-control" default="" label="COM_SECRETARY_SETTINGS_GOOGLEMAPS_API_KEY" />
 	</fieldset>
-	
 	<fieldset>
 		<field name="templateColor" type="radio" class="btn-group secretary-group-radio-multi form-control" default="blue" label="COM_SECRETARY_SETTINGS_TEMPLATE" description="COM_SECRETARY_SETTINGS_TEMPLATE_DESC">
 			<option value="red">COM_SECRETARY_SETTINGS_TEMPLATE_RED</option>
@@ -47,66 +39,48 @@
 			<option value="black">COM_SECRETARY_SETTINGS_TEMPLATE_BLACK</option>
 			<option value="white">COM_SECRETARY_SETTINGS_TEMPLATE_WHITE</option>
 		</field>
-		
 		<field name="filterList" type="radio" class="btn-group secretary-group-radio" default="1" label="COM_SECRETARY_SETTINGS_BUSINESS_FILTERLIST" description="COM_SECRETARY_SETTINGS_BUSINESS_FILTERLIST_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
 		<field name="documents_frontend" type="radio" class="btn-group secretary-group-radio" default="1" label="COM_SECRETARY_SETTINGS_DOCUMENTS_FRONTEND" description="COM_SECRETARY_SETTINGS_DOCUMENTS_FRONTEND_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
-		
 		<field name="accessMissingNote" type="radio" class="btn-group secretary-group-radio" default="0" label="COM_SECRETARY_ACCESS_LIMITED_ACCESS_NOTE">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
 		<field name="entitySelect" type="radio" class="btn-group secretary-group-radio-multi" default="0" label="COM_SECRETARY_SETTINGS_BUSINESS_ENTITYSELECT" description="COM_SECRETARY_SETTINGS_BUSINESS_ENTITYSELECT_DESC">
 			<option value="1">COM_SECRETARY_SETTINGS_BUSINESS_ENTITYSELECT_OPT1</option>
 			<option value="0">COM_SECRETARY_SETTINGS_BUSINESS_ENTITYSELECT_OPT2</option>
 		</field>
-		
 		<field name="numberformat" type="list" class="form-control" default="0" label="COM_SECRETARY_NUMBER_FORMAT" description="COM_SECRETARY_NUMBER_FORMAT_DESC">
 			<option value="0">1,000,000.00</option>
 			<option value="1">1000000.00</option>
 			<option value="2">1.000.000,00</option>
 			<option value="3">1000000,00</option>
 		</field>
-		
 		<field name="currencyformat" type="list" class="form-control" default="0" label="COM_SECRETARY_CURRENCY_FORMAT">
 			<option value="0">10 $</option>
 			<option value="1">10$</option>
 			<option value="2">$ 10</option>
 			<option value="3">$10</option>
 		</field>
-		
 		<field name="documentExt" type="text" class="form-control" default="jpeg,jpg,png,gif,pdf,doc,docx,odt" label="COM_SECRETARY_SETTINGS_DOCUMENT_ENDUNG" description="COM_SECRETARY_SETTINGS_DOCUMENT_ENDUNG_DESC"/>
-		
 		<field name="documentSize" type="number" step="1000" min="0" class="btn-group " default="2500000" label="COM_SECRETARY_SETTINGS_DOCUMENT_SIZE" description="COM_SECRETARY_SETTINGS_DOCUMENT_SIZE_DESC"/>
-		
 		<field name="cache" type="radio" class="btn-group secretary-group-radio" default="1" label="COM_SECRETARY_CACHE" description="COM_SECRETARY_CACHE_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
-		 
-		
 		<field name="messages_chat" type="radio" class="btn-group secretary-group-radio" default="1" label="COM_SECRETARY_LIVE_CHAT_ENABLE">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		
 		<field name="messages_unread" type="secretarystatus" extension="messages" label="COM_SECRETARY_SETTINGS_MESSAGES_UNREAD" description="COM_SECRETARY_SETTINGS_MESSAGES_UNREAD_DESC" class="form-control inputbox" />
-		
-		<field name="messages_waitMsg" type="number" min="100" step="100" default="3000" label="COM_SECRETARY_SETTINGS_MESSAGES_WAITMSG" description="COM_SECRETARY_SETTINGS_MESSAGES_WAITMSG_DESC" class="form-control inputbox" /> 
-		
-		<field name="messages_waitPing" type="number" min="100" step="100" default="10000" label="COM_SECRETARY_SETTINGS_MESSAGES_WAITPING" description="COM_SECRETARY_SETTINGS_MESSAGES_WAITPING_DESC" class="form-control inputbox" /> 
-		
+		<field name="messages_waitMsg" type="number" min="100" step="100" default="3000" label="COM_SECRETARY_SETTINGS_MESSAGES_WAITMSG" description="COM_SECRETARY_SETTINGS_MESSAGES_WAITMSG_DESC" class="form-control inputbox" />
+		<field name="messages_waitPing" type="number" min="100" step="100" default="10000" label="COM_SECRETARY_SETTINGS_MESSAGES_WAITPING" description="COM_SECRETARY_SETTINGS_MESSAGES_WAITPING_DESC" class="form-control inputbox" />
 		<field name="products_columns" type="hidden" />
 		<field name="rules" type="textarea" />
 	</fieldset>
-	
 </form>

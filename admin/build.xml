@@ -8,7 +8,6 @@
                         <param name="NAME_SHORT" value="secretary"/>
                 </antcall>
         </target>
-	
         <target name="build">
                 <antcall target="buildcomponent">
                         <param name="NAME" value="com_secretary"/>

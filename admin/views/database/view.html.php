@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,14 +26,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
 class SecretaryViewDatabase extends JViewLegacy
-{	
+{
 	/**
 	 * Method to display the View
 	 *
@@ -40,17 +41,16 @@ class SecretaryViewDatabase extends JViewLegacy
 	 * @see \Joomla\CMS\MVC\View\HtmlView::display()
 	 */
 	public function display($tpl = null)
-	{ 
-	    $canSee	= Secretary\Joomla::getUser()->authorise('core.admin','com_secretary');
-		if (!$canSee || count($errors = $this->get('Errors'))) {
+	{
+		$canSee	= Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary');
+		if (!$canSee || count($this->get('Errors') ?? [])) {
 			throw new Exception(500, JText('JERROR_ALERTNOAUTHOR'));
 			return false;
 		}
-		
+
 		$model = $this->getModel('Database');
 		$this->assetsErrors = $model->assetsErrorMissingParent();
-		
+
 		parent::display($tpl);
 	}
-	
 }

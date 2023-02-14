@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,48 +26,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class SecretaryTableRepetition extends JTable
 {
-    
+
     /**
      * Class constructor
      *
      * @param mixed $db
      */
-	public function __construct(&$db) {
+    public function __construct(&$db)
+    {
         parent::__construct('#__secretary_repetition', 'id', $db);
     }
-	
-	/**
-	 * Delete and save activity
-	 *
-	 * {@inheritDoc}
-	 * @see \Joomla\CMS\Table\Table::delete()
-	 */
-    public function delete($pk = null) {
+
+    /**
+     * Delete and save activity
+     *
+     * {@inheritDoc}
+     * @see \Joomla\CMS\Table\Table::delete()
+     */
+    public function delete($pk = null)
+    {
         $this->load($pk);
         $result = parent::delete($pk);
         if ($result) {
-			\Secretary\Helpers\Activity::set('repetition', 'deleted', $this->catid, $pk);
+            \Secretary\Helpers\Activity::set('repetition', 'deleted', $this->catid, $pk);
         }
         return $result;
     }
-    
+
     /**
      * Delete repetition depending on time id
      * 
      * @param int $time_id
      */
     public function deleteRepetition($time_id)
-	{
-	    $row = Secretary\Database::getQuery('repetition',$time_id,'time_id');
-		if(isset($row->id)) {
-			$result = $this->delete($row->id);
-		}
-	}
-	
+    {
+        $row = Secretary\Database::getQuery('repetition', $time_id, 'time_id');
+        if (isset($row->id)) {
+            $result = $this->delete($row->id);
+        }
+    }
 }

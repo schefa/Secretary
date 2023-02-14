@@ -1,70 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" />
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" />
 		<field name="createdEntry" type="hidden" filter="intval" />
-		
-		<field name="catid" type="categories" class="filter_category" required="required" extension="documents" label="COM_SECRETARY_CATEGORY"  />
-	
+		<field name="catid" type="categories" class="filter_category" required="required" extension="documents" label="COM_SECRETARY_CATEGORY" />
 		<field name="currency" type="currency" required="true" class="form-control" label="COM_SECRETARY_CURRENCY" filter="safehtml" />
-		
-		<field name="nr" type="text" class="inputAjaxNumber form-control" default="0" label="COM_SECRETARY_NR" hint="COM_SECRETARY_NR" filter="Secretary\Utilities::cleaner" /> 
+		<field name="nr" type="text" class="inputAjaxNumber form-control" default="0" label="COM_SECRETARY_NR" hint="COM_SECRETARY_NR" filter="Secretary\Utilities::cleaner" />
 		<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" filter="intval" />
-
-       <field name="title" type="textarea" label="COM_SECRETARY_TITLE" description="" filter="Secretary\Utilities::cleaner" />
-	   
-	   <field name="text" class="form-control" type="textarea" height="200" filter="Secretary\Utilities::cleaner" label="COM_SECRETARY_HINT" hint="COM_SECRETARY_HINT" /> 
-
-       <field name="office" type="locations" class="form-control" extension="documents" label="COM_SECRETARY_LOCATION_DOCUMENTS" /> 
-	   
-       <field name="subject" type="textarea" /> 
-       <field name="subjectid" type="hidden" label="COM_SECRETARY_SUBJECT" filter="intval" /> 
-
-       <field name="created_by" type="user" label="COM_SECRETARY_USER" /> 
-       <field name="created" type="calendar" default="NOW" label="COM_SECRETARY_DATE" required="required" /> 
-       <field name="deadline" type="calendar" label="COM_SECRETARY_DEADLINE" /> 
-       <field name="paid" type="number" step="0.01" min="0" class="form-control" label="COM_SECRETARY_PAIDAMOUNT" description="COM_SECRETARY_PAIDAMOUNT_DESC" filter="Secretary\Utilities::cleaner" />
-
-		<field name="items" type="textarea" label="COM_SECRETARY_ITEMS" cols="100" rows="8" /> 
-		<field name="total" type="text" class="document-total" label="COM_SECRETARY_BRUTTO" readonly="readonly" /> 
-		<field name="subtotal" type="text" class="form-control input-small document-subtotal" size="10" label="COM_SECRETARY_NETTO" readonly="readonly" /> 
-		<field name="taxtotal" type="textarea" class="document-taxtotal" label="COM_SECRETARY_STEUERN" /> 
-		
-		<field name="rabatt" type="number" step="0.01" min="0" class="document-rabatt text-center" label="COM_SECRETARY_RABATT" /> 
-		
+		<field name="title" type="textarea" label="COM_SECRETARY_TITLE" description="" filter="Secretary\Utilities::cleaner" />
+		<field name="text" class="form-control" type="textarea" height="200" filter="Secretary\Utilities::cleaner" label="COM_SECRETARY_HINT" hint="COM_SECRETARY_HINT" />
+		<field name="office" type="locations" class="form-control" extension="documents" label="COM_SECRETARY_LOCATION_DOCUMENTS" />
+		<field name="subject" type="textarea" />
+		<field name="subjectid" type="hidden" label="COM_SECRETARY_SUBJECT" filter="intval" />
+		<field name="created_by" type="user" label="COM_SECRETARY_USER" />
+		<field name="created" type="calendar" default="NOW" label="COM_SECRETARY_DATE" required="required" />
+		<field name="deadline" type="calendar" label="COM_SECRETARY_DEADLINE" />
+		<field name="paid" type="number" step="0.01" min="0" class="form-control" label="COM_SECRETARY_PAIDAMOUNT" description="COM_SECRETARY_PAIDAMOUNT_DESC" filter="Secretary\Utilities::cleaner" />
+		<field name="items" type="textarea" label="COM_SECRETARY_ITEMS" cols="100" rows="8" />
+		<field name="total" type="text" class="document-total" label="COM_SECRETARY_BRUTTO" readonly="readonly" />
+		<field name="subtotal" type="text" class="form-control input-small document-subtotal" size="10" label="COM_SECRETARY_NETTO" readonly="readonly" />
+		<field name="taxtotal" type="textarea" class="document-taxtotal" label="COM_SECRETARY_STEUERN" />
+		<field name="rabatt" type="number" step="0.01" min="0" class="document-rabatt text-center" label="COM_SECRETARY_RABATT" />
 		<field name="taxtype" type="list" label="COM_SECRETARY_TAX" class="form-control inputbox" size="1" default="1">
 			<option value="0">COM_SECRETARY_NOTAX</option>
 			<option value="1">COM_SECRETARY_INKLUSIV</option>
 			<option value="2">COM_SECRETARY_EXKLUSIV</option>
 		</field>
-			
 		<field name="state" type="secretarystatus" extension="documents" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" />
-		
 		<field name="upload" type="upload" label="COM_SECRETARY_DOCUMENT" description="COM_SECRETARY_DOCUMENT_DESC" size="10" />
 		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
-		
 		<field name="accounting_id" type="hidden" filter="intval" />
 		<field name="accounting" type="hidden" />
-		
 		<field name="template" type="templates" label="COM_SECRETARY_TEMPLATE" />
 		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
 		<field name="checked_out" type="hidden" filter="unset" />
 		<field name="checked_out_time" type="hidden" filter="unset" />
 		<field name="repetition" type="hidden" />
-
 	</fieldset>
-
 	<fieldset name="accesscontrol">
 		<field name="asset_id" type="hidden" filter="unset" />
-		<field name="rules"
-			type="rules"
-			label="JFIELD_RULES_LABEL"
-			filter="rules"
-			validate="rules"
-			class="inputbox"
-			component="com_secretary"
-			section="document" />
+		<field name="rules" type="rules" label="JFIELD_RULES_LABEL" filter="rules" validate="rules" class="inputbox" component="com_secretary" section="document" />
 	</fieldset>
-	
 </form>

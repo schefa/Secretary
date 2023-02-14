@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('JPATH_BASE') or die;
 
@@ -34,30 +35,29 @@ JFormHelper::loadFieldClass('list');
 
 class JFormFieldCurrency extends JFormFieldList
 {
-	
+
 	protected $type = 'currency';
-	
+
 	/**
 	 * Method to return a list of all available currencies
 	 * 
 	 * {@inheritDoc}
 	 * @see JFormFieldList::getInput()
 	 */
-	public function getInput( )
+	public function getInput()
 	{
 		$options = array();
-		
-		$items = \Secretary\Database::getObjectList('currencies',['currency',"CONCAT(symbol,' (',title,')') as value"],[],'title ASC'); 
-		foreach($items as $message) {
-			$options[] = JHtml::_('select.option', $message->currency, $message->value );
+
+		$items = \Secretary\Database::getObjectList('currencies', ['currency', "CONCAT(symbol,' (',title,')') as value"], [], 'title ASC');
+		foreach ($items as $message) {
+			$options[] = JHtml::_('select.option', $message->currency, $message->value);
 		}
-	
+
 		$html = '<div class="select-arrow select-arrow-white">'
-		    .'<select name="'.$this->name.'" id="'.$this->id.'" class="form-control currency-select">'
-            . JHtml::_('select.options', $options, 'value', 'text', $this->value)
-            . '</select></div>';
-            	
+			. '<select name="' . $this->name . '" id="' . $this->id . '" class="form-control currency-select">'
+			. JHtml::_('select.options', $options, 'value', 'text', $this->value)
+			. '</select></div>';
+
 		return $html;
 	}
-	
 }

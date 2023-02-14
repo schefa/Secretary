@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -47,7 +48,7 @@ class HttpClient
     public function execute()
     {
         $application = \Secretary\Joomla::getApplication();
-    
+
         $ch = curl_init($this->url);
         curl_setopt_array($ch, array(
             CURLOPT_RETURNTRANSFER => true,
@@ -56,16 +57,12 @@ class HttpClient
 
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($httpStatus !== 200)
-        {
-            $application->enqueueMessage("HTTP call failed with error ".$httpStatus.".", 'error');
-        }
-        elseif ($response === false)
-        { 
+        if ($httpStatus !== 200) {
+            $application->enqueueMessage("HTTP call failed with error " . $httpStatus . ".", 'error');
+        } elseif ($response === false) {
             $application->enqueueMessage("HTTP call failed empty response.", 'error');
         }
 
         return $response;
     }
-
 }

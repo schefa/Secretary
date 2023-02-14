@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -33,15 +34,16 @@ defined('_JEXEC') or die;
 
 class Debug
 {
-    
+
     /**
      * Debug
      */
-    public static function _($array, $die = false) {
+    public static function _($array, $die = false)
+    {
         echo '<pre>';
         print_r($array);
         echo '</pre>';
-        if($die) die;
+        if ($die)
+            die;
     }
-    
 }

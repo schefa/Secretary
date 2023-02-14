@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('JPATH_BASE') or die;
 
@@ -36,86 +37,77 @@ JFormHelper::loadFieldClass('list');
 
 class JFormFieldSubjects extends JFormFieldList
 {
-	
+
 	protected $type = 'subjects';
 
-	public function getOptions( )
+	public function getOptions()
 	{
 		$html = array();
-		
-		$user	= \Secretary\Joomla::getUser();
-        $db		= \Secretary\Database::getDBO();
-        $query	= $db->getQuery(true);
-		
+
+		$user = \Secretary\Joomla::getUser();
+		$db = \Secretary\Database::getDBO();
+		$query = $db->getQuery(true);
+
 		$query->select("id,CONCAT( lastname ,', ', firstname, ' aus ', location, ' (', street, ')') AS username")
 			->from($db->qn('#__secretary_subjects'))
 			->order('lastname ASC');
-			
+
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
-		
-		foreach($items as $subject) {
-			if($user->authorise('core.show','com_secretary.subject.'.$subject->id) 
-			|| $user->authorise('core.show.other','com_secretary.subject.'.$subject->id))
-			{
-				$html[] = JHtml::_('select.option', $subject->id, $subject->username );
+
+		foreach ($items as $subject) {
+			if (
+				$user->authorise('core.show', 'com_secretary.subject.' . $subject->id)
+				|| $user->authorise('core.show.other', 'com_secretary.subject.' . $subject->id)
+			) {
+				$html[] = JHtml::_('select.option', $subject->id, $subject->username);
 			}
 		}
-		
+
 		return $html;
-		
 	}
-	
+
 	protected function getInput()
 	{
-		
+
 		// Load the javascript
 		JHtml::_('bootstrap.tooltip');
-		
+
 		JFactory::getLanguage()->load('com_secretary', JPATH_ADMINISTRATOR);
 		$html = array();
-		
+
 		// Note: class='required' for client side validation.
 		$class = '';
-		if ($this->required)
-		{
+		if ($this->required) {
 			$class = ' class="required modal-value"';
 		}
 
 		// The active contact id field.
-		if (0 == (int) $this->value)
-		{
+		if (0 == (int) $this->value) {
 			$value = '';
-		}
-		else
-		{
+		} else {
 			$value = (int) $this->value;
 		}
 
 		// Get the title of the linked chart
-		if ((int) $this->value > 0)
-		{
-		    $fieldStr = (Secretary\Database::getDbType() == 'postgresql') ? "firstname || ' ' || lastname" : 'CONCAT_WS(" ",firstname,lastname)';
-			
+		if ((int) $this->value > 0) {
+			$fieldStr = (Secretary\Database::getDbType() == 'postgresql') ? "firstname || ' ' || lastname" : 'CONCAT_WS(" ",firstname,lastname)';
+
 			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true)
 				->select($fieldStr)
 				->from($db->qn('#__secretary_subjects'))
-				->where($db->qn('id').'=' . (int) $this->value);
+				->where($db->qn('id') . '=' . (int) $this->value);
 			$db->setQuery($query);
 
-			try
-			{
+			try {
 				$title = $db->loadResult();
-			}
-			catch (RuntimeException $e)
-			{
+			} catch (RuntimeException $e) {
 				JError::raiseWarning(500, $e->getMessage());
 			}
 		}
 
-		if (empty($title))
-		{
+		if (empty($title)) {
 			$title = JText::_('COM_SECRETARY_SELECT_A_CONTACT');
 		}
 
@@ -133,38 +125,35 @@ class JFormFieldSubjects extends JFormFieldList
 
 		// Add the script to the document head.
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
-		
-		
-		$link	= 'index.php?option=com_secretary&amp;view=subjects&amp;layout=modal&amp;tmpl=component&amp;'.JSession::getFormToken().'=1';
-		
-		if (isset($this->element['language']))
-		{
+
+		$link = 'index.php?option=com_secretary&amp;view=subjects&amp;layout=modal&amp;tmpl=component&amp;' . JSession::getFormToken() . '=1';
+
+		if (isset($this->element['language'])) {
 			$link .= '&amp;forcedLanguage=' . $this->element['language'];
 		}
-		
-		if (isset($this->element['email']))
-		{
+
+		if (isset($this->element['email'])) {
 			$link .= '&amp;email=1';
 		}
-		
+
 		// The current contact display field.
 		$html[] = '<span class="input-append">';
 		$html[] = '<input type="text" class="input-medium" id="subject_name" value="' . $title . '" disabled="disabled" size="35" />';
-		$html[] = '<input type="hidden" id="subject_id"'.$class.' name="' . $this->name . '" value="' . $value . '" />';
-			
-		$html[] = '<a class="modal btn btn-default hasTooltip" title="'.JHtml::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG').'"  href="'.$link.'" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'. JText::_('COM_SECRETARY_SELECT').'</a>';
-		
+		$html[] = '<input type="hidden" id="subject_id"' . $class . ' name="' . $this->name . '" value="' . $value . '" />';
+
+		$html[] = '<a class="modal btn btn-default hasTooltip" title="' . JHtml::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG') . '"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">' . JText::_('COM_SECRETARY_SELECT') . '</a>';
+
 		// Edit contact
 		$html[] = '<a class="btn hasTooltip' . ($value ? '' : ' hidden') . '" target="_blank"'
-				. ' href="index.php?option=com_secretary&layout=modal&tmpl=component&task=subject.edit&id=' . $value . '"'
-				. ' title="' . JHtml::tooltipText('COM_SECRETARY_EDIT') . '" >'
-				. '<span class="icon-edit"></span>' . JText::_('JACTION_EDIT') . '</a>';
-				
+			. ' href="index.php?option=com_secretary&layout=modal&tmpl=component&task=subject.edit&id=' . $value . '"'
+			. ' title="' . JHtml::tooltipText('COM_SECRETARY_EDIT') . '" >'
+			. '<span class="icon-edit"></span>' . JText::_('JACTION_EDIT') . '</a>';
+
 		// Clear contact
 		$html[] = '<button id="' . $this->id . '_clear" class="btn' . ($value ? '' : ' hidden') . '"'
-				. " onclick=\"return jSelectUser('','','','','','','','')\">"
-				. '<span class="icon-remove"></span>' . JText::_('COM_SECRETARY_CLEAR')
-				. '</button>';
+			. " onclick=\"return jSelectUser('','','','','','','','')\">"
+			. '<span class="icon-remove"></span>' . JText::_('COM_SECRETARY_CLEAR')
+			. '</button>';
 
 		// The current contact display field.
 		$html[] = JHtml::_(
@@ -175,12 +164,11 @@ class JFormFieldSubjects extends JFormFieldList
 				'title' => JText::_('COM_SECRETARY_CHANGE_CONTACT'),
 				'width' => '800px',
 				'height' => '300px',
-				'footer' => '<button class="btn" data-dismiss="modal" aria-hidden="true">'.JText::_("JLIB_HTML_BEHAVIOR_CLOSE").'</button>'
+				'footer' => '<button class="btn" data-dismiss="modal" aria-hidden="true">' . JText::_("JLIB_HTML_BEHAVIOR_CLOSE") . '</button>'
 			)
 		);
 		$html[] = '</span>';
-		
+
 		return implode("\n", $html);
 	}
-
 }

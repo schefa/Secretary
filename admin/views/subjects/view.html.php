@@ -66,7 +66,7 @@ class SecretaryViewSubjects extends JViewLegacy
 		}
 		
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) { 
+		if (count(($errors = $this->get('Errors')) ?? [])) { 
 			$app->enqueueMessage( implode("\n", $errors) , 'error');
 			return false;
 		}

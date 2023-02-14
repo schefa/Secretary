@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -29,10 +30,11 @@
 namespace Secretary;
 
 // No direct access
-defined('_JEXEC') or die; 
+defined('_JEXEC') or die;
 
-class Security {
-    
+class Security
+{
+
     /**
      * Encrypt and decrypt a string
      * 
@@ -40,31 +42,32 @@ class Security {
      * @param string $string string
      * @return NULL|string
      */
-    public static function encryptor($action,$string) {
+    public static function encryptor($action, $string)
+    {
         $output = NULL;
-        
+
         $encrypt_method = "AES-256-CBC";
         $secret_key = 'pAIo2';
         $secret_iv = 'pAl1Io2';
-        
-        $key	= hash('sha256', $secret_key);
-        $iv		= substr(hash('sha256', $secret_iv), 0, 16);
-        
+
+        $key = hash('sha256', $secret_key);
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
         switch ($action) {
-                
-            case 'close' :
+
+            case 'close':
                 $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
                 $output = base64_encode($output);
                 break;
-                
-            case 'open' :
+
+            case 'open':
                 $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
                 break;
-                
-            default: break;
-        } 
-        
+
+            default:
+                break;
+        }
+
         return $output;
     }
-    
-} 
+}

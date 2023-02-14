@@ -206,7 +206,7 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                     <tfoot class="table-list-pagination">
                         <?php 
                         if(isset($this->items[0])){
-                            $colspan = count(get_object_vars($this->items[0]));
+                            $colspan = count(get_object_vars($this->items[0]) ?? []);
                         }
                         else{
                             $colspan = 10;
@@ -315,7 +315,7 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                 <h3 class="documents-sidebar-title"><?php echo JText::_('COM_SECRETARY_REPETITIONS'); ?></h3>
                 <div class="documents-sidebar-repetitions">
                 <?php if(!empty($this->itemsRepeat)) { ?>
-                   <?php echo JText::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->itemsRepeat)); ?>
+                   <?php echo JText::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->itemsRepeat ?? [])); ?>
                    <div class="margin-top"></div>
                    <a class="open-modal btn headline-sidebar-button" 
                    data-url="<?php echo Secretary\Route::create('documents', array('layout'=>'repetition','tmpl'=>'component')); ?>" >

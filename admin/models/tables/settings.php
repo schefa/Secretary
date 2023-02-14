@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,27 +26,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class SecretaryTableSettings extends JTable
 {
-    
-    /**
-     * Class constructor
-     *
-     * @param mixed $db
-     */
-    public function __construct(&$db) {
-        parent::__construct('#__secretary_settings', 'id', $db);
-    }
-	
+
+	/**
+	 * Class constructor
+	 *
+	 * @param mixed $db
+	 */
+	public function __construct(&$db)
+	{
+		parent::__construct('#__secretary_settings', 'id', $db);
+	}
+
 	public function getAssetPId()
 	{
 		return self::_getAssetParentId();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::_getAssetParentId()

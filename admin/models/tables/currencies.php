@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -36,21 +37,23 @@ class SecretaryTableCurrencies extends JTable
      *
      * @param mixed $db
      */
-    public function __construct(&$db) {
+    public function __construct(&$db)
+    {
         parent::__construct('#__secretary_currencies', 'id', $db);
     }
-    
+
     /**
      * Delete and save activity
      *
      * {@inheritDoc}
      * @see \Joomla\CMS\Table\Table::delete()
      */
-    public function delete($pk = null) {
+    public function delete($pk = null)
+    {
         $this->load($pk);
         $result = parent::delete($pk);
         if ($result) {
-			\Secretary\Helpers\Activity::set('currencies', 'deleted', 0, $pk);
+            \Secretary\Helpers\Activity::set('currencies', 'deleted', 0, $pk);
         }
         return $result;
     }

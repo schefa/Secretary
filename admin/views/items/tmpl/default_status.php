@@ -109,7 +109,7 @@ $canCheckin	= $user->authorise('core.manage',		'com_secretary');
     <tfoot class="table-list-pagination">
         <?php 
         if(isset($this->items[0])){
-            $colspan = count(get_object_vars($this->items[0]));
+            $colspan = count(get_object_vars($this->items[0]) ?? []);
         }
         else{
             $colspan = 10;

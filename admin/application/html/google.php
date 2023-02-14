@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -28,7 +29,7 @@
 
 namespace Secretary\HTML;
 
-require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
+require_once SECRETARY_ADMIN_PATH . '/application/HTML.php';
 
 use JText;
 use Secretary\Application;
@@ -38,50 +39,46 @@ defined('_JEXEC') or die;
 
 class Google
 {
-	
-	public static function items() {
-		
-	}
-	
-	public static function maps( $items, $type = 'contacts' )
-	{
-		
-	    $params = Application::parameters();
-	    $key       = $params->get('gMapsAPI',"");
-	    $keyString = (strlen($key)>0) ? 'key='.$key.'&amp;' : "";
-	    
-		$new      = array();
-		$html     = array();
-		$html[]   = '<div id="map" class="fullwidth" style="width:100%;height:400px;"></div>';
-		
-		foreach($items AS $i => $item)
-		{ 
-			if($item->lat != 0 && $item->lng != 0)
-			{
-				$anschrift = "";
-				
-				if($type == 'contacts')
-					$anschrift = addslashes(html_entity_decode($item->firstname, ENT_QUOTES)) ." ". addslashes(html_entity_decode($item->lastname, ENT_QUOTES)) ;
-			   
-				if(!empty($item->street))
-				  $anschrift .= "<br>".addslashes(html_entity_decode($item->street, ENT_QUOTES));
-				  
-				if(!empty($item->location))
-				  $anschrift .= "<br>".$item->zip." ".addslashes(html_entity_decode($item->location, ENT_QUOTES));
-				
-				$new [] = "{'name': '". $anschrift ."', 'lat' : '". $item->lat ."', 'lng' : '". $item->lng ."'},";
-				
-			}
-			
-		}
-		
-						
-		$html[] =  '<script type="text/javascript">';
-		
-		$html[] = '
+
+    public static function items()
+    {
+    }
+
+    public static function maps($items, $type = 'contacts')
+    {
+
+        $params = Application::parameters();
+        $key       = $params->get('gMapsAPI', "");
+        $keyString = (strlen($key) > 0) ? 'key=' . $key . '&amp;' : "";
+
+        $new      = array();
+        $html     = array();
+        $html[]   = '<div id="map" class="fullwidth" style="width:100%;height:400px;"></div>';
+
+        foreach ($items as $i => $item) {
+            if ($item->lat != 0 && $item->lng != 0) {
+                $anschrift = "";
+
+                if ($type == 'contacts')
+                    $anschrift = addslashes(html_entity_decode($item->firstname, ENT_QUOTES)) . " " . addslashes(html_entity_decode($item->lastname, ENT_QUOTES));
+
+                if (!empty($item->street))
+                    $anschrift .= "<br>" . addslashes(html_entity_decode($item->street, ENT_QUOTES));
+
+                if (!empty($item->location))
+                    $anschrift .= "<br>" . $item->zip . " " . addslashes(html_entity_decode($item->location, ENT_QUOTES));
+
+                $new[] = "{'name': '" . $anschrift . "', 'lat' : '" . $item->lat . "', 'lng' : '" . $item->lng . "'},";
+            }
+        }
+
+
+        $html[] =  '<script type="text/javascript">';
+
+        $html[] = '
 (function($) {  
 		    
-    var points = ['. implode('',$new ). '];
+    var points = [' . implode('', $new) . '];
     window.initMap = function() {
         
         var infowindow = new google.maps.InfoWindow();
@@ -154,10 +151,9 @@ class Google
         $.each(markers, function() { this.setMap(map); });
 	}   
 })( jQuery );';
-		
-		$html[] = '</script><script async defer src="https://maps.google.com/maps/api/js?'.$keyString.'callback=initMap"></script>';
-		
-		return implode('', $html);
-	}
-	
+
+        $html[] = '</script><script async defer src="https://maps.google.com/maps/api/js?' . $keyString . 'callback=initMap"></script>';
+
+        return implode('', $html);
+    }
 }

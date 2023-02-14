@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('JPATH_BASE') or die;
 
@@ -38,9 +39,8 @@ class JFormFieldTax extends JFormField
 
 	protected function getOptions()
 	{
-		$options = array( 1 => 'COM_SECRETARY_INKLUSIV', 2 => 'COM_SECRETARY_EXKLUSIV');
+		$options = array(1 => 'COM_SECRETARY_INKLUSIV', 2 => 'COM_SECRETARY_EXKLUSIV');
 		$html = JHtml::_('select.genericlist', $options, $this->name, $input_options, 'value', 'text', $value);
 		return $html;
 	}
-	
 }

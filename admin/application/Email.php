@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -37,157 +38,159 @@ use JUser;
 // No direct access
 defined('_JEXEC') or die;
 
-class Email 
+class Email
 {
-	
-	public static function emailMessage( $data )
+
+	public static function emailMessage($data)
 	{
-	    
-	    $user = \Secretary\Joomla::getUser(); 
-		$business	= Application::company();
-		
-		$result = array('link' => 'index.php?option=com_secretary&view=messages&layout=talk&id='.$data['id'].'&catid='.$data['catid'], 
-						'msg' => JText::_('COM_SECRETARY_EMAIL_SENT_FAILED'), 'msgClass' => 'warning',
-						'result' => false); 
-		
-		if(!(\Secretary\Helpers\Access::checkAdmin())) return $result;
-		
-		if(empty($data['subject'])) {
+
+		$user = \Secretary\Joomla::getUser();
+		$business = Application::company();
+
+		$result = array(
+			'link' => 'index.php?option=com_secretary&view=messages&layout=talk&id=' . $data['id'] . '&catid=' . $data['catid'],
+			'msg' => JText::_('COM_SECRETARY_EMAIL_SENT_FAILED'),
+			'msgClass' => 'warning',
+			'result' => false
+		);
+
+		if (!(\Secretary\Helpers\Access::checkAdmin()))
+			return $result;
+
+		if (empty($data['subject'])) {
 			$result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_SUBJECT');
 			return $result;
 		}
-		
+
 		// $attachment = SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/emails/document-'.$data['createdEntry'].'.pdf';
 		$attachment = "";
-		$name		= $data['contact_to'];
-		$email		= $data['contact_to_alias'];
-		
-		if(empty($name) || empty($email)) {
-			$result['msg'] .= ': '. JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_RECIPIENT');
+		$name = $data['contact_to'];
+		$email = $data['contact_to_alias'];
+
+		if (empty($name) || empty($email)) {
+			$result['msg'] .= ': ' . JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_RECIPIENT');
 			return $result;
 		}
-		
-		if(!empty($data['id']))
-		{
+
+		if (!empty($data['id'])) {
 			$sent = self::email($name, $email, $data['subject'], $data['message'], $attachment);
-				
-			if($sent == 1)
-			{
+
+			if ($sent == 1) {
 				$db = \Secretary\Database::getDBO();
-				 
-				$data['fields']['emailed'] = intval( time() );
+
+				$data['fields']['emailed'] = intval(time());
 				$fields = json_encode($data['fields'], true);
-				
+
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName("#__secretary_messages"));
-				$query->set($db->quoteName("fields")."=". $db->quote($fields));
-				$query->where($db->quoteName("id")."=". $db->escape($data['id']));
+				$query->set($db->quoteName("fields") . "=" . $db->quote($fields));
+				$query->where($db->quoteName("id") . "=" . $db->escape($data['id']));
 				$db->setQuery($query);
 				$db->query();
-				
+
 				$result['msg'] = JText::sprintf('COM_SECRETARY_EMAIL_SENT_TO', $email);
 				$result['msgClass'] = 'success';
 				$result['result'] = true;
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	/**
 	 * Send a document via email
 	 * 
 	 * @param array $data
 	 * @return string JSON response
 	 */
-	public static function emailDocument( $data )
+	public static function emailDocument($data)
 	{
-	    $user       = \Secretary\Joomla::getUser(); 
-		$business	= \Secretary\Application::company();
-		
-		$result = array('link' => 'index.php?option=com_secretary&task=document.edit&id='.$data['id'].'&catid='.$data['catid'], 
-						'msg' => JText::_('COM_SECRETARY_EMAIL_SENT_FAILED'), 'msgClass' => 'warning',
-						'result' => false); 
-		
+		$user = \Secretary\Joomla::getUser();
+		$business = \Secretary\Application::company();
+
+		$result = array(
+			'link' => 'index.php?option=com_secretary&task=document.edit&id=' . $data['id'] . '&catid=' . $data['catid'],
+			'msg' => JText::_('COM_SECRETARY_EMAIL_SENT_FAILED'),
+			'msgClass' => 'warning',
+			'result' => false
+		);
+
 		// No permission
-		if(!(\Secretary\Helpers\Access::checkAdmin())) {
+		if (!(\Secretary\Helpers\Access::checkAdmin())) {
 			$result['msg'] = JText::_('COM_SECRETARY_PERMISSION_FAILED');
 			return $result;
 		}
-		
+
 		// No contact
-		if(empty($data['fields']['message']['subject'])) {
+		if (empty($data['fields']['message']['subject'])) {
 			$result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_SUBJECT');
 			return $result;
 		}
-		
+
 		$category_title = self::getCategoryTitle($data['catid']);
-		$attachment = SECRETARY_ADMIN_PATH.'/uploads/'.$business['id'].'/emails/'.$category_title.'-'.$data['createdEntry'].'.pdf';
-		
-		$name		= $data['subject'][1];
-		$email		= $data['subject'][6];
-		
-		if(empty($name) || empty($email)) {
-			$result['msg'] .= ': '. JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_RECIPIENT');
+		$attachment = SECRETARY_ADMIN_PATH . '/uploads/' . $business['id'] . '/emails/' . $category_title . '-' . $data['createdEntry'] . '.pdf';
+
+		$name = $data['subject'][1];
+		$email = $data['subject'][6];
+
+		if (empty($name) || empty($email)) {
+			$result['msg'] .= ': ' . JText::_('COM_SECRETARY_EMAIL_SENT_FAILED_NO_RECIPIENT');
 			return $result;
 		}
-		
-		if(!empty($data['id']))
-		{
+
+		if (!empty($data['id'])) {
 			$sent = self::email($name, $email, $data['fields']['message']['subject'], $data['fields']['message']['text'], $attachment);
-				
-			if(is_bool($sent))
-			{
+
+			if (is_bool($sent)) {
 				$db = \Secretary\Database::getDBO();
-				 
-				$data['fields']['message']['emailed'] = intval( time() );
+
+				$data['fields']['message']['emailed'] = intval(time());
 				$fields = json_encode($data['fields'], true);
-				
+
 				$query = $db->getQuery(true);
 				$query->update($db->quoteName("#__secretary_documents"));
-				$query->set($db->quoteName("fields")."=". $db->quote($fields));
-				$query->where($db->quoteName("id")."=". $db->escape($data['id']));
+				$query->set($db->quoteName("fields") . "=" . $db->quote($fields));
+				$query->where($db->quoteName("id") . "=" . $db->escape($data['id']));
 				$db->setQuery($query);
 				$db->execute();
-				
-				if($sent) {
-				    $result['msg'] = JText::sprintf('COM_SECRETARY_EMAIL_SENT_TO', $email);
+
+				if ($sent) {
+					$result['msg'] = JText::sprintf('COM_SECRETARY_EMAIL_SENT_TO', $email);
 				} else {
-				    $result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED');
+					$result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED');
 				}
 				$result['msgClass'] = 'success';
 				$result['result'] = $sent;
 			} else {
-			    $result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED') .': '.$sent->get('message');
-			    $result['msgClass'] = 'error';
-			    $result['result'] = false;
+				$result['msg'] = JText::_('COM_SECRETARY_EMAIL_SENT_FAILED') . ': ' . $sent->get('message');
+				$result['msgClass'] = 'error';
+				$result['result'] = false;
 			}
 		}
-		
+
 		return $result;
 	}
 
 	public static function sendEmail($data, $contact_to, $contact_to_email, $subject, $emailText, $attachment = '')
 	{
-		
-	    $app = \Secretary\Joomla::getApplication();
 
-		if ($contact->email == '' && $contact->user_id != 0)
-		{
-			$contact_user   = JUser::getInstance($contact->user_id);
+		$app = \Secretary\Joomla::getApplication();
+
+		if ($contact->email == '' && $contact->user_id != 0) {
+			$contact_user = JUser::getInstance($contact->user_id);
 			$contact->email = $contact_user->get('email');
 		}
-		
+
 		$mailfrom = $app->get('mailfrom');
 		$fromname = $app->get('fromname');
 		$sitename = $app->get('sitename');
 
-		$name    = $contact_to;
-		$email   = JStringPunycode::emailToPunycode($contact_to_email); 
+		$name = $contact_to;
+		$email = JStringPunycode::emailToPunycode($contact_to_email);
 
 		// Prepare email body
 		$prefix = JText::sprintf('COM_SECRETARY_ENQUIRY_TEXT', JUri::base());
-		$body   = $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($emailText);
+		$body = $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($emailText);
 
 		$mail = JFactory::getMailer();
 		$mail->addRecipient($email);
@@ -198,10 +201,9 @@ class Email
 		$sent = $mail->Send();
 
 		// Check whether email copy function activated
-		if ($copy_email_activated == true && !empty($data['contact_email_copy']))
-		{
+		if ($copy_email_activated == true && !empty($data['contact_email_copy'])) {
 			$copysubject = JText::sprintf('COM_SECRETARY_COPYSUBJECT_OF', $subject);
-			$copytext    = JText::sprintf('COM_SECRETARY_COPYTEXT_OF', $name, $sitename) . "\r\n\r\n" . $body;
+			$copytext = JText::sprintf('COM_SECRETARY_COPYTEXT_OF', $name, $sitename) . "\r\n\r\n" . $body;
 
 			$mail = JFactory::getMailer();
 			$mail->addRecipient($email);
@@ -228,35 +230,35 @@ class Email
 	 */
 	public static function email($contact_to, $contact_to_email, $headline, $emailText, $attachment = '')
 	{
-	    $app		= \Secretary\Joomla::getApplication();
-	    $user		= \Secretary\Joomla::getUser();
-		
-		if(!isset($contact_to) || !isset($contact_to_email) || !isset($headline) || !isset($emailText))
+		$app = \Secretary\Joomla::getApplication();
+		$user = \Secretary\Joomla::getUser();
+
+		if (!isset($contact_to) || !isset($contact_to_email) || !isset($headline) || !isset($emailText))
 			return false;
-		
-		$mailfrom	= $app->getCfg('mailfrom');
-		$fromname	= $app->getCfg('fromname');
-		$sitename	= $app->getCfg('sitename');
-		$body		= "\r\n".stripslashes($emailText);
-		
+
+		$mailfrom = $app->getCfg('mailfrom');
+		$fromname = $app->getCfg('fromname');
+		$sitename = $app->getCfg('sitename');
+		$body = "\r\n" . stripslashes($emailText);
+
 		$mail = JFactory::getMailer();
 		$mail->isHTML(true);
 		$mail->Encoding = 'base64';
-		if(!empty($attachment)) $mail->addAttachment($attachment);
-		$mail->addRecipient($contact_to_email,$contact_to);
+		if (!empty($attachment))
+			$mail->addAttachment($attachment);
+		$mail->addRecipient($contact_to_email, $contact_to);
 		$mail->setSender(array($mailfrom, $fromname));
 		$mail->setSubject($headline);
 		$mail->setBody($body);
-		
+
 		try {
-		    $sent = $mail->Send();
-		} catch(Exception $e) {
-		    throw new Exception($e->getMessage());
-		    return false;
+			$sent = $mail->Send();
+		} catch (Exception $e) {
+			throw new Exception($e->getMessage());
+			return false;
 		}
-		
+
 		return $sent;
-		
 	}
 
 	/**
@@ -267,9 +269,8 @@ class Email
 	 */
 	public static function getCategoryTitle($catid)
 	{
-	    $categoryP	= \Secretary\Database::getQuery('folders',(int) $catid,'id','alias');
-	    $alias = (!empty($categoryP->alias)) ? JText::_($categoryP->alias) : JText::_('COM_SECRETARY_DOCUMENT');
-	    return strtolower($alias);
+		$categoryP = \Secretary\Database::getQuery('folders', (int) $catid, 'id', 'alias');
+		$alias = (!empty($categoryP->alias)) ? JText::_($categoryP->alias) : JText::_('COM_SECRETARY_DOCUMENT');
+		return strtolower($alias);
 	}
-	
 }

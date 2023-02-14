@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -28,7 +29,7 @@
 
 namespace Secretary;
 
-use JFactory; 
+use JFactory;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -37,32 +38,34 @@ class Joomla
 {
     private static $app;
     private static $user;
-    
+
     /**
      * Joomla User Interface
      */
-    public static function getUser() {
-        if(!isset(self::$user)) {
+    public static function getUser()
+    {
+        if (!isset(self::$user)) {
             self::$user = JFactory::getUser();
         }
         return self::$user;
     }
-    
+
     /**
      * Joomla Application Interface
      */
-    public static function getApplication($mode = 'administrator') {
-        if(!isset(self::$app)) {
+    public static function getApplication($mode = 'administrator')
+    {
+        if (!isset(self::$app)) {
             self::$app = JFactory::getApplication($mode);
         }
-        return self::$app; 
+        return self::$app;
     }
-    
+
     /**
      * Joomla Cache Interface
      */
-    public static function getCache() {
+    public static function getCache()
+    {
         return JFactory::getCache('com_secretary', '');
     }
-     
 }

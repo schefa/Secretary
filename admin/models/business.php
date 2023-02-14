@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -33,42 +34,42 @@ jimport('joomla.application.component.modeladmin');
 
 class SecretaryModelBusiness extends JModelAdmin
 {
-    private static $_item;
-    protected $app;
-    
-    /**
-     * Class constructor
-     * 
-     * @param array $config
-     */
+	private static $_item;
+	protected $app;
+
+	/**
+	 * Class constructor
+	 * 
+	 * @param array $config
+	 */
 	public function __construct($config = array())
 	{
-	    $this->app = \Secretary\Joomla::getApplication();
+		$this->app = \Secretary\Joomla::getApplication();
 		parent::__construct();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\AdminModel::canDelete()
 	 */
 	protected function canDelete($record)
 	{
-		return \Secretary\Helpers\Access::canDelete($record,'business');
+		return \Secretary\Helpers\Access::canDelete($record, 'business');
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\AdminModel::populateState()
 	 */
 	protected function populateState()
 	{
-	    $pk = $this->app->input->getInt('id');
+		$pk = $this->app->input->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
-		
+
 		$params = Secretary\Application::parameters();
 		$this->setState('params', $params);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\BaseDatabaseModel::getTable()
@@ -77,55 +78,56 @@ class SecretaryModelBusiness extends JModelAdmin
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\FormModel::getForm()
 	 */
 	public function getForm($data = array(), $loadData = true)
-	{ 
+	{
 		$form = $this->loadForm('com_secretary.business', 'business', array('control' => 'jform', 'load_data' => $loadData));
-        if (empty($form)) return false;
+		if (empty($form)) return false;
 		return $form;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\FormModel::loadFormData()
 	 */
 	protected function loadFormData()
 	{
-	    $item = $this->app->getUserState('com_secretary.edit.business.data', array());
-		if (empty($item)) { $item = $this->getItem(); }
+		$item = $this->app->getUserState('com_secretary.edit.business.data', array());
+		if (empty($item)) {
+			$item = $this->getItem();
+		}
 		return $item;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\AdminModel::getItem()
 	 */
 	public function getItem($pk = null)
 	{
-		if(empty(self::$_item[$pk]) && ($item = parent::getItem($pk)))
-		{
-			$item->title         = Secretary\Utilities::cleaner($item->title,true);
-			$item->slogan        = Secretary\Utilities::cleaner($item->slogan,true);
-			$item->address       = Secretary\Utilities::cleaner($item->address,true);
-			$item->defaultNote   = Secretary\Utilities::cleaner($item->defaultNote,true);
-		    $item->createdEntry  = (empty($item->createdEntry)) ? time() : $item->createdEntry;
-			
-			$selectedCategories  = array('documents'=>array(),'subjects'=>array(),'products'=>array(),'messages'=>array());
+		if (empty(self::$_item[$pk]) && ($item = parent::getItem($pk))) {
+			$item->title         = Secretary\Utilities::cleaner($item->title, true);
+			$item->slogan        = Secretary\Utilities::cleaner($item->slogan, true);
+			$item->address       = Secretary\Utilities::cleaner($item->address, true);
+			$item->defaultNote   = Secretary\Utilities::cleaner($item->defaultNote, true);
+			$item->createdEntry  = (empty($item->createdEntry)) ? time() : $item->createdEntry;
+
+			$selectedCategories  = array('documents' => array(), 'subjects' => array(), 'products' => array(), 'messages' => array());
 			$item->selectedFolders	= json_decode($item->selectedFolders);
-			$item->selectedFolders = array_replace( $selectedCategories, (array) $item->selectedFolders );
+			$item->selectedFolders = array_replace($selectedCategories, (array) $item->selectedFolders);
 
 			$item->guv1				= json_decode($item->guv1);
 			$item->guv2				= json_decode($item->guv2);
-			
+
 			$item->owner = (!empty($item->owner)) ? $item->owner : \Secretary\Joomla::getUser()->id;
-		
+
 			self::$_item[$pk] = $item;
 		}
-		
+
 		return self::$_item[$pk];
 	}
 
@@ -136,67 +138,68 @@ class SecretaryModelBusiness extends JModelAdmin
 	public function save($data)
 	{
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-		
+
 		// Initialise variables; 
 		$user	= \Secretary\Joomla::getUser();
 		$table	= $this->getTable();
 		$key	= $table->getKeyName();
-		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName().'.id');
-		
+		$pk		= (!empty($data[$key])) ? $data[$key] : (int)$this->getState($this->getName() . '.id');
+
 		// Access
-		if(!(\Secretary\Helpers\Access::checkAdmin())) {
-			if ( !$user->authorise('core.create', 'com_secretary.business') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.business.'.$pk) ) )
-			{
+		if (!(\Secretary\Helpers\Access::checkAdmin())) {
+			if (!$user->authorise('core.create', 'com_secretary.business') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.business.' . $pk))) {
 				throw new Exception(JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				return false;
 			}
 		}
-		
+
 		// Allow an exception to be thrown.
-		try
-		{
+		try {
 			// Load existing record.
-			if ($pk > 0) { $table->load($pk); }
+			if ($pk > 0) {
+				$table->load($pk);
+			}
 
 			// Prepare data
 			$table->prepareStore($data);
-			
+
 			// Bind
-			if (!$table->bind($data)) { $this->setError($table->getError()); return false; }
-			
+			if (!$table->bind($data)) {
+				$this->setError($table->getError());
+				return false;
+			}
+
 			// Store
-			if (!$table->store()) { $this->setError($table->getError()); return false; }
-			
-		}
-		catch (Exception $e)
-		{
+			if (!$table->store()) {
+				$this->setError($table->getError());
+				return false;
+			}
+		} catch (Exception $e) {
 			$this->setError($e->getMessage());
 			return false;
-		} 
+		}
 
 		$newID = (int) $table->id;
 		$this->setHome($newID);
-		
+
 		// Update Upload Document 
-		if($user->authorise('core.upload', 'com_secretary') )
-		{
-		    $uploadTitle = (isset($data['upload_title'])) ? $data['upload_title'] : '';
-		    \Secretary\Helpers\Uploads::upload( 'logo', 'businesses', $uploadTitle, $newID );
+		if ($user->authorise('core.upload', 'com_secretary')) {
+			$uploadTitle = (isset($data['upload_title'])) ? $data['upload_title'] : '';
+			\Secretary\Helpers\Uploads::upload('logo', 'businesses', $uploadTitle, $newID);
 		}
-		
+
 		// Activity
 		$activityAction = ($pk > 0) ? 'edited' : 'created';
-		\Secretary\Helpers\Activity::set('businesses', $activityAction, 0, $newID );
-		
+		\Secretary\Helpers\Activity::set('businesses', $activityAction, 0, $newID);
+
 		if (isset($table->id)) {
-		    $this->setState($this->getName().'.id', $newID);
+			$this->setState($this->getName() . '.id', $newID);
 		}
 
 		$this->cleanCache();
 		return true;
-		
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\MVC\Model\BaseDatabaseModel::cleanCache()
@@ -205,7 +208,7 @@ class SecretaryModelBusiness extends JModelAdmin
 	{
 		parent::cleanCache('com_secretary');
 	}
-	
+
 	/**
 	 * Set standard company
 	 * 
@@ -214,7 +217,7 @@ class SecretaryModelBusiness extends JModelAdmin
 	 */
 	public function setHome($id = 0)
 	{
-	    $user = \Secretary\Joomla::getUser();
+		$user = \Secretary\Joomla::getUser();
 		$db   = $this->getDbo();
 
 		// Access check 
@@ -225,16 +228,16 @@ class SecretaryModelBusiness extends JModelAdmin
 
 		$business = $this->getTable();
 		if (!$business->load((int) $id)) {
-		    throw new Exception(JText::_('COM_SECRETARY_NOT_FOUND'));
-		    return false;
+			throw new Exception(JText::_('COM_SECRETARY_NOT_FOUND'));
+			return false;
 		}
-		
+
 		// Reset the home fields for all
 		$db->setQuery('UPDATE #__secretary_businesses SET home = \'0\'');
 		$db->execute();
 
 		// Set the new home business.
-		$db->setQuery('UPDATE #__secretary_businesses SET home = \'1\' WHERE id = ' . (int) $id );
+		$db->setQuery('UPDATE #__secretary_businesses SET home = \'1\' WHERE id = ' . (int) $id);
 		$db->execute();
 
 		// Clean the cache.
@@ -242,5 +245,4 @@ class SecretaryModelBusiness extends JModelAdmin
 
 		return true;
 	}
-	
 }

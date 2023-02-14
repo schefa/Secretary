@@ -71,7 +71,7 @@ class SecretaryViewReports extends JViewLegacy
 		$this->products           = $model->getProductsGrowth($this->business);
 		
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
 			throw new Exception(implode("\n", $errors));
 		}
 		 

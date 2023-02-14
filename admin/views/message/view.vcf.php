@@ -47,7 +47,7 @@ class SecretaryViewMessage extends JViewLegacy
 		$item = $this->get('Item');
 		
 		// Check for errors.
-		if (count($errors = $this->get('Errors')))
+		if (count(($errors = $this->get('Errors')) ?? []))
 		{
 			JError::raiseWarning(500, implode("\n", $errors));
 			return false;

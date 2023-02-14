@@ -71,7 +71,7 @@ class SecretaryViewLocation extends JViewLegacy
 		} elseif( $this->layout != 'edit' && false === \Secretary\Helpers\Access::show($this->view, $this->item->id,  $this->item->created_by) ) {
 			JError::raiseError(500, JText::_('JERROR_ALERTNOAUTHOR'));
 			return false;
-		} elseif (count($errors = $this->get('Errors'))) {
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
 		    throw new Exception(implode("\n", $errors));
 		    return false;
 		}

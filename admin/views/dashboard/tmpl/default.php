@@ -100,24 +100,6 @@ $listDirn	= $this->state->get('list.direction');
             </div>
             <?php } ?>
             
-            <?php if ($user->authorise('core.show', 'com_secretary.accounting')) { ?>
-            <div class="col-md-3">
-                <a class="icon" href="index.php?option=com_secretary&view=accountings">
-                    <span class="fa fa-book"></span>
-                <?php echo JText::_('COM_SECRETARY_ACCOUNTINGS'); ?>
-                </a>
-            </div>
-            <?php } ?>
-            
-            <?php if ($user->authorise('core.show', 'com_secretary.market')) { ?>
-            <div class="col-md-3">
-                <a class="icon" href="index.php?option=com_secretary&view=markets">
-                    <span class="fa fa-certificate"></span>
-                <?php echo JText::_('COM_SECRETARY_MARKETS'); ?>
-                </a>
-            </div>
-            <?php } ?>
-            
         </div>
         
         <hr>
@@ -247,7 +229,7 @@ $listDirn	= $this->state->get('list.direction');
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <?php if(count($this->activities) > $this->state->get('list.limit')) { ?>
+                    <?php if(count($this->activities ?? []) > $this->state->get('list.limit')) { ?>
                     <tfoot class="table-list-pagination">
                     <tr>
                         <td colspan="4"><div class="pull-left"><?php echo $this->pagination->getListFooter(); ?></div></td>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,28 +26,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controlleradmin'); 
+jimport('joomla.application.component.controlleradmin');
 
 class SecretaryControllerSubjects extends Secretary\Controller\Admin
 {
-    
-    protected $app;
-    protected $catid;
-    protected $view;
-    protected $redirect_url;
-    
-	public function __construct() {
-	    $this->app		= \Secretary\Joomla::getApplication();
-	    $this->catid	= $this->app->input->getInt('catid');
+
+	protected $app;
+	protected $catid;
+	protected $view;
+	protected $redirect_url;
+
+	public function __construct()
+	{
+		$this->app		= \Secretary\Joomla::getApplication();
+		$this->catid	= $this->app->input->getInt('catid');
 		$this->view		= $this->app->input->getCmd('view');
-		$this->redirect_url  = 'index.php?option=com_secretary&amp;view='.$this->view.'&amp;catid='. $this->catid;
+		$this->redirect_url  = 'index.php?option=com_secretary&amp;view=' . $this->view . '&amp;catid=' . $this->catid;
 		parent::__construct();
 	}
-	
+
 	public function getModel($name = 'Subject', $prefix = 'SecretaryModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
@@ -55,34 +57,33 @@ class SecretaryControllerSubjects extends Secretary\Controller\Admin
 
 	public function importUsers()
 	{
-	    $msg = \Secretary\Helpers\Subjects::importUsers();
-	    $this->setMessage($msg);
-	    $this->setRedirect(JRoute::_($this->redirect_url, false));
+		$msg = \Secretary\Helpers\Subjects::importUsers();
+		$this->setMessage($msg);
+		$this->setRedirect(JRoute::_($this->redirect_url, false));
 	}
 
 	public function addDocuments()
 	{
-	    $pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
-	    $this->setRedirect(JRoute::_('index.php?option=com_secretary&amp;view=document&layout=edit&amp;catid='. $this->catid.'&amp;subject=['.implode(",",$pks).']', false));
-	} 
-	
+		$pks	= \Secretary\Joomla::getApplication()->input->get('cid', array(), 'array');
+		$this->setRedirect(JRoute::_('index.php?option=com_secretary&amp;view=document&layout=edit&amp;catid=' . $this->catid . '&amp;subject=[' . implode(",", $pks) . ']', false));
+	}
+
 	public function postDeleteUrl()
 	{
-	    $this->setRedirect(JRoute::_($this->redirect_url, false));
+		$this->setRedirect(JRoute::_($this->redirect_url, false));
 	}
-	
+
 	public function applyColumns()
 	{
-	    $app = \Secretary\Joomla::getApplication();
-	
-	    $stockcolumns	= $app->input->get('chk_group', array(), 'array');
-	
-	    if(empty($stockcolumns)) $stockcolumns = array(0=>"lastname");
-	     
-	    $app->setUserState('filter.contacts_columns', $stockcolumns);
-	
-	    $this->setRedirect(JRoute::_($this->redirect_url, false));
-	    return true;
+		$app = \Secretary\Joomla::getApplication();
+
+		$stockcolumns	= $app->input->get('chk_group', array(), 'array');
+
+		if (empty($stockcolumns)) $stockcolumns = array(0 => "lastname");
+
+		$app->setUserState('filter.contacts_columns', $stockcolumns);
+
+		$this->setRedirect(JRoute::_($this->redirect_url, false));
+		return true;
 	}
-		
 }

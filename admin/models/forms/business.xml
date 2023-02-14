@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
-		<field id="id" name="id" type="hidden" class="inputbox"	label="" size="10" readonly="true" filter="intval" />
-		<field name="title" type="text" class="form-control fullwidth" required="true" label="COM_SECRETARY_NAME" hint="COM_SECRETARY_BUSINESSNAME_DESC" filter="Secretary\Utilities::cleaner" /> 
-		<field name="slogan" type="text" class="form-control fullwidth" label="COM_SECRETARY_SLOGAN" hint="COM_SECRETARY_SLOGAN" filter="Secretary\Utilities::cleaner" /> 
-		<field name="address"  rows="6" type="textarea" class="form-control" label="COM_SECRETARY_ADDRESS" hint="COM_SECRETARY_ADDRESS" filter="Secretary\Utilities::cleaner" /> 
+		<field id="id" name="id" type="hidden" class="inputbox" label="" size="10" readonly="true" filter="intval" />
+		<field name="title" type="text" class="form-control fullwidth" required="true" label="COM_SECRETARY_NAME" hint="COM_SECRETARY_BUSINESSNAME_DESC" filter="Secretary\Utilities::cleaner" />
+		<field name="slogan" type="text" class="form-control fullwidth" label="COM_SECRETARY_SLOGAN" hint="COM_SECRETARY_SLOGAN" filter="Secretary\Utilities::cleaner" />
+		<field name="address" rows="6" type="textarea" class="form-control" label="COM_SECRETARY_ADDRESS" hint="COM_SECRETARY_ADDRESS" filter="Secretary\Utilities::cleaner" />
 		<field name="upload" type="upload" label="COM_SECRETARY_LOGO" accept="image/*" />
 		<field name="upload_title" type="text" filter="Secretary\Utilities::cleaner" />
-		
 		<field name="created_by" type="hidden" class="form-control" label="COM_SECRETARY_CREATEDBY" filter="intval" />
-		
 		<field name="currency" type="currency" default="EUR" required="true" class="form-control" label="COM_SECRETARY_CURRENCY" filter="safehtml" />
-		
 		<field name="defaultNote" type="textarea" class="form-control" label="COM_SECRETARY_BUSINESS_DEFAULTNOTE" hint="COM_SECRETARY_BUSINESS_DEFAULTNOTE" filter="Secretary\Utilities::cleaner" />
-		
-		<field name="taxPrepo" class="form-control" type="list" label="COM_SECRETARY_TAX"> 
+		<field name="taxPrepo" class="form-control" type="list" label="COM_SECRETARY_TAX">
 			<option value="0">COM_SECRETARY_NOTAX</option>
 			<option value="1">COM_SECRETARY_INKLUSIV</option>
 			<option value="2">COM_SECRETARY_EXKLUSIV</option>
 		</field>
-		<field name="taxvalue" type="number" min="0" step="0.01" class="form-control" label="COM_SECRETARY_BUSINESS_TAXVALUE" hint="COM_SECRETARY_BUSINESS_TAXVALUE"  />
-		
-		<field name="selectedFolders" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_KONTEN" hint="COM_SECRETARY_BUSINESS_KONTEN" /> 
-		
-		<field name="guv1" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV1" hint="COM_SECRETARY_BUSINESS_GUV1" /> 
-		<field name="guv2" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV2" hint="COM_SECRETARY_BUSINESS_GUV2" /> 
-		
+		<field name="taxvalue" type="number" min="0" step="0.01" class="form-control" label="COM_SECRETARY_BUSINESS_TAXVALUE" hint="COM_SECRETARY_BUSINESS_TAXVALUE" />
+		<field name="selectedFolders" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_KONTEN" hint="COM_SECRETARY_BUSINESS_KONTEN" />
+		<field name="guv1" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV1" hint="COM_SECRETARY_BUSINESS_GUV1" />
+		<field name="guv2" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV2" hint="COM_SECRETARY_BUSINESS_GUV2" />
 		<field name="fields" type="textarea" label="COM_SECRETARY_FIELDS" />
 		<field name="state" type="secretarystatus" extension="businesses" label="COM_SECRETARY_STATUS" description="COM_SECRETARY_STATUS_DESC" class="form-control inputbox" />
 		<field name="home" type="hidden" class="inputbox" size="10" readonly="true" />
 		<field name="createdEntry" type="hidden" filter="intval" />
 	</fieldset>
-	
 	<fieldset name="accesscontrol">
 		<field name="asset_id" type="hidden" filter="unset" />
 		<field name="rules" type="rules" component="com_secretary" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="business" />
-	
 	</fieldset>
 </form>

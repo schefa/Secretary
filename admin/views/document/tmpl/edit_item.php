@@ -131,17 +131,3 @@ $taxrateClass = ($toggleTaxRateColumn== 0) ? 'none' : 'block';
 
 
 </li>
-
-
-<div class="secretary-acc-row clearfix" style="display:none;">
-    <div class="secretary-acc-row-1"><div class="btn acc-row-remove"><i class="fa fa-remove"></i></div></div>
-    <div class="secretary-acc-row-2">
-        <input class="search-accounts form-control" type="text" value="##account##" placeholder="<?php echo JText::_('COM_SECRETARY_KONTO'); ?>" />
-        <input name="jform[accounting][##type##][##counter##][id]" class="acc_##type##_konto" type="hidden" value="##accountid##" />
-    </div>
-    <div class="secretary-acc-row-3">
-        <span><?php echo $this->item->currencySymbol; ?></span>
-    	<input name="jform[accounting][##type##][##counter##][sum]" class="form-control secretary-acc-total acc_##type##_sum" type="number" min="0" step="0.01" value="##sum##" />
-    </div>
-    
-</div>

@@ -77,7 +77,7 @@ class SecretaryViewMessages extends JViewLegacy
 		if (false === boolval($canShow)) {
 			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR') , 500);
 			return false;
-		} elseif (count($errors = $this->get('Errors'))) {
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
 			throw new Exception( implode("\n", $errors) , 500);
 			return false;
 		}

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset>
-	
 		<field name="id" type="hidden" readonly="true" />
 		<field name="currency" type="text" label="COM_SECRETARY_CURRENCY_SHORT" filter="Secretary\Utilities::cleaner" />
-		<field name="title" type="text" label="COM_SECRETARY_CURRENCY_TITLE" filter="Secretary\Utilities::cleaner" /> 
-		<field name="symbol" type="text" label="COM_SECRETARY_CURRENCY_SYMBOL" filter="Secretary\Utilities::cleaner" /> 
-		
+		<field name="title" type="text" label="COM_SECRETARY_CURRENCY_TITLE" filter="Secretary\Utilities::cleaner" />
+		<field name="symbol" type="text" label="COM_SECRETARY_CURRENCY_SYMBOL" filter="Secretary\Utilities::cleaner" />
 	</fieldset>
 </form>

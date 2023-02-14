@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -34,27 +35,28 @@ jimport('joomla.application.component.controllerform');
 class SecretaryControllerDatabase extends JControllerForm
 {
 	protected $app;
-	static $whiteTasks = array('fixassets','import','submit');
-	static $whiteExports = array('sql','csv','xml','excel','json');
-	
+	static $whiteTasks = array('fixassets', 'import', 'submit');
+	static $whiteExports = array('sql', 'csv', 'xml', 'excel', 'json');
+
 	/**
 	 * Class constructor
 	 * 
 	 * @param array $config 
 	 */
-	public function __construct($config = array()) {
-	    $this->app        = \Secretary\Joomla::getApplication();
-	    if(!in_array($this->app->input->getCmd('task'), self::$whiteTasks)) {
-			die();	
+	public function __construct($config = array())
+	{
+		$this->app = \Secretary\Joomla::getApplication();
+		if (!in_array($this->app->input->getCmd('task'), self::$whiteTasks)) {
+			die();
 		}
-		
-		if (!\Secretary\Joomla::getUser()->authorise('core.admin','com_secretary')) {
-			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR') , 500);
+
+		if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary')) {
+			throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 500);
 			return false;
-		} 
-		parent::__construct($config);	
+		}
+		parent::__construct($config);
 	}
-	
+
 	/**
 	 * Method to fix assets table
 	 * 
@@ -64,41 +66,41 @@ class SecretaryControllerDatabase extends JControllerForm
 	{
 		// Check for request forgeries.
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-		
+
 		$msg = JText::_("COM_SECRETARY_NOTHING_CHANGED");
-		$model = $this->getModel('Database','SecretaryModel');
-		
-		$assets_fix      = $this->app->input->getCmd('assets_fix');
-		$assets_clear    = $this->app->input->getCmd('assets_clear');
-		 
-		if(isset($assets_fix)) {
-		    $errorReport = $model->assetsErrorMissingParent();
-    		if($errorReport['status'] > 0) {
-    			$stackMsg = array();
-    			$no_parents = $errorReport['no_parent'];
-    			foreach($no_parents as $child) {
-    				$result = $model->assetsFix((int) $child->id);
-    				if($result !== true) {
-    					$stackMsg[] = $result;	
-    				}
-    			}
-    			if(!empty($stackMsg)) {
-    				$msg = JText::_('COM_SECRETARY_ASSETS_ERRORS_FIX_MANUALY');
-    				$msg .= implode('<br>',$stackMsg);
-    			} else {
-    				$msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_ASSETS_ERRORS_FIX"));
-    			}
-    		}
-		} elseif(isset($assets_clear)) {
-		    $return = $model->clearAssetsTable();
-		    if($return) {
-		        $msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_ASSETS_ERRORS_FIX"));
-		    }
-    	}
-		$this->setRedirect( 'index.php?option=com_secretary&view=database',$msg);
+		$model = $this->getModel('Database', 'SecretaryModel');
+
+		$assets_fix = $this->app->input->getCmd('assets_fix');
+		$assets_clear = $this->app->input->getCmd('assets_clear');
+
+		if (isset($assets_fix)) {
+			$errorReport = $model->assetsErrorMissingParent();
+			if ($errorReport['status'] > 0) {
+				$stackMsg = array();
+				$no_parents = $errorReport['no_parent'];
+				foreach ($no_parents as $child) {
+					$result = $model->assetsFix((int) $child->id);
+					if ($result !== true) {
+						$stackMsg[] = $result;
+					}
+				}
+				if (!empty($stackMsg)) {
+					$msg = JText::_('COM_SECRETARY_ASSETS_ERRORS_FIX_MANUALY');
+					$msg .= implode('<br>', $stackMsg);
+				} else {
+					$msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_ASSETS_ERRORS_FIX"));
+				}
+			}
+		} elseif (isset($assets_clear)) {
+			$return = $model->clearAssetsTable();
+			if ($return) {
+				$msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_ASSETS_ERRORS_FIX"));
+			}
+		}
+		$this->setRedirect('index.php?option=com_secretary&view=database', $msg);
 		return true;
 	}
-	
+
 	/**
 	 * Method to export
 	 * 
@@ -112,26 +114,26 @@ class SecretaryControllerDatabase extends JControllerForm
 		$msg = "";
 
 		// Initialise variables.
-		$app	= \Secretary\Joomla::getApplication();
-		$user	= \Secretary\Joomla::getUser();
-		$model	= $this->getModel('Database', 'SecretaryModel');
-		
-		if (!$user->authorise('core.admin','com_secretary')) {
-			throw new Exception( JText::_('JERROR_ALERTNOAUTHOR'), 500);
+		$app = \Secretary\Joomla::getApplication();
+		$user = \Secretary\Joomla::getUser();
+		$model = $this->getModel('Database', 'SecretaryModel');
+
+		if (!$user->authorise('core.admin', 'com_secretary')) {
+			throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'), 500);
 			return false;
 		}
-		
-		$importClicked	= $app->input->getCmd('import');
-		$export_sql	= $app->input->getCmd('export_sql');
-		$export_csv	= $app->input->getCmd('export_csv');
-		$export_xlm	= $app->input->getCmd('export_xlm');
+
+		$importClicked = $app->input->getCmd('import');
+		$export_sql = $app->input->getCmd('export_sql');
+		$export_csv = $app->input->getCmd('export_csv');
+		$export_xlm = $app->input->getCmd('export_xlm');
 		$export_json = $app->input->getCmd('export_json');
 		$export_excel = $app->input->getCmd('export_excel');
-		
-		if(isset($importClicked)) {
-				
+
+		if (isset($importClicked)) {
+
 			// Attempt to save the data.
-			$return	= $model->import();
+			$return = $model->import();
 			if ($return == 0) {
 				// Save the data in the session.
 				$this->setMessage(JText::sprintf('COM_SECRETARY_THIS_FAILED_BECAUSE', JText::_('COM_SECRETARY_IMPORT'), $model->getError()), 'warning');
@@ -139,24 +141,23 @@ class SecretaryControllerDatabase extends JControllerForm
 				return false;
 			}
 			$msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_IMPORT"));
-			
-		} elseif(isset($export_sql) || isset($export_csv) || isset($export_xlm) || isset($export_excel) || isset($export_json)) {
-			
+		} elseif (isset($export_sql) || isset($export_csv) || isset($export_xlm) || isset($export_excel) || isset($export_json)) {
+
 			$formatType = false;
-			if(isset($export_sql)) {
+			if (isset($export_sql)) {
 				$formatType = 'sql';
-			} elseif(isset($export_csv)) {
+			} elseif (isset($export_csv)) {
 				$formatType = 'csv';
-			} elseif(isset($export_xlm)) {
+			} elseif (isset($export_xlm)) {
 				$formatType = 'xml';
-			} elseif(isset($export_excel)) {
+			} elseif (isset($export_excel)) {
 				$formatType = 'excel';
-			} elseif(isset($export_json)) {
+			} elseif (isset($export_json)) {
 				$formatType = 'json';
 			}
-			
+
 			// Attempt to save the data.
-			$return	= $model->export($formatType);
+			$return = $model->export($formatType);
 			if ($return === false) {
 				// Save the data in the session.
 				$this->setMessage(JText::sprintf('COM_SECRETARY_THIS_FAILED_BECAUSE', JText::_('COM_SECRETARY_EXPORT'), $model->getError()), 'warning');
@@ -165,11 +166,10 @@ class SecretaryControllerDatabase extends JControllerForm
 			}
 			$msg = JText::sprintf("COM_SECRETARY_THIS_SUCCESSFUL", JText::_("COM_SECRETARY_EXPORT"));
 		}
-		
+
 		// Redirect to the list screen.
 		$app->setUserState('com_secretary.edit.database.data', null);
-		$this->setRedirect( 'index.php?option=com_secretary&view=database',$msg);
+		$this->setRedirect('index.php?option=com_secretary&view=database', $msg);
 		return true;
 	}
-
 }

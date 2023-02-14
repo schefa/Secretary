@@ -50,7 +50,7 @@ $values = json_decode($this->item->values,true);
 <div class="control-group">
     <div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
     <div class="controls"><?php echo $this->form->getInput('type'); ?></div>
-	<div id="secretary-fields-values" class="controls"><?php if(in_array($this->item->type,array('newsletter','sql','search','accounts_tax'))) echo $this->form->getInput('values'); ?></div>
+	<div id="secretary-fields-values" class="controls"><?php if(in_array($this->item->type,array('newsletter','sql','search'))) echo $this->form->getInput('values'); ?></div>
 </div>
 <div class="control-group">
     <div class="control-label"><?php echo $this->form->getLabel('standard'); ?></div>
@@ -79,7 +79,7 @@ $values = json_decode($this->item->values,true);
 console.log(value);
 		switch (value) {
     		case 'list' :
-    			$('#secretary-fields-values.controls').append('<div class="fields-items"></div><div id="value-add" class="btn btn-default" counter="<?php echo 0 + count($values); ?>"><span class="fa fa-plus"></span> <?php echo JText::_('COM_SECRETARY_NEW'); ?></div>');
+    			$('#secretary-fields-values.controls').append('<div class="fields-items"></div><div id="value-add" class="btn btn-default" counter="<?php echo 0 + count($values ?? []); ?>"><span class="fa fa-plus"></span> <?php echo JText::_('COM_SECRETARY_NEW'); ?></div>');
     			if(typeof(itemValues) !== 'undefined') {
     				for( var key in itemValues) {
     					if(itemValues.hasOwnProperty(key)){
@@ -93,7 +93,7 @@ console.log(value);
     		case 'newsletter' : case 'sql':
     			$('#secretary-fields-values.controls').append('<textarea id="jform_values" value="" name="jform[values]"></textarea>');
     			break;
-    		case 'search' : case 'accounts_tax':
+    		case 'search' :
     			$('#secretary-fields-values.controls').append('<input id="jform_values" type="text" value="" name="jform[values]">');
     			break;
 		}

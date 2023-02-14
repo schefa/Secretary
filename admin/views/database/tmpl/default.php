@@ -75,7 +75,7 @@ $scanned_directory = array_diff(scandir($directory), array('..','.','.DS_STORE',
             <h3><?php echo JText::_('COM_SECRETARY_EXPORT');?></h3>
             
             <div class="control-group">
-                <select name="jform[exportTables][]" multiple="multiple" size="<?php echo count($tables);?>">
+                <select name="jform[exportTables][]" multiple="multiple" size="<?php echo count($tables ?? []);?>">
                 <?php 
                 foreach($tables AS $table) {
                     echo '<option value="'.$table.'">'.$prefix.'secretary_'. $table .'</option>';
@@ -106,7 +106,7 @@ $scanned_directory = array_diff(scandir($directory), array('..','.','.DS_STORE',
                 </div>
             	<div class="col-md-6">
                 <h4><?php echo JText::_('COM_SECRETARY_SAMPLE_DATA'); ?></h4>
-                <select name="jform[import][]" multiple="multiple" size="<?php echo count($scanned_directory);?>">
+                <select name="jform[import][]" multiple="multiple" size="<?php echo count($scanned_directory ?? []);?>">
                 <?php 
                 foreach($scanned_directory AS $item) {
                     echo '<option value="'.$item.'">'.$item .'</option>';

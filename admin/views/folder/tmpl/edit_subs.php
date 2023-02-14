@@ -35,7 +35,7 @@ $this->document->addScriptDeclaration("
 ?>
 
 <div class="control-group search-features-newsletter">
-    <div class="posts multiple-input-selection clearfix" data-source="subjects" data-counter="<?php echo count($this->item->contacts); ?>">
+    <div class="posts multiple-input-selection clearfix" data-source="subjects" data-counter="<?php echo count($this->item->contacts ?? []); ?>">
         <div>
         <input class="search-features" type="text" placeholder="<?php echo JText::_('COM_SECRETARY_SEARCH'); ?>" >
         </div>

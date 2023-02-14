@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,19 +26,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class SecretaryTableMessage extends JTable
 {
-    
-    /**
-     * Class constructor
-     *
-     * @param mixed $db
-     */
-	public function __construct(& $db)
+
+	/**
+	 * Class constructor
+	 *
+	 * @param mixed $db
+	 */
+	public function __construct(&$db)
 	{
 		parent::__construct('#__secretary_messages', 'id', $db);
 	}
@@ -48,35 +49,34 @@ class SecretaryTableMessage extends JTable
 	 */
 	public function check()
 	{
-		if (empty($this->subject))
-		{
-		    $errTitle = JText::_('COM_SECRETARY_TITLE');
-		    $this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', $errTitle));
-		    return false;
+		if (empty($this->subject)) {
+			$errTitle = JText::_('COM_SECRETARY_TITLE');
+			$this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', $errTitle));
+			return false;
 		}
 
-		if (empty($this->message))
-		{
-		    $errTitle = JText::_('COM_SECRETARY_MESSAGE');
-		    $this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', $errTitle));
-		    return false;
+		if (empty($this->message)) {
+			$errTitle = JText::_('COM_SECRETARY_MESSAGE');
+			$this->setError(JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', $errTitle));
+			return false;
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Delete and save activity
 	 *
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::delete()
 	 */
-    public function delete($pk = null) {
-        $this->load($pk);
-        $result = parent::delete($pk);
-        if ($result) {
+	public function delete($pk = null)
+	{
+		$this->load($pk);
+		$result = parent::delete($pk);
+		if ($result) {
 			\Secretary\Helpers\Activity::set('messages', 'deleted', $this->catid, $pk);
-        }
-        return $result;
-    }
+		}
+		return $result;
+	}
 }

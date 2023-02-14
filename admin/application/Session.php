@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -29,11 +30,11 @@
 namespace Secretary;
 
 // No direct access
-defined('_JEXEC') or die; 
+defined('_JEXEC') or die;
 
 class Session
 {
-    
+
     /**
      * Customizable columns from listview (mainly for contacts, products)
      * 
@@ -41,24 +42,25 @@ class Session
      * @param array $allColumns
      * @return array
      */
-    public static function getColumns($fieldName,array $allColumns) {
-        
-        $app     = Joomla::getApplication();
-        $params  = Application::parameters();
-        $cols    = $params->get($fieldName);
-        
-        $selectedCols	= $app->getUserState('filter.'.$fieldName) ;
-        $selectedCols   = (empty($selectedCols)) ? $cols : $selectedCols;
-        $result         = array();
-        
-        if(!empty($selectedCols)) {
-            foreach($allColumns as $name => $value) {
-                $result[$name] = (in_array($name,$selectedCols)) ? true : false;
+    public static function getColumns($fieldName, array $allColumns)
+    {
+
+        $app = Joomla::getApplication();
+        $params = Application::parameters();
+        $cols = $params->get($fieldName);
+
+        $selectedCols = $app->getUserState('filter.' . $fieldName);
+        $selectedCols = (empty($selectedCols)) ? $cols : $selectedCols;
+        $result = array();
+
+        if (!empty($selectedCols)) {
+            foreach ($allColumns as $name => $value) {
+                $result[$name] = (in_array($name, $selectedCols)) ? true : false;
             }
         } else {
             $result = $allColumns;
         }
-        
+
         return $result;
     }
-} 
+}

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="permissions" label="com_secretary" description="JCONFIG_PERMISSIONS_DESC">
-		<field
-			name="rules" type="rules" filter="rules" validate="rules" component="com_secretary"
-			label="com_secretary"
-			section="component"
-			description="JCONFIG_PERMISSIONS_DESC"
-		/>
+		<field name="rules" type="rules" filter="rules" validate="rules" component="com_secretary" label="com_secretary" section="component" description="JCONFIG_PERMISSIONS_DESC" />
 	</fieldset>
 </config>

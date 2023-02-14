@@ -35,7 +35,7 @@ $listDirn	= $this->state->get('list.direction');
 $title = (isset($this->extension)) ? JText::_('COM_SECRETARY_CATEGORIES_'.strtoupper($this->extension)) : JText::_('COM_SECRETARY_CATEGORIES');
 $title_items = (isset($this->extension)) ? JText::_('COM_SECRETARY_'.strtoupper($this->extension)) : JText::_('COM_SECRETARY_ITEMS');
 
-$sections = array('documents','subjects','products','times','messages','markets','templates');
+$sections = array('documents','subjects','products','times','messages','templates');
 ?>
 
 <div class="secretary-main-container">

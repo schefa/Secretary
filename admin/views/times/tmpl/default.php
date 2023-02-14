@@ -185,7 +185,7 @@ if ( !extension_loaded ( "Calendar" )){
         <div class="row-fluid">
             <h3><?php echo JText::_('COM_SECRETARY_REPETITIONS'); ?><a href="<?php echo Secretary\Route::create(false, array( 'task'=>'times.updateRepetitions', 'catid'=>$this->categoryId ) );?>" class="btn headline-sidebar-button"><i class="fa fa-refresh"></i>&nbsp;<?php echo JText::_('COM_SECRETARY_REPETITION_UPDATE');?></a></h3>
             <div class="documents-sidebar-repetitions">
-               <?php echo JText::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->checkRep)); ?>
+               <?php echo JText::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->checkRep ?? [])); ?>
                <a class="open-modal" data-url="<?php echo Secretary\Route::create('times', array('layout'=>'repetition','format'=>'raw','tmpl'=>'component')); ?>" ><i class="fa fa-share-square-o"></i> <?php echo JText::_('COM_SECRETARY_MORE_INFORMATION'); ?></a>
             </div>
         </div>

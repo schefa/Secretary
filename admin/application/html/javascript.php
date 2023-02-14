@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -30,8 +31,8 @@ namespace Secretary\HTML;
 
 use JText;
 
-require_once SECRETARY_ADMIN_PATH .'/application/HTML.php';
- 
+require_once SECRETARY_ADMIN_PATH . '/application/HTML.php';
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -44,18 +45,19 @@ class Javascript
      * @param string $view
      * @return string
      */
-    public static function submitformbutton($view) {
+    public static function submitformbutton($view)
+    {
         $extension = \Secretary\Application::getSingularSection($view);
         $html = "
         Joomla.submitbutton = function(task)
         {
-            if (task == '".$extension.".cancel') {
+            if (task == '" . $extension . ".cancel') {
                 Joomla.submitform(task, document.getElementById('adminForm'));
             } else {
-                if (task != '".$extension.".cancel' && document.formvalidator.isValid(document.id('".$extension."-form'))) {
+                if (task != '" . $extension . ".cancel' && document.formvalidator.isValid(document.id('" . $extension . "-form'))) {
                     Joomla.submitform(task, document.getElementById('adminForm'));
                 } else {
-                    alert('". \Secretary\Utilities::cleaner(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')) ."');
+                    alert('" . \Secretary\Utilities::cleaner(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')) . "');
                 }
             }
         }

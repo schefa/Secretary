@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -25,7 +26,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  */
- 
+
 // No direct access
 defined('JPATH_BASE') or die;
 
@@ -40,7 +41,7 @@ class JFormFieldDatafields extends JFormFieldList
 
 	public function getFieldsArray()
 	{
-		$result = array( 
+		$result = array(
 			'text' => JText::_('COM_SECRETARY_FIELD_TEXT'),
 			'textarea' => JText::_('COM_SECRETARY_FIELD_TEXTAREA'),
 			'number' => JText::_('COM_SECRETARY_FIELD_NUMBER'),
@@ -50,25 +51,24 @@ class JFormFieldDatafields extends JFormFieldList
 			'list' => JText::_('COM_SECRETARY_FIELD_LIST'),
 			'url' => JText::_('COM_SECRETARY_FIELD_URL'),
 		);
-		if(\Secretary\Helpers\Access::checkAdmin()) {
+		if (\Secretary\Helpers\Access::checkAdmin()) {
 			$result['sql'] = JText::_('COM_SECRETARY_FIELD_SQL');
 			$result['search'] = 'search';
-			$result['accounts_tax'] = 'accounts_tax';
 		}
-		return $result; 
+		return $result;
 	}
-	 
-	public function getResult( $key )
+
+	public function getResult($key)
 	{
 		$result = $this->getFieldsArray();
 		return $result[$key];
 	}
-	
+
 	public function getOptions()
 	{
 		$result = $this->getFieldsArray();
-		foreach($result as $key=>$value) {
-			$html[] = JHtml::_('select.option', $key, $value );
+		foreach ($result as $key => $value) {
+			$html[] = JHtml::_('select.option', $key, $value);
 		}
 		return $result;
 	}

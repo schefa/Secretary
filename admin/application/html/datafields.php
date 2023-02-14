@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -28,18 +29,18 @@
 
 namespace Secretary\HTML;
 
-require_once SECRETARY_ADMIN_PATH .'/application/HTML.php'; 
+require_once SECRETARY_ADMIN_PATH . '/application/HTML.php';
 
 use JText;
 use JHtml;
- 
+
 // No direct access
 defined('_JEXEC') or die;
 
 class Datafields
 {
-	
-	public static function item ()
+
+	public static function item()
 	{
 		return '
 <div class="field-item" style="display:none;">
@@ -48,30 +49,29 @@ class Datafields
 		<span class="pull-left">##hard##</span>
 		<input id="jform_fields_##counter##_id" type="hidden" class="form-control" name="jform[fields][##counter##][id]" value="##id##" />
 		<input id="jform_fields_##counter##_hard" type="hidden" class="form-control" name="jform[fields][##counter##][hard]" value="##hard##" />
-		<input id="jform_fields_##counter##_title" type="text" value="##title##" class="form-control" name="jform[fields][##counter##][title]" placeholder="'. JText::_('COM_SECRETARY_FIELD_KEY') .'" />
+		<input id="jform_fields_##counter##_title" type="text" value="##title##" class="form-control" name="jform[fields][##counter##][title]" placeholder="' . JText::_('COM_SECRETARY_FIELD_KEY') . '" />
     </div>
 	<div class="field-item-values">##values##</div>
     <div class="btn btn-default field-remove"><i class="fa fa-remove"></i></div>
 </div>';
 	}
-	
-	public static function listOptions ($extension, $unsets = array() )
+
+	public static function listOptions($extension, $unsets = array())
 	{
 		// Liste aller Standard Datenfelder
 		$allFields		= \Secretary\Helpers\Items::getFields($extension, $unsets);
 		$fieldOptions	= array();
-		
-		foreach($allFields as $field) {
+
+		foreach ($allFields as $field) {
 			$fieldOptions[] = JHtml::_('select.option', $field->id, JText::_($field->title));
 		}
-		
-		if(is_array($extension)) $extension = implode(",",$extension);
-		
-		$html = '<div class="select-arrow"><select id="getfields" class="form-control inputbox" data-ext="'. $extension .'">';
+
+		if (is_array($extension)) $extension = implode(",", $extension);
+
+		$html = '<div class="select-arrow"><select id="getfields" class="form-control inputbox" data-ext="' . $extension . '">';
 		$html .= JHtml::_('select.options', $fieldOptions, 'value', 'text');
-        $html .= '</select></div>';
-			
+		$html .= '</select></div>';
+
 		return $html;
 	}
-	
 }

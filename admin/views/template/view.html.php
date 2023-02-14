@@ -70,7 +70,7 @@ class SecretaryViewTemplate extends JViewLegacy
 		
 		if( !$show) {
 		    echo '<div class="alert alert-danger">'. JText::_('JERROR_ALERTNOAUTHOR').'</div>'; return false;
-		} elseif (count($errors = $this->get('Errors'))) {
+		} elseif (count(($errors = $this->get('Errors')) ?? [])) {
 		    $app->enqueueMessage( implode("\n", $errors) , 'error');
 		    return false;
 		}

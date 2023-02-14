@@ -63,7 +63,7 @@ class SecretaryViewMessage extends JViewLegacy
 		$this->params		= $this->state->get('params');
 
 		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+		if (count(($errors = $this->get('Errors')) ?? [])) {
             $app->enqueueMessage(implode("\n", $errors), 'error'); return false;
 		}
 

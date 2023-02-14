@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.2.0
  * @package     com_secretary
@@ -31,45 +32,46 @@ namespace Secretary\Helpers;
 use JText;
 
 // No direct access
-defined('_JEXEC') or die; 
+defined('_JEXEC') or die;
 
 abstract class Newsletter
 {
-    
+
     /**
      * Method to send a newsletter template
      *
      * @param number $newsletterid
      * @return boolean|number
      */
-    public static function sendNewsletter( $newsletterid )
+    public static function sendNewsletter($newsletterid)
     {
         // Get newsletter
-        $newsletter = \Secretary\Database::getQuery('templates',$newsletterid);
-        
+        $newsletter = \Secretary\Database::getQuery('templates', $newsletterid);
+
         // Get newsletter list + contacts
-        $newsletterContacts = \Secretary\Database::getQuery('newsletter',$newsletter->catid,'listID','contactID','loadColumn');
-        
+        $newsletterContacts = \Secretary\Database::getQuery('newsletter', $newsletter->catid, 'listID', 'contactID', 'loadColumn');
+
         $msg = false;
-        
+
         // check if someone has subscribed
-        if(empty($newsletterContacts)) {
+        if (empty($newsletterContacts)) {
             return $msg;
         }
-        
+
         // Loop Contacts
-        foreach($newsletterContacts as $contactID) {
-            $contact = \Secretary\Database::getQuery('subjects',$contactID);
-            if(!isset($contact)) continue;
-            $text = \Secretary\Helpers\Templates::transformText( $newsletter->text, array('subject'=>$contact->id) );
-            if(!empty($contact->email)) {
-                $msg += (int) \Secretary\Email::email($contact->firstname .' '.$contact->lastname, $contact->email, $newsletter->title,$text);
+        foreach ($newsletterContacts as $contactID) {
+            $contact = \Secretary\Database::getQuery('subjects', $contactID);
+            if (!isset($contact))
+                continue;
+            $text = \Secretary\Helpers\Templates::transformText($newsletter->text, array('subject' => $contact->id));
+            if (!empty($contact->email)) {
+                $msg += (int) \Secretary\Email::email($contact->firstname . ' ' . $contact->lastname, $contact->email, $newsletter->title, $text);
             }
         }
-        
+
         return $msg;
     }
-    
+
     /**
      * Method to get contacts who subscribe to a newsletter list
      * 
@@ -78,29 +80,29 @@ abstract class Newsletter
      */
     public static function getNewsletterContacts($newsletterListID)
     {
-        $db	= \Secretary\Database::getDBO();
-        
-        $query = 'SELECT id,firstname,lastname FROM '.$db->qn('#__secretary_subjects');
-        $query .= 'WHERE id IN (SELECT contactID FROM '.$db->qn('#__secretary_newsletter').' WHERE listID = '. (int) $newsletterListID .')';
+        $db = \Secretary\Database::getDBO();
+
+        $query = 'SELECT id,firstname,lastname FROM ' . $db->qn('#__secretary_subjects');
+        $query .= 'WHERE id IN (SELECT contactID FROM ' . $db->qn('#__secretary_newsletter') . ' WHERE listID = ' . (int) $newsletterListID . ')';
         $db->setQuery($query);
         $result = $db->loadObjectList();
-         
+
         return (!empty($result)) ? $result : array();
     }
-    
-    public static function addContactToNewsletter($contactid , $newsletterid)
+
+    public static function addContactToNewsletter($contactid, $newsletterid)
     {
         $app = \Secretary\Joomla::getApplication();
-        $db   = \Secretary\Database::getDBO();
-        
-        $db->setQuery('SELECT * FROM #__secretary_newsletter WHERE '.$db->qn('listID').'='. (int) $newsletterid.' AND '.$db->qn('contactID').'='. (int) $contactid);
+        $db = \Secretary\Database::getDBO();
+
+        $db->setQuery('SELECT * FROM #__secretary_newsletter WHERE ' . $db->qn('listID') . '=' . (int) $newsletterid . ' AND ' . $db->qn('contactID') . '=' . (int) $contactid);
         $exists = $db->loadResult();
-        
+
         $sql = $db->getQuery(true);
-        if(empty($exists)) {
+        if (empty($exists)) {
             $sql->insert($db->qn("#__secretary_newsletter"))
-            ->set($db->qn("listID")."=". $db->escape((int) $newsletterid))
-            ->set($db->qn("contactID")."=". $db->escape((int) $contactid));
+                ->set($db->qn("listID") . "=" . $db->escape((int) $newsletterid))
+                ->set($db->qn("contactID") . "=" . $db->escape((int) $contactid));
             try {
                 $db->setQuery($sql);
                 $result = $db->query();
@@ -113,15 +115,15 @@ abstract class Newsletter
             return true;
         }
     }
-    
-    public static function removeContactFromAllNewsletters($contactid )
+
+    public static function removeContactFromAllNewsletters($contactid)
     {
         $app = \Secretary\Joomla::getApplication();
-        $db   = \Secretary\Database::getDBO();
+        $db = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
-        
+
         $sql->delete($db->qn("#__secretary_newsletter"));
-        $sql->where($db->qn("contactID")."=". $db->escape((int) $contactid));
+        $sql->where($db->qn("contactID") . "=" . $db->escape((int) $contactid));
         try {
             $db->setQuery($sql);
             $result = $db->query();
@@ -131,16 +133,16 @@ abstract class Newsletter
             return false;
         }
     }
-    
-    public static function removeContactFromNewsletter($contactid,$newsletter_id)
+
+    public static function removeContactFromNewsletter($contactid, $newsletter_id)
     {
         $app = \Secretary\Joomla::getApplication();
-        $db   = \Secretary\Database::getDBO();
+        $db = \Secretary\Database::getDBO();
         $sql = $db->getQuery(true);
-        if(!empty($exists)) {
+        if (!empty($exists)) {
             $sql->delete($db->qn("#__secretary_newsletter"))
-            ->where($db->qn("listID")."=". intval($newsletter_id))
-            ->where($db->qn("contactID")."=". $db->escape((int) $contactid));
+                ->where($db->qn("listID") . "=" . intval($newsletter_id))
+                ->where($db->qn("contactID") . "=" . $db->escape((int) $contactid));
             try {
                 $db->setQuery($sql);
                 $result = $db->query();
@@ -153,49 +155,53 @@ abstract class Newsletter
             return true;
         }
     }
-    
+
     public static function removeNewsletterFromContact($contactid, $newsletterid = NULL)
     {
-        $db   = \Secretary\Database::getDBO();
-        $subject = \Secretary\Database::getQuery('subjects',(int) $contactid);
-        
-        if(empty($subject))
+        $db = \Secretary\Database::getDBO();
+        $subject = \Secretary\Database::getQuery('subjects', (int) $contactid);
+
+        if (empty($subject))
             return JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', 'Email is not in a newsletter');
-        
+
         // Get Old
         $oldFields = $subject->fields;
-        
+
         $newsletterIds = array();
         $found = false;
-        if($fields = json_decode($oldFields)) {
+        if ($fields = json_decode($oldFields)) {
             // unset same newsletter
-            if(strpos($oldFields,"newsletter") !== false) {
-                foreach($fields as $key => $field) {
-                    if(is_numeric($key)) {
-                        if(isset($newsletterid) && $field[3] == 'newsletter' && $field[2] == $newsletterid) {
-                            unset($fields[$key]); $found = true; $newsletterIds[] = $field[2];
-                        } elseif(!isset($newsletterid) && $field[3] == 'newsletter'){
-                            unset($fields[$key]); $found = true; $newsletterIds[] = $field[2];
+            if (strpos($oldFields, "newsletter") !== false) {
+                foreach ($fields as $key => $field) {
+                    if (is_numeric($key)) {
+                        if (isset($newsletterid) && $field[3] == 'newsletter' && $field[2] == $newsletterid) {
+                            unset($fields[$key]);
+                            $found = true;
+                            $newsletterIds[] = $field[2];
+                        } elseif (!isset($newsletterid) && $field[3] == 'newsletter') {
+                            unset($fields[$key]);
+                            $found = true;
+                            $newsletterIds[] = $field[2];
                         }
                     }
                 }
             }
             $oldFields = json_encode($fields);
         }
-        
-        if(!$found)
+
+        if (!$found)
             return JText::sprintf('COM_SECRETARY_ERROR_CHECK_THIS', 'Email is not in a newsletter');
-        
+
         // Remove Contact from Newsletters
-        foreach($newsletterIds as $newsletter_id)
-            \Secretary\Helpers\Newsletter::removeContactFromNewsletter($contactid,(int) $newsletter_id);
-        
+        foreach ($newsletterIds as $newsletter_id)
+            \Secretary\Helpers\Newsletter::removeContactFromNewsletter($contactid, (int) $newsletter_id);
+
         // Set New
         $updateQuery = $db->getQuery(true);
         $updateQuery->update($db->qn("#__secretary_subjects"));
-        $updateQuery->set($db->qn("fields")."=". $db->quote($oldFields));
-        $updateQuery->where($db->qn("id")."=". $db->escape($contactid));
-        
+        $updateQuery->set($db->qn("fields") . "=" . $db->quote($oldFields));
+        $updateQuery->where($db->qn("id") . "=" . $db->escape($contactid));
+
         try {
             $db->setQuery($updateQuery);
             $db->execute();
@@ -203,57 +209,58 @@ abstract class Newsletter
             $app->enqueueMessage($e->getMessage(), 'error');
             return JText::_('COM_SECRETARY_ERROR_OCCURED');
         }
-        
+
         return JText::_('COM_SECRETARY_NEWSLETTER_UNSUBSCRIBED');
     }
-    
-    public static function refreshNewsletterListToContacts($newsletterListID , $contacts, $batch = false)
+
+    public static function refreshNewsletterListToContacts($newsletterListID, $contacts, $batch = false)
     {
-        $app  = \Secretary\Joomla::getApplication();
-        $db   = \Secretary\Database::getDBO();
-        $contactsIds	= array_unique($contacts);
-        
+        $app = \Secretary\Joomla::getApplication();
+        $db = \Secretary\Database::getDBO();
+        $contactsIds = array_unique($contacts);
+
         // Geld field ID
         $query = $db->getQuery(true);
         $query->select('id,title');
         $query->from($db->qn("#__secretary_fields"));
-        $query->where($db->qn("hard")." LIKE ". $db->quote("newsletter"));
+        $query->where($db->qn("hard") . " LIKE " . $db->quote("newsletter"));
         $db->setQuery($query);
         $field = $db->loadObject();
-        
+
         // Clear newsletter table
-        $db->setQuery('DELETE FROM '.$db->qn("#__secretary_newsletter").' WHERE '.$db->qn('listID').' = '.intval($newsletterListID));
+        $db->setQuery('DELETE FROM ' . $db->qn("#__secretary_newsletter") . ' WHERE ' . $db->qn('listID') . ' = ' . intval($newsletterListID));
         $db->execute();
-        
+
         // Input Field
-        $input = array($field->id,JText::_($field->title),$newsletterListID,'newsletter');
+        $input = array($field->id, JText::_($field->title), $newsletterListID, 'newsletter');
         $contactsNewsletter = array();
-        
+
         // Kontakte Felder update
-        foreach($contactsIds as $contactid)
-        {
+        foreach ($contactsIds as $contactid) {
             // New Field input
             $newFields = array($input);
-            
+
             // Get Old
-            $oldFields = \Secretary\Database::getQuery('subjects', $contactid,'id','fields','loadResult');
-            
-            if($fields = json_decode($oldFields)) {
+            $oldFields = \Secretary\Database::getQuery('subjects', $contactid, 'id', 'fields', 'loadResult');
+
+            if ($fields = json_decode($oldFields)) {
                 // unset same newsletter
-                if(strpos($oldFields,"newsletter") !== false) {
-                    foreach($fields as $key => $field) {
-                        if(is_numeric($key) && $field[3] == 'newsletter' && $field[2] == $newsletterListID){ unset($fields[$key]); }
+                if (strpos($oldFields, "newsletter") !== false) {
+                    foreach ($fields as $key => $field) {
+                        if (is_numeric($key) && $field[3] == 'newsletter' && $field[2] == $newsletterListID) {
+                            unset($fields[$key]);
+                        }
                     }
                 }
                 $newFields = array_merge($newFields, $fields);
             }
-            
+
             // Set New
             $upd = $db->getQuery(true);
             $upd->update($db->qn("#__secretary_subjects"))
-            ->set($db->qn("fields")."=". $db->quote(json_encode($newFields)))
-            ->where($db->qn("id")."=". $db->escape($contactid));
-            
+                ->set($db->qn("fields") . "=" . $db->quote(json_encode($newFields)))
+                ->where($db->qn("id") . "=" . $db->escape($contactid));
+
             try {
                 $db->setQuery($upd);
                 $db->query();
@@ -261,9 +268,9 @@ abstract class Newsletter
                 $app->enqueueMessage($e->getMessage(), 'error');
                 continue;
             }
-            
+
             // Contact in der Newsletter Liste vermerken
-            \Secretary\Helpers\Newsletter::addContactToNewsletter($contactid , $newsletterListID);
+            \Secretary\Helpers\Newsletter::addContactToNewsletter($contactid, $newsletterListID);
         }
     }
 }
