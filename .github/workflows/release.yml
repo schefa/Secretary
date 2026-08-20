@@ -1,0 +1,109 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to create for this release (e.g. v1.2.3)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restrict runs to the repository owner
+        if: github.actor != github.repository_owner
+        run: |
+          echo "Only the repository owner (${{ github.repository_owner }}) can trigger this workflow."
+          exit 1
+
+  lint:
+    needs: authorize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run phpcs
+        run: vendor/bin/phpcs
+
+  test:
+    needs: authorize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer
+
+      - name: Install dependencies
+        working-directory: com_secretary/tests
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run phpunit
+        working-directory: com_secretary/tests
+        run: vendor/bin/phpunit
+
+  release:
+    needs: [authorize, lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create and push tag
+        # Pushed with the default GITHUB_TOKEN, so GitHub suppresses any resulting
+        # push event - this cannot recursively trigger a workflow run.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "${{ inputs.tag }}"
+          git push origin "${{ inputs.tag }}"
+
+      - name: Build packages
+        run: |
+          make secretary
+          make secretary/module
+
+      - name: Generate release notes from commits
+        id: changelog
+        run: |
+          PREV_TAG=$(git tag --sort=-creatordate | grep -vFx "${{ inputs.tag }}" | head -n1)
+
+          if [ -n "$PREV_TAG" ]; then
+            LOG=$(git log "$PREV_TAG..${{ inputs.tag }}" --pretty=format:"- %s (%h)")
+          else
+            LOG=$(git log "${{ inputs.tag }}" --pretty=format:"- %s (%h)")
+          fi
+
+          {
+            echo "log<<EOF"
+            echo "$LOG"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          body: ${{ steps.changelog.outputs.log }}
+          files: _package/*.zip

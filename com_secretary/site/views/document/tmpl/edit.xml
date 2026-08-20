@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_DOCUMENT_FORM"></layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+			<field name="catid" extension="documents" type="categories" label="COM_SECRETARY_FOLDER" required="true" />
+		</fieldset>
+	</fields>
+	
+</metadata>
+

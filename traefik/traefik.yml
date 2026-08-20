@@ -1,0 +1,33 @@
+api:
+  insecure: false
+  dashboard: false
+
+ping: {}
+
+log:
+  level: INFO
+  format: json
+
+accessLog:
+  filePath: /var/log/traefik/access.log
+  format: json
+  bufferingSize: 100       # reduce I/O overhead
+  filters:
+    statusCodes:
+      - "400-599"          # log only errors
+    retryAttempts: true
+    minDuration: "100ms"   # ignore short successful requests
+
+entryPoints:
+  web:
+    address: :80
+    transport:
+      respondingTimeouts:
+        readTimeout: 30s
+        writeTimeout: 30s
+        idleTimeout: 120s
+
+providers:
+  file:
+    directory: /etc/traefik/conf.d/
+    watch: true

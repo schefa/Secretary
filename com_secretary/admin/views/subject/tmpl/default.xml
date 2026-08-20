@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout
+		title="COM_SECRETARY_SUBJECT" option="COM_SECRETARY_SUBJECT_OPTION">
+		<help />
+		<message>
+			<![CDATA[COM_SECRETARY_SUBJECT_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="id"  type="sql" default="0" label="ID" query="SELECT id, concat( firstname, ' ', lastname) AS title  FROM #__secretary_subjects" key_field="id" value_field="title" />
+		</fieldset>
+	</fields>
+	
+</metadata>

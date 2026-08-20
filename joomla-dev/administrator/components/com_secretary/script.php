@@ -1,0 +1,1 @@
+../../../../com_secretary/script.php

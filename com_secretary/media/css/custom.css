@@ -1,0 +1,12 @@
+/* @package com_secretary */
+
+/* Secretary renders its own sidebar (see Navigation::getSidebar()), so
+   Joomla's own admin main-menu sidebar would just duplicate it. Hide it here
+   in CSS, scoped to Secretary's own admin views only, rather than via the
+   shared `hidemainmenu` app-input flag - that flag is also read by mod_user,
+   mod_messages and other header modules on every admin page, so setting it
+   outside edit forms hides those too. */
+body.com_secretary #sidebar-wrapper,
+body.com_secretary button[data-bs-target="#sidebar-wrapper"] {
+    display: none;
+}

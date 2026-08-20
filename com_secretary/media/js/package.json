@@ -1,0 +1,12 @@
+{
+  "name": "com-secretary-js",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Unit tests for com_secretary's client-side document/tax calculations.",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

@@ -1,0 +1,356 @@
+##
+# @package    Joomla
+# @copyright  Copyright (C) 2005 - 2016 Open Source Matters. All rights reserved.
+# @license    GNU General Public License version 2 or later; see LICENSE.txt
+##
+
+##
+# READ THIS COMPLETELY IF YOU CHOOSE TO USE THIS FILE!
+#
+# The line just below this section: 'Options +FollowSymLinks' may cause problems
+# with some server configurations.  It is required for use of mod_rewrite, but may already
+# be set by your server administrator in a way that disallows changing it in
+# your .htaccess file.  If using it causes your server to error out, comment it out (add # to
+# beginning of line), reload your site in your browser and test your sef url's.  If they work,
+# it has been set by your server administrator and you do not need it set here.
+##
+
+## No directory listings
+IndexIgnore *
+
+## Can be commented out if causes errors, see notes above.
+Options +FollowSymlinks
+Options -Indexes
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+## Mod_rewrite in use.
+
+RewriteEngine On
+
+########## Begin - Joomla! core SEF Section
+## Begin - Rewrite rules to block out some common exploits.
+# If you experience problems on your site block out the operations listed below
+# This attempts to block the most common type of exploit `attempts` to Joomla!
+#
+# Block out any script trying to base64_encode data within the URL.
+RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
+# Block out any script that includes a <script> tag in URL.
+RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+# Block out any script trying to set a PHP GLOBALS variable via URL.
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+# Block out any script trying to modify a _REQUEST variable via URL.
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+# Return 403 Forbidden header and show the content of the root homepage
+RewriteRule .* index.php [F]
+#
+#
+## End - Rewrite rules to block out some common exploits.
+########## End - Joomla! core SEF Section
+
+## Begin - Custom redirects
+#
+# If you need to redirect some pages, or set a canonical non-www to
+# www redirect (or vice versa), place that code here. Ensure those
+# redirects use the correct RewriteRule syntax and the [R=301,L] flags.
+#
+## End - Custom redirects
+
+##
+# Uncomment following line if your webserver's URL
+# is not directly related to physical file paths.
+# Update Your Joomla! Directory (just / for root).
+##
+
+# RewriteBase /
+
+## Begin - Joomla! core SEF Section.
+#
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+#
+# If the requested path and file is not /index.php and the request
+# has not already been internally rewritten to the index.php script
+RewriteCond %{REQUEST_URI} !^/index\.php
+# and the requested path and file doesn't directly match a physical file
+RewriteCond %{REQUEST_FILENAME} !-f
+# and the requested path and file doesn't directly match a physical folder
+RewriteCond %{REQUEST_FILENAME} !-d
+# internally rewrite the request to the index.php script
+RewriteRule .* index.php [L]
+#
+## End - Joomla! core SEF Section.
+
+
+########## Begin - Automatic compression of resources
+# Compress text, html, javascript, css, xml, kudos to Komra.de
+# May kill access to your site for old versions of Internet Explorer
+# The server needs to be compiled with mod_deflate otherwise it will send HTTP 500 Error.
+# mod_deflate is not available on Apache 1.x series. Can only be used with Apache 2.x server.
+# AddOutputFilterByType is now deprecated by Apache. Use mod_filter in the future.
+AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/xhtml+xml application/rss+xml application/javascript application/x-javascript
+########## End - Automatic compression of resources
+
+########## Begin - Add optional bad user agent or IP blocking code
+#
+# If you need to block certain user agents or IP addresses and
+# other signatures, place that code here. Ensure the rules use
+# the correct RewriteRule syntax and the [F] flag.
+#
+########## End - Add optional bad user agent or IP blocking code
+
+########## Begin - Rewrite rules to block out some common exploits
+## If you experience problems on your site block out the operations listed below
+## This attempts to block the most common type of exploit `attempts` to Joomla!
+#
+# If the request query string contains /proc/self/environ (by SigSiu.net)
+RewriteCond %{QUERY_STRING} proc/self/environ [OR]
+# Block out any script trying to set a mosConfig value through the URL
+# (these attacks wouldn't work w/out Joomla! 1.5's Legacy Mode plugin)
+RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
+# Block out any script trying to base64_encode or base64_decode data within the URL
+RewriteCond %{QUERY_STRING} base64_(en|de)code[^(]*\([^)]*\) [OR]
+########## End - Rewrite rules to block out some common exploits
+
+########## Begin - File injection protection, by SigSiu.net
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+RewriteRule .* - [F]
+########## End - File injection protection
+
+########## Begin - Basic antispam Filter, by SigSiu.net
+## I removed some common words, tweak to your liking
+## This code uses PCRE and works only with Apache 2.x.
+## This code will NOT work with Apache 1.x servers.
+RewriteCond %{QUERY_STRING} \b(ambien|blue\spill|cialis|cocaine|ejaculation|erectile)\b [NC,OR]
+RewriteCond %{QUERY_STRING} \b(erections|hoodia|huronriveracres|impotence|levitra|libido)\b [NC,OR]
+RewriteCond %{QUERY_STRING} \b(lipitor|phentermin|pro[sz]ac|sandyauer|tramadol|troyhamby)\b [NC,OR]
+RewriteCond %{QUERY_STRING} \b(ultram|unicauca|valium|viagra|vicodin|xanax|ypxaieo)\b [NC]
+## Note: The final RewriteCond must NOT use the [OR] flag.
+RewriteRule .* - [F]
+## Note: The previous lines are a "compressed" version
+## of the filters. You can add your own filters as:
+## RewriteCond %{QUERY_STRING} \bbadword\b [NC,OR]
+## where "badword" is the word you want to exclude.
+########## End - Basic antispam Filter, by SigSiu.net
+
+########## Begin - Advanced server protection - query strings, referrer and config
+# Advanced server protection, version 3.2 - May 2011
+# by Nicholas K. Dionysopoulos
+
+## Disallow PHP Easter Eggs (can be used in fingerprinting attacks to determine
+## your PHP version). See http://www.0php.com/php_easter_egg.php and
+## http://osvdb.org/12184 for more information
+RewriteCond %{QUERY_STRING} \=PHP[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12} [NC]
+RewriteRule .* - [F]
+
+## SQLi first line of defense, thanks to Radek Suski (SigSiu.net) @
+## http://www.sigsiu.net/presentations/fortifying_your_joomla_website.html
+## May cause problems on legitimate requests
+RewriteCond %{QUERY_STRING} concat[^\(]*\( [NC,OR]
+RewriteCond %{QUERY_STRING} union([^s]*s)+elect [NC,OR]
+RewriteCond %{QUERY_STRING} union([^a]*a)+ll([^s]*s)+elect [NC]
+RewriteRule .* - [F]
+
+## Referrer filtering for common media files. Replace with your own domain name.
+## This blocks most common fingerprinting attacks ;)
+## Note: Change www\.schefa\.com with your own domain name, substituting the
+## dots with \.  i.e. use www\.schefa\.com for www.schefa.com
+# RewriteRule ^images/stories/([^/]+/)*([^/.]+\.)+(jp(e?g|2)?|png|gif|bmp|css|js|swf|ico)$ - [L]
+# RewriteCond %{HTTP_REFERER} .
+# RewriteCond %{HTTP_REFERER} !^https?://(www\.)?schefa\.com [NC]
+# RewriteCond %{REQUEST_FILENAME} -f
+# RewriteRule \.(jp(e?g|2)?|png|gif|bmp|css|js|swf|ico)$ - [F]
+
+## Disallow visual fingerprinting of Joomla! sites (module position dump)
+## Initial idea by Brian Teeman and Ken Crowder, see:
+## http://www.slideshare.net/brianteeman/hidden-joomla-secrets
+## Improved by @nikosdion to work more efficiently and handle template
+## and tmpl query parameters
+RewriteCond %{QUERY_STRING} (^|&)tmpl=(component|system) [NC]
+RewriteRule .* - [L]
+RewriteCond %{QUERY_STRING} (^|&)t(p|emplate|mpl)= [NC]
+RewriteRule .* - [F]
+
+## Disallow access to htaccess.txt, configuration.php, configuration.php-dist and php.ini
+RewriteRule ^(htaccess\.txt|configuration\.php(-dist)?|php\.ini)$ - [F]
+
+########## Begin - Advanced server protection rules exceptions ####
+##
+## These are sample exceptions to the Advanced Server Protection 3.1
+## rule set further down this file.
+##
+## Allow UddeIM CAPTCHA
+RewriteRule ^components/com_uddeim/captcha15\.php$ - [L]
+## Allow Phil Taylor's Turbo Gears
+RewriteRule ^plugins/system/GoogleGears/gears-manifest\.php$ - [L]
+## Allow JoomlaWorks AllVideos
+RewriteRule ^plugins/content/jw_allvideos/includes/jw_allvideos_scripts\.php$ - [L]
+## Allow Admin Tools Joomla! updater to run
+RewriteRule ^administrator/components/com_admintools/restore\.php$ - [L]
+
+# Add more rules to single PHP files here
+
+## Allow Agora attachments, but not PHP files in that directory!
+RewriteCond %{REQUEST_FILENAME} !(\.php)$
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^components/com_agora/img/members/ - [L]
+
+########## End - Advanced server protection rules exceptions ####
+
+########## Begin - Advanced server protection - paths and files
+# Advanced server protection, version 3.2 - May 2011
+
+## Back-end protection
+## This also blocks fingerprinting attacks browsing for XML and INI files
+RewriteRule ^administrator/?$ - [L]
+RewriteRule ^administrator/index\.(php|html?)$ - [L]
+RewriteRule ^administrator/index[23]\.php$ - [L]
+RewriteRule ^administrator/(components|modules|templates|images|plugins)/([^/]+/)*([^/.]+\.)+(jp(e?g|2)?|png|gif|bmp|css|js|swf|html?|mp(eg?|[34])|avi|wav|og[gv]|xlsx?|docx?|pptx?|zip|rar|pdf|xps|txt|7z|svg|od[tsp]|flv|mov)$ - [L]
+RewriteRule ^administrator/ - [F]
+
+## Explicitly allow access only to XML-RPC's xmlrpc/index.php or plain xmlrpc/ directory
+RewriteRule ^xmlrpc/(index\.php)?$ - [L]
+RewriteRule ^xmlrpc/ - [F]
+
+## Disallow front-end access for certain Joomla! system directories
+RewriteRule ^includes/js/ - [L]
+RewriteRule ^(cache|includes|language|libraries|logs|tmp)/ - [F]
+
+## Allow limited access for certain Joomla! system directories with client-accessible content
+RewriteRule ^(components|modules|plugins|templates)/([^/]+/)*([^/.]+\.)+(jp(e?g|2)?|png|gif|bmp|css|js|swf|html?|mp(eg?|[34])|avi|wav|og[gv]|xlsx?|docx?|pptx?|zip|rar|pdf|xps|txt|7z|svg|ttf|od[tsp]|flv|mov)$ - [L]
+## Uncomment this line if you have extensions which require direct access to their own
+## custom index.php files. Note that this is UNSAFE and the developer should be ashamed
+## for being so lame, lazy and security unconscious.
+# RewriteRule ^(components|modules|plugins|templates)/([^/]+/)*(index\.php)?$ - [L]
+## Uncomment the following line if your template requires direct access to PHP files
+## inside its directory, e.g. GZip compressed copies of its CSS files
+# RewriteRule ^templates/([^/]+/)*([^/.]+\.)+php$ - [L]
+RewriteRule ^(components|modules|plugins|templates)/ - [F]
+
+## Disallow access to rogue PHP files throughout the site, unless they are explicitly allowed
+RewriteCond %{REQUEST_FILENAME} \.php$
+RewriteCond %{REQUEST_FILENAME} !/index[23]?\.php$
+## The next line is to explicitly allow the forum post assistant(fpa-xx)script to run
+RewriteCond %{REQUEST_FILENAME} !/fpa-[a-z]{2}\.php
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^([^/]+/)*([^/.]+\.)+php$ - [F]
+
+########## End - Advanced server protection - paths and files
+
+########## Begin - Redirect index.php to /
+RewriteCond %{THE_REQUEST} !^POST
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php\ HTTP/
+RewriteRule ^index\.php$ / [R=301,L]
+########## End - Redirect index.php to /
+
+########## Begin - Custom internal rewrites
+#
+# If you need to internally rewrite some specific URL requests,
+# place that code here. Ensure those internal rewrites use the
+# correct RewriteRule syntax without domain name and with [L] flag.
+#
+########## End - Custom internal rewrites
+
+########## Begin - Optimal default expiration time
+## Note: this might cause problems and you might have to comment it out by
+## placing a hash in front of this section's lines
+<IfModule mod_expires.c>
+# Enable expiration control
+ExpiresActive On
+
+# Default expiration: 1 hour after request
+ExpiresDefault "now plus 1 hour"
+
+# CSS and JS expiration: 1 week after request
+ExpiresByType text/css "now plus 1 week"
+ExpiresByType application/javascript "now plus 1 week"
+ExpiresByType application/x-javascript "now plus 1 week"
+
+# Image files expiration: 1 month after request
+ExpiresByType image/bmp "now plus 1 month"
+ExpiresByType image/gif "now plus 1 month"
+ExpiresByType image/jpeg "now plus 1 month"
+ExpiresByType image/jp2 "now plus 1 month"
+ExpiresByType image/pipeg "now plus 1 month"
+ExpiresByType image/png "now plus 1 month"
+ExpiresByType image/svg+xml "now plus 1 month"
+ExpiresByType image/tiff "now plus 1 month"
+ExpiresByType image/vnd.microsoft.icon "now plus 1 month"
+ExpiresByType image/x-icon "now plus 1 month"
+ExpiresByType image/ico "now plus 1 month"
+ExpiresByType image/icon "now plus 1 month"
+ExpiresByType text/ico "now plus 1 month"
+ExpiresByType application/ico "now plus 1 month"
+ExpiresByType image/vnd.wap.wbmp "now plus 1 month"
+ExpiresByType application/vnd.wap.wbxml "now plus 1 month"
+ExpiresByType application/smil "now plus 1 month"
+
+# Audio files expiration: 1 month after request
+ExpiresByType audio/basic "now plus 1 month"
+ExpiresByType audio/mid "now plus 1 month"
+ExpiresByType audio/midi "now plus 1 month"
+ExpiresByType audio/mpeg "now plus 1 month"
+ExpiresByType audio/x-aiff "now plus 1 month"
+ExpiresByType audio/x-mpegurl "now plus 1 month"
+ExpiresByType audio/x-pn-realaudio "now plus 1 month"
+ExpiresByType audio/x-wav "now plus 1 month"
+
+# Movie files expiration: 1 month after request
+ExpiresByType application/x-shockwave-flash "now plus 1 month"
+ExpiresByType x-world/x-vrml "now plus 1 month"
+ExpiresByType video/x-msvideo "now plus 1 month"
+ExpiresByType video/mpeg "now plus 1 month"
+ExpiresByType video/mp4 "now plus 1 month"
+ExpiresByType video/quicktime "now plus 1 month"
+ExpiresByType video/x-la-asf "now plus 1 month"
+ExpiresByType video/x-ms-asf "now plus 1 month"
+</IfModule>
+########## End - Optimal expiration time
+
+########## Block bad user agents
+## The following list may include bots that no longer exist or are not a problem
+## for your site. The list will always be incomplete and it is therefore wise to
+## follow discussions on one of the many "security" mailing lists or on a forum
+## such as http://www.webmasterworld.com/search_engine_spiders/
+## It is also unwise to rely on this list as your ONLY security mechanism.
+# Block all bots except Googlebot and Bingbot
+RewriteCond %{HTTP_USER_AGENT} !(Googlebot|bingbot) [NC]
+RewriteCond %{HTTP_USER_AGENT} (bot|spider|crawl|slurp|archiver|curl|wget|python|scrapy|facebookexternalhit|yandex|baidu|duckduckbot|sogou|exabot|facebot|ia_archiver) [NC]
+## Note: The final RewriteCond must NOT use the [OR] flag.
+
+## Return 403 Forbidden error.
+RewriteRule .* - [F]
+
+# Protect sensitive directories with FilesMatch
+<FilesMatch "\.(?:php|phtml|php\.|php3|php4|php5|php7|pht|phar)$">
+    SetEnvIf Request_URI "^/(images|media|logs|tmp|cache|includes)/" FORBIDDEN=1
+    Order allow,deny
+    Allow from all
+    Deny from env=FORBIDDEN
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "^(\.env|\.git|\.htaccess|\.htpasswd|composer\.json|composer\.lock|web\.config|configuration\.php|php\.ini)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block PHP execution in uploads
+RewriteCond %{REQUEST_URI} ^/(uploads|images|media|files|tmp)/.+\.(?:php|phtml|php.|php3|php4|php5|php7|pht|phar)$ [NC]
+RewriteRule .* - [F,L]
+
+# Protect against common exploits
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+
+# Block PHP execution in specific folders
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^/(uploads|images|media|files|tmp)/.*\.(php|phtml|php3|php4|php5|php7|pht|phar)$ [NC]
+    RewriteRule ^ - [F,L]
+</IfModule>

@@ -1,0 +1,156 @@
+<?php
+
+// No direct access
+defined('JPATH_BASE') or die;
+
+if (!defined('SECRETARY_ADMIN_PATH'))
+{
+	define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR . '/components/com_secretary');
+}
+
+\Joomla\CMS\Form\FormHelper::loadFieldClass('list');
+
+require_once SECRETARY_ADMIN_PATH . '/application/Secretary.php';
+
+class JFormFieldCategories extends \Joomla\CMS\Form\Field\ListField
+{
+	protected $type = 'categories';
+
+	public function getOptions()
+	{
+
+		$user = \Secretary\Joomla::getUser();
+		$app = \Secretary\Joomla::getApplication();
+		$business = \Secretary\Application::company();
+		$categories = array();
+
+		$db = \Secretary\Database::getDBO();
+		$query = $db->getQuery(true);
+
+		$query->select("id,title,parent_id,level,state");
+		$query->select("id AS value,title AS text");
+		$query->from($db->quoteName("#__secretary_folders"));
+		$query->where('business = ' . intval($business['id']));
+
+		// Filter by the type
+		if ($extension = $this->element['extension'])
+		{
+			$query->where('(' . $db->quoteName("extension") . ' IN ( ' . $db->quote($extension) . '))');
+		}
+
+		$query->where($db->quoteName("level") . " > 0");
+
+		$db->setQuery($query);
+		$categories = $db->loadObjectList();
+
+		$categories = \Secretary\Helpers\Folders::reorderFolderItems($categories);
+
+		if (!empty($extension))
+		{
+			$view = $extension;
+		}
+        else
+		{
+			$view = $app->input->get('view');
+		}
+
+		for ($i = 0, $n = count($categories ?? []); $i < $n; $i++)
+		{
+            if (
+				$user->authorise('core.show', 'com_secretary.folder.' . $categories[$i]->id)
+				|| $user->authorise('core.show.other', 'com_secretary.folder.' . $categories[$i]->id)
+			)
+			{
+				$categories[$i]->text = str_repeat('- ', $categories[$i]->level) . \Joomla\CMS\Language\Text::_($categories[$i]->text);
+			}
+            else
+			{
+				unset($categories[$i]);
+			}
+		}
+
+		switch ($view)
+		{
+			case 'documents':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_FILTER_DOCUMENTS');
+				break;
+			case 'subjects':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_GROUPS_ALL');
+				break;
+			case 'templates':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_CATEGORIES_ALL');
+				break;
+			default:
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_CATEGORIES_NOPARENT');
+				break;
+		}
+
+		array_unshift($categories, $defaultText);
+		
+        return $categories;
+	}
+
+	public function getCategories($view, $not = NULL)
+	{
+		$user = \Secretary\Joomla::getUser();
+		$business = \Secretary\Application::company();
+		$categories = array();
+
+		$db = \Secretary\Database::getDBO();
+		$query = $db->getQuery(true);
+
+		$query->select("id as value,title as text,id,title,level,parent_id,state");
+		$query->from($db->quoteName("#__secretary_folders"));
+		$query->where($db->quoteName("business") . ' = ' . intval($business['id']));
+		$query->where($db->quoteName('extension') . "=" . $db->quote($view));
+		$query->where($db->quoteName("level") . " > 0");
+
+		if (!empty($not))
+		{
+			$query->where($db->quoteName('id') . "!=" . intval($not));
+		}
+		$db->setQuery($query);
+		$categories = $db->loadObjectList();
+
+		$categories = \Secretary\Helpers\Folders::reorderFolderItems($categories);
+
+		for ($i = 0, $n = count($categories ?? []); $i < $n; $i++)
+		{
+            if (
+				$user->authorise('core.show', 'com_secretary.folder.' . $categories[$i]->id)
+				|| $user->authorise('core.show.other', 'com_secretary.folder.' . $categories[$i]->id)
+			)
+			{
+				$categories[$i]->title = str_repeat('- ', $categories[$i]->level) . \Joomla\CMS\Language\Text::_($categories[$i]->title);
+			}
+            else
+			{
+				unset($categories[$i]);
+			}
+		}
+
+		switch ($view)
+		{
+			case 'documents':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_FILTER_DOCUMENTS');
+				break;
+			case 'subjects':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_GROUPS_ALL');
+				break;
+			case 'templates':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_CATEGORIES_ALL');
+				break;
+			case 'times':
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_CATEGORIES_ALL');
+				break;
+			default:
+				$defaultText = \Joomla\CMS\Language\Text::_('COM_SECRETARY_CATEGORIES_NOPARENT');
+				break;
+		}
+
+		array_unshift($categories, $defaultText);
+		
+        return $categories;
+	}
+
+}

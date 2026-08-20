@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout
+		title="COM_SECRETARY_TIME" option="COM_SECRETARY_TIME_OPTION">
+		<help />
+		<message>
+			<![CDATA[COM_SECRETARY_TIME_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+		
+			<field name="extension" type="list" default="list" label="Extension" >
+				<option value="events">events</option>
+				<option value="projects">projects</option>
+				<option value="tasks">tasks</option>
+			</field>
+			
+			<field name="id"  type="sql" default="0" label="ID" query="SELECT id, concat( title, ' (', created, ')') AS title  FROM #__secretary_times" key_field="id" value_field="title" />
+		</fieldset>
+	</fields>
+	
+</metadata>

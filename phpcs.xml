@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<ruleset name="Secretary">
+    <description>Coding standard for the Secretary Joomla extension.</description>
+
+    <file>com_secretary</file>
+    <file>mod_secretary_dashboard</file>
+
+    <!--
+      Locally composer-installed PHPUnit for com_secretary/tests, gitignored
+      and not part of the extension's own source - never lint/fix vendored
+      third-party code.
+    -->
+    <exclude-pattern>*/tests/vendor/*</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="p"/>
+    <arg name="tab-width" value="4"/>
+
+    <!--
+      Enforces that content inside a brace pair sits one indent level deeper
+      than the brace itself, at every nesting depth - including control
+      structures split across `?>`/`<?php` boundaries in template files.
+      Configured for spaces rather than Joomla's usual tabs: tabIndent mode
+      does not converge cleanly on this codebase's pre-existing mixed
+      tab/space indentation (verified: leaves sibling blocks visibly
+      misaligned even once the sniff itself reports zero violations), while
+      space mode produces a fully consistent, whitespace-only fix.
+    -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="false"/>
+        </properties>
+    </rule>
+
+    <!--
+      Inline-control-structure brace warnings (~430, pre-existing legacy
+      style) stay visible in the report but don't fail the build - fixing
+      them means restructuring code, not a safe blanket auto-fix.
+    -->
+    <config name="ignore_warnings_on_exit" value="1"/>
+
+    <!--
+      joomla/coding-standards' Commenting sniffs are omitted: ClassCommentSniff
+      extends FileCommentSniff across files, and PHPCS 3.x's autoloader fatals
+      on that (Class "...FileCommentSniff" not found) regardless of package
+      version - reproduced against 3.0.0-alpha and the 3.x-dev tip alike.
+    -->
+    <!--
+      InstantiateNewClasses's auto-fixer is broken: on `new ClassName()` /
+      `new static()` with no args, phpcbf deletes the class-name token too,
+      not just the parens - producing `new ;` (verified: reproduced this
+      exact corruption in com_secretary/admin/application/pdf/pdf.php).
+      Excluded entirely rather than trusted to auto-fix.
+    -->
+    <rule ref="vendor/joomla/coding-standards/Joomla/Sniffs/Classes">
+        <exclude name="Joomla.Classes.InstantiateNewClasses.NewClass"/>
+    </rule>
+    <!--
+      SpaceBeforeBrace is superseded by Generic.WhiteSpace.ScopeIndent above:
+      it hardcodes tabs (str_repeat("\t", ...)) to check brace alignment,
+      which conflicts with the space-based indentation ScopeIndent now
+      enforces for the whole file, not just the brace line.
+    -->
+    <rule ref="vendor/joomla/coding-standards/Joomla/Sniffs/ControlStructures">
+        <exclude name="Joomla.ControlStructures.ControlStructuresBrackets.SpaceBeforeBrace"/>
+    </rule>
+    <rule ref="vendor/joomla/coding-standards/Joomla/Sniffs/Functions"/>
+    <rule ref="vendor/joomla/coding-standards/Joomla/Sniffs/Operators"/>
+
+    <!--
+      Same permanent exclusions Joomla core's own ruleset applies to itself
+      ("permanent as long as there are B/C naming exceptions"): this codebase
+      follows Joomla's legacy snake_case/underscore naming throughout, same as
+      Joomla core - these sniffs would flag idiomatic Joomla code as wrong.
+    -->
+    <rule ref="vendor/joomla/coding-standards/Joomla/Sniffs/NamingConventions">
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.FunctionNoCapital"/>
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.MethodUnderscore"/>
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.NotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.ScopeNotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
+        <exclude name="Joomla.NamingConventions.ValidVariableName.ClassVarHasUnderscore"/>
+        <exclude name="Joomla.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidVariableName.NotCamelCaps"/>
+        <exclude name="Joomla.NamingConventions.ValidVariableName.StringNotCamelCaps"/>
+    </rule>
+</ruleset>

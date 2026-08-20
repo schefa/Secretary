@@ -1,0 +1,142 @@
+---
+x-common-config: &common-config
+  networks:
+    - secretary
+  restart: unless-stopped
+
+x-security-base: &security-base
+  cap_drop:
+    - ALL
+  cap_add:
+    - CHOWN
+    - SETGID
+    - SETUID
+  security_opt:
+    - no-new-privileges:true
+  pids_limit: 100
+
+x-logging: &logging
+  logging:
+    driver: "json-file"
+    options:
+      tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+      max-size: "10m"
+      max-file: "3"
+
+x-static-base: &static-base
+  <<: [*common-config, *security-base, *logging]
+
+x-joomla-base: &joomla-base
+  <<: [*common-config, *security-base, *logging]
+  depends_on:
+    mysql:
+      condition: service_healthy
+
+services:
+  traefik:
+    <<: *static-base
+    container_name: secretary_traefik
+    image: traefik:v3.7.11
+    volumes:
+      - "./traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "./traefik/conf.d:/etc/traefik/conf.d:ro"
+      - "./traefik:/var/log/traefik"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    ports:
+      - "80:80"
+      - "443:443"
+
+  # Fresh Joomla 6.1.3 installation, with no customizations.
+  joomla:
+    <<: *joomla-base
+    container_name: secretary_joomla
+    image: joomla-base:6.1.3
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+      args:
+        JOOMLA_VERSION: "6.1.3"
+    volumes:
+      - joomla6_html:/var/www/html
+      - ./joomla-dev/.htaccess:/var/www/html/.htaccess:ro
+      - ./joomla-dev/robots.txt:/var/www/html/robots.txt:ro
+      - ./joomla-dev/php.ini:/usr/local/etc/php/php.ini:ro
+    user: "1000:1000"
+  
+  # Development Joomla 6.1.3 installation, with Secretary installed
+  dev:
+    <<: *joomla-base
+    container_name: secretary_dev
+    image: joomla:6.1.3
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: joomla
+      args:
+        JOOMLA_VERSION: "6.1.3"
+    volumes:
+      - dev_logs:/var/www/html/logs
+      # The admin com_secretary tree below is made of relative symlinks
+      # (../../../../com_secretary/...) that only resolve if ./com_secretary
+      # is also mounted at the path they point into (4 levels up from
+      # .../administrator/components/com_secretary is /var/www).
+      - ./com_secretary:/var/www/com_secretary:ro
+      - ./joomla-dev/administrator/components/com_secretary:/var/www/html/administrator/components/com_secretary
+      - ./joomla-dev/administrator/modules/mod_secretary_dashboard:/var/www/html/administrator/modules/mod_secretary_dashboard
+      - ./joomla-dev/administrator/language/de-DE/de-DE.com_secretary.ini:/var/www/html/administrator/language/de-DE/de-DE.com_secretary.ini
+      - ./joomla-dev/administrator/language/de-DE/de-DE.com_secretary.sys.ini:/var/www/html/administrator/language/de-DE/de-DE.com_secretary.sys.ini
+      - ./joomla-dev/administrator/language/en-GB/en-GB.com_secretary.ini:/var/www/html/administrator/language/en-GB/en-GB.com_secretary.ini
+      - ./joomla-dev/administrator/language/en-GB/en-GB.com_secretary.sys.ini:/var/www/html/administrator/language/en-GB/en-GB.com_secretary.sys.ini
+      - ./joomla-dev/components/com_secretary:/var/www/html/components/com_secretary
+      - ./joomla-dev/media/secretary:/var/www/html/media/secretary
+      - ./joomla-dev/.htaccess:/var/www/html/.htaccess:ro
+      - ./joomla-dev/robots.txt:/var/www/html/robots.txt:ro
+      - ./joomla-dev/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./joomla-dev/configuration.php:/var/www/html/configuration.php:ro
+    user: "1000:1000"
+  
+  mysql:
+    <<: *logging
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 200
+    networks:
+      - secretary
+    image: mysql:8.0.46
+    container_name: secretary_mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --log-error-verbosity=3
+      - --log-error-services=log_filter_internal;log_sink_json
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-password}"
+      MYSQL_DATABASE: "${DEV_DB_NAME:-dev}"
+      MYSQL_USER: "${DEV_DB_USER:-dev}"
+      MYSQL_PASSWORD: "${DEV_DB_PASSWORD:-root}"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  secretary:
+    name: secretary
+    driver: bridge
+
+volumes:
+  mysql_data:
+  dev_logs:
+  joomla6_html:
+  cache:
+    driver: local

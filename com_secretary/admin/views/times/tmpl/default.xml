@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_SECRETARY_TIMES" option="COM_SECRETARY_TIMES_OPTION">
+		<message>
+			<![CDATA[COM_SECRETARY_TIMES_DEFAULT_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields" >
+		
+			<field name="layout" type="list" default="list" class="btn-group btn-group-yesno" label="Layout" >
+				<option value="list">list</option>
+				<option value="week">week</option>
+				<option value="month">month</option>
+				<option value="year">year</option>
+			</field>
+			
+		</fieldset>
+	</fields>
+	
+</metadata>

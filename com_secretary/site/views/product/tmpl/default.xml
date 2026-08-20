@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_PRODUCT"></layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="id"  type="sql" default="0" label="ID" query="SELECT id, title  FROM #__secretary_products" key_field="id" value_field="title" />
+		</fieldset>
+	</fields>
+	
+</metadata>

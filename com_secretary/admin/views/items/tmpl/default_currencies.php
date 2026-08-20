@@ -1,0 +1,77 @@
+<?php
+ 
+defined('_JEXEC') or die;
+
+$user		= Secretary\Joomla::getUser();
+$canCheckin	= $user->authorise('core.manage', 'com_secretary');
+
+?>
+
+<table class="table table-hover" id="entriesList">
+    <thead>
+        <tr>
+        
+            <th width="1%" class="hidden-phone">
+            <?php echo Secretary\HTML::_('status.checkall'); ?><span class="lbl"></span>
+            </th>
+            
+            <?php if (isset($this->items[0]->currency))
+            {
+                ?>
+            <th width="5%" class="nowrap center hidden-phone">
+                <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.sort', 'COM_SECRETARY_CURRENCY_SHORT', 'a.currency', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+            </th>
+            <?php } ?>
+            <th class='left'>
+            <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.sort',  'COM_SECRETARY_CURRENCY_TITLE', 'a.title', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+            </th>
+            <th class='left'>
+            <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.sort',  'COM_SECRETARY_CURRENCY_SYMBOL', 'a.symbol', $this->state->get('list.direction'), $this->state->get('list.ordering')); ?>
+            </th>
+        
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->items as $i => $item)
+    {
+        ?>
+        <tr class="row<?php echo $i % 2; ?>">
+            
+            <td class="center hidden-phone">
+                <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.id', $i, $item->currency); ?>
+                <span class="lbl"></span>
+            </td>
+            
+            <td class="center hidden-phone"><?php echo $item->currency; ?></td>
+            
+            <td>
+                <?php if ($canCheckin)
+                {
+                    ?>
+                    <a class="hasTooltip" data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_CLICK_TO_EDIT'); ?>"  href="<?php echo \Joomla\CMS\Router\Route::_('index.php?option=com_secretary&view=item&layout=edit&id='.(int) $item->id .'&extension='.$this->extension ); ?>">
+                    <?php echo \Joomla\CMS\Language\Text::_($item->title); ?></a>
+                <?php }
+                else
+                {
+                    ?>
+                    <?php echo \Joomla\CMS\Language\Text::_($item->title); ?>
+                <?php } ?>
+            </td>
+            
+            <td><?php echo $item->symbol; ?></td>
+            
+        </tr>
+        <?php } ?>
+    </tbody>
+    <tfoot class="table-list-pagination">
+    <tr>
+        <td colspan="4">
+            <div class="pull-left"><?php echo $this->pagination->getListFooter(); ?></div>
+            <div class="pull-right clearfix">
+            <select name="sortTable" id="sortTable" class="" onchange="Joomla.orderTable()"><option value=""><?php echo \Joomla\CMS\Language\Text::_('JGLOBAL_SORT_BY');?></option><?php echo \Joomla\CMS\HTML\HTMLHelper::_('select.options', $this->getSortFieldsEntities(), 'value', 'text', $this->state->get('list.ordering'));?></select>
+            </div>
+            <div class="pull-right limit-box clearfix"><span class="pagination-filter-text"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_LIMIT');?></span><?php echo $this->pagination->getLimitBox(); ?></div>
+        </td>
+    </tr>
+    </tfoot>
+</table>

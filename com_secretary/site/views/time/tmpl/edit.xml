@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout
+		title="COM_SECRETARY_TIME_FORM" option="COM_SECRETARY_TIME_FORM_OPTION">
+		<help />
+		<message>
+			<![CDATA[COM_SECRETARY_TIME_FORM_DESC]]>
+		</message>
+	</layout>
+	
+	<fields name="request">
+		<fieldset name="request" addfieldpath="/administrator/components/com_secretary/models/fields">
+			<field name="extension" type="list" default="list" label="Extension" >
+				<option value="events">events</option>
+				<option value="projects">projects</option>
+				<option value="tasks">tasks</option>
+			</field>
+			<field name="business" type="businesses" label="COM_SECRETARY_BUSINESS" />
+			
+		</fieldset>
+	</fields>
+	
+</metadata>

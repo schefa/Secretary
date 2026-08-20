@@ -1,4 +1,10 @@
 /.gitignore
 /.htaccess
-/*.txt
 /robots.txt.dist
+/_package/
+/vendor/
+/com_secretary/tests/vendor/
+.phpunit.cache
+traefik/access.log
+*.pdf
+.DS_Store

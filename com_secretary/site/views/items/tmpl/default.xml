@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+
+	<layout title="COM_SECRETARY_STANDARDS"></layout>
+
+	<fields name="request">
+		<fieldset name="request">
+			<field name="extension" type="list" label="COM_SECRETARY_ITEMS_OPTIONS" required="true">
+				<option value="uploads">COM_SECRETARY_UPLOADS_AND_FILES</option>
+				<option value="currencies">COM_SECRETARY_CURRENCIES</option>
+				<option value="fields">COM_SECRETARY_FIELDS</option>
+				<option value="status">COM_SECRETARY_STATUS</option>
+			</field>
+		</fieldset>
+	</fields>
+
+
+</metadata>

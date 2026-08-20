@@ -1,0 +1,12 @@
+{
+    "name": "schefa/secretary-dev-tools",
+    "description": "Dev tooling (linting) for the Secretary Joomla extension.",
+    "private": true,
+    "require-dev": {
+        "joomla/coding-standards": "3.0.0-alpha",
+        "squizlabs/php_codesniffer": "^3.9"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,37 @@
+http:
+
+  # ── Middlewares ──────────────────────────────────────────────────────────────
+
+  middlewares:
+
+    # Redirects
+    # Replacement follows the deployment scheme: hardcoding https here sent the
+    # local stack at a port nothing serves (there is no websecure entrypoint
+    # when schema is http).
+    redirect-www-to-root:
+      redirectRegex:
+        regex: "^https?://www\\.(.*)"
+        replacement: "http://$1"
+        permanent: true
+
+    # Security headers
+    security-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        referrerPolicy: "strict-origin-when-cross-origin"
+        customResponseHeaders:
+          X-Permitted-Cross-Domain-Policies: "none"
+          Permissions-Policy: "camera=(), microphone=(), geolocation=()"
+
+    # Response compression (gzip/brotli/zstd, negotiated via Accept-Encoding)
+    compress:
+      compress: {}
+
+    # Rate limiting
+    rate-limit:
+      rateLimit:
+        average: 100
+        period: 1s
+        burst: 50

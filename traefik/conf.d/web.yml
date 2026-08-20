@@ -1,0 +1,63 @@
+
+
+
+http:
+
+  # ── Routers ──────────────────────────────────────────────────────────────────
+
+  routers:
+    dev:
+      rule: "Host(`joomla-dev.localhost`) || Host(`www.joomla-dev.localhost`)"
+      service: dev-service
+      middlewares:
+        - remove-frame-deny
+        - rate-limit
+        - security-headers
+        - redirect-www-to-root
+        - compress
+    joomla:
+      rule: "Host(`joomla.localhost`) || Host(`www.joomla.localhost`)"
+      service: joomla-service
+      middlewares:
+        - remove-frame-deny
+        - rate-limit
+        - security-headers
+        - redirect-www-to-root
+        - compress
+
+  # ── Services ──────────────────────────────────────────────────────────────────
+
+  services:
+    dev-service:
+      loadBalancer:
+        healthCheck:
+          path: /
+          interval: 10s
+          timeout: 3s
+          followRedirects: false
+          headers:
+            Host: "joomla-dev.localhost"
+        servers:
+          - url: http://dev:80
+    joomla-service:
+      loadBalancer:
+        healthCheck:
+          path: /
+          interval: 10s
+          timeout: 3s
+          followRedirects: false
+          headers:
+            Host: "joomla.localhost"
+        servers:
+          - url: http://joomla:80
+    
+  # ── Middlewares ──────────────────────────────────────────────────────────────
+
+  middlewares:
+    # Secretary's own admin dialogs (Documents "Preview"/"Email") load same-origin
+    # iframes; security-headers' frameDeny blocks those too, so undo it here.
+    remove-frame-deny:
+      headers:
+        customResponseHeaders:
+          X-Frame-Options: ""
+
