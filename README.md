@@ -5,6 +5,7 @@ Secretary is a Joomla 6 component that allows you to manage your digital office 
 
 If Secretary is useful to you, consider supporting its development:
 
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-db61a2?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/schefa)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white)](https://www.paypal.com/donate/?hosted_button_id=VKN76VER5RSWL)
 
 ## Sections
