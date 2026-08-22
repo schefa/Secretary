@@ -43,7 +43,7 @@ This brings up two sites behind Traefik:
 
 Credentials (MySQL and the dev site's Joomla admin account) live in `.env` at the repo root and can be overridden per-invocation, e.g. `make up SECRETARY_DEV_ADMIN_PASSWORD=...`.
 
-The `joomla` and `dev` images are built from the repo's own [Dockerfile](Dockerfile) (`docker compose build`, or `make build` / `make build/base` / `make build/joomla`) rather than pulled from a registry, so a fresh clone works standalone.
+The `joomla` and `dev` images are built from the repo's own [Dockerfile](Dockerfile) (`docker compose -f deploy/compose.yml build`, or `make build` / `make build/base` / `make build/joomla`) rather than pulled from a registry, so a fresh clone works standalone.
 
 ## Building a Release
 

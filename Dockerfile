@@ -40,7 +40,7 @@ RUN a2enmod rewrite
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-COPY ./joomla-dev/apache.conf /etc/apache2/sites-available/000-default.conf
+COPY ./deploy/joomla-dev/apache.conf /etc/apache2/sites-available/000-default.conf
 
 # German (de-DE) language pack from the official J!German team, matching
 # JOOMLA_VERSION - downloaded rather than vendored so the repo doesn't need a

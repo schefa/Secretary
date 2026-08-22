@@ -5,6 +5,6 @@
 /vendor/
 /com_secretary/tests/vendor/
 .phpunit.cache
-traefik/access.log
+deploy/traefik/access.log
 *.pdf
 .DS_Store

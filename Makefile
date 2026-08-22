@@ -34,11 +34,11 @@ export
 all: up
 
 up:
-	docker compose -f compose.yml up -d
-	./scripts/bootstrap-dev.sh
+	docker compose -f deploy/compose.yml up -d
+	./deploy/scripts/bootstrap-dev.sh
 
 stop:
-	docker compose -f compose.yml down
+	docker compose -f deploy/compose.yml down
 
 # --- Image builds -------------------------------------------------------------
 build/base:
