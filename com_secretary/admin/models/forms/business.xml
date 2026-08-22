@@ -16,7 +16,7 @@
 			<option value="1">COM_SECRETARY_INKLUSIV</option>
 			<option value="2">COM_SECRETARY_EXKLUSIV</option>
 		</field>
-		<field name="taxvalue" type="number" min="0" step="0.01" class="form-control" label="COM_SECRETARY_BUSINESS_TAXVALUE" hint="COM_SECRETARY_BUSINESS_TAXVALUE" />
+		<field name="taxvalue" type="number" default="0" min="0" step="0.01" class="form-control" label="COM_SECRETARY_BUSINESS_TAXVALUE" hint="COM_SECRETARY_BUSINESS_TAXVALUE" filter="floatval" />
 		<field name="selectedFolders" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_KONTEN" hint="COM_SECRETARY_BUSINESS_KONTEN" />
 		<field name="guv1" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV1" hint="COM_SECRETARY_BUSINESS_GUV1" />
 		<field name="guv2" type="categoriesmultiselect" extension="documents" class="form-control" label="COM_SECRETARY_BUSINESS_GUV2" hint="COM_SECRETARY_BUSINESS_GUV2" />
