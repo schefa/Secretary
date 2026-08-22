@@ -154,7 +154,7 @@ namespace Secretary {
 			{
                 try
 				{
-                    if ($xml_obj = simplexml_load_file("https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml"))
+                    if ($xml_obj = simplexml_load_file("https://raw.githubusercontent.com/schefa/Secretary/refs/heads/master/secretary.xml"))
 					{
                         self::$lastversion = (string) $xml_obj->update->version;
                         $cache->store(self::$lastversion, $key, "com_secretary");

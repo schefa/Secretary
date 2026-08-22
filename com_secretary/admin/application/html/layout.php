@@ -45,18 +45,25 @@ class Layout
         $html = array();
         $html[] = '<div class="secretary-footer software-property-of-schefa text-center">';
         $html[] = '<ul>';
-        $html[] = '<li>Powered by <a href="https://github.com/schefa/Secretary" target="_blank">Secretary</a> ' . SECRETARY_VERSION . ' &copy; Fjodor Sch&auml;fer</li>';
+        $html[] = '<li>Powered by <a href="https://github.com/schefa/Secretary" target="_blank">Secretary</a> ' . SECRETARY_VERSION . '</li>';
         $html[] = '<li><a href="https://www.paypal.com/donate/?hosted_button_id=VKN76VER5RSWL" target="_blank">Donate</a></li>';
 
         if ($isBackend)
 		{
-            $html[] = '<li><a href="index.php?option=com_secretary&view=navbar&layout=changelog" rel="{size: {x: 800, y: 500}}" class="modal">Changelog</a></li>';
-            $html[] = '<li><a href="index.php?option=com_secretary&view=navbar&layout=lastversion" rel="{size: {x: 300, y: 170}}" class="modal">Version Check</a></li>';
+            \Joomla\CMS\Factory::getApplication()->getDocument()->getWebAssetManager()
+                ->useScript('joomla.dialog-autocreate');
+
+            $html[] = '<li><a href="#" data-joomla-dialog=\'{"popupType": "inline", "src": "#secretary-lastversion-dialog"}\'>Version Check</a></li>';
         }
 
         $html[] = '</ul>';
 
         $html[] = '</div>';
+
+        if ($isBackend)
+		{
+            $html[] = self::lastversion();
+        }
 
         return implode('', $html);
     }
@@ -110,24 +117,34 @@ class Layout
      */
     public static function lastversion()
     {
-
+        $version     = \Secretary\Application::getVersion();
         $lastversion = \Secretary\Application::getLatestVersion();
 
+        $html   = array();
+        $html[] = '<template id="secretary-lastversion-dialog">';
+        $html[] = '<div class="secretary-modal-top">';
+        $html[] = '<button type="button" class="close" onclick="this.closest(\'joomla-dialog\').close();">x</button>';
+        $html[] = '<h3>Version Check</h3>';
+        $html[] = '</div>';
+
+        $html[] = '<div class="secretary-modal-content fullwidth">';
         $html[] = 'Installed version:&nbsp;';
-        $html[] = '<br><strong>' . \Secretary\Application::getVersion() . '</strong>';
+        $html[] = '<br><strong>' . $version . '</strong>';
 
         $html[] = '<br><br>Last published version:&nbsp;';
         $html[] = '<br><strong>' . $lastversion . '</strong>';
 
-        if (version_compare($lastversion, \Secretary\Application::getVersion(), '>'))
+        if (version_compare($lastversion, $version, '>'))
 		{
-            $html[] = '<br><br><a href="https://www.schefa.com/secretary/download" class="btn btn-primary" target="_blank">Download</a>';
+            $html[] = '<br><br><a href="https://github.com/schefa/Secretary/releases" class="btn btn-primary" target="_blank">Download</a>';
         }
 
         $html[] = '<hr/>';
         $html[] = '<h3>Impressum</h3>';
-        $html[] = '<p>SECRETARY ist Eigentum von Fjodor Schäfer (www.schefa.com). Es wird für die Nutzung zur Verfügung gestellt, wobei es keinerlei Einflussmöglichkeit seitens des Urhebers gibt, sobald der Nutzer die Software bei sich installiert hat. Die Nutzung der Software liegt damit einzig in der Verantwortung des Nutzers. Jegliche Haftung oder Verpflichtung seitens des Urhebers ist in Gänze ausgeschlossen.</p>';
+        $html[] = '<p>SECRETARY ist Eigentum von Fjodor Schäfer. Es wird für die Nutzung zur Verfügung gestellt, wobei es keinerlei Einflussmöglichkeit seitens des Urhebers gibt, sobald der Nutzer die Software bei sich installiert hat. Die Nutzung der Software ist kostenlos und liegt einzig in der Verantwortung des Nutzers. Jegliche Haftung oder Verpflichtung seitens des Urhebers ist in Gänze ausgeschlossen.</p>';
+        $html[] = '</div>';
+        $html[] = '</template>';
 
-        echo implode('', $html);
+        return implode('', $html);
     }
 }

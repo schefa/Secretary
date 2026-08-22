@@ -58,49 +58,33 @@ class SecretaryController extends BaseController
 		{
 			if (!empty($business) || ($view == 'business' && $layout == 'edit'))
 			{
-				switch ($view)
+				// Display raw content body without anything
+				if (
+					strpos($task, 'ajax') !== false || $task == 'ajax'
+					|| ($app->input->getCmd('tmpl') == 'component') || in_array($layout, $raws) || in_array($format, $raws)
+				)
 				{
-					case 'navbar':
-						switch ($layout)
-						{
-							case 'changelog':
-								include_once SECRETARY_ADMIN_PATH . "/application/html/changelog.php";
-								break;
-							case 'lastversion':
-								echo \Secretary\HTML::_('layout.lastversion');
-								break;
-						}
-						break;
-					default:
-						// Display raw content body without anything
-						if (
-							strpos($task, 'ajax') !== false || $task == 'ajax'
-							|| ($app->input->getCmd('tmpl') == 'component') || in_array($layout, $raws) || in_array($format, $raws)
-						)
-						{
-							parent::display($cachable, $urlparams);
-						}
-                        else
-						{
-							// Display everything
-							if ($app->isClient('administrator') && !($view == 'template' && $layout == 'edit'))
-							{
-								echo Secretary\Navigation::getSidebar();
-                            }
+					parent::display($cachable, $urlparams);
+				}
+                else
+				{
+					// Display everything
+					if ($app->isClient('administrator') && !($view == 'template' && $layout == 'edit'))
+					{
+						echo Secretary\Navigation::getSidebar();
+                    }
 
-							echo '<div class="secretary-container">';
+					echo '<div class="secretary-container">';
 
-							if ($app->isClient('administrator'))
-							{
-								echo \Secretary\HTML::_('layout.latestVersionMsg');
-								echo \Secretary\HTML::_('layout.topToolbar');
-                            }
-							parent::display($cachable, $urlparams);
+					if ($app->isClient('administrator'))
+					{
+						echo \Secretary\HTML::_('layout.latestVersionMsg');
+						echo \Secretary\HTML::_('layout.topToolbar');
+                    }
+					parent::display($cachable, $urlparams);
 
-							echo \Secretary\HTML::_('layout.footer', $app->isClient('administrator'));
-							echo '</div>';
-						}
-						break;
+					echo \Secretary\HTML::_('layout.footer', $app->isClient('administrator'));
+					echo '</div>';
 				}
 			}
             else
