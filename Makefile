@@ -91,7 +91,11 @@ test: build/base
 	docker run --rm -v $(CURDIR):/work -w /work/com_secretary/tests joomla-base:$(JOOMLA6_VERSION) \
 		sh -c "composer install --quiet && vendor/bin/phpunit"
 
+# --- Documentation ----------------------------------------------------------
+wiki:
+	./deploy/scripts/sync-wiki.sh
+
 .PHONY: all up stop \
 	build/base build/joomla6 build/secretary \
 	secretary secretary/module schefa/template \
-	lint lint/fix test
+	lint lint/fix test wiki
