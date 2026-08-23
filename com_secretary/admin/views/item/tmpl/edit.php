@@ -51,55 +51,6 @@ defined('_JEXEC') or die;
         </form>
     </fieldset>
     
-	<?php if ( $this->extension == 'settings')
-	{
-        ?>
-    <div class="secretary_tab_pane " style="display:none;" id="settings_access">
-    
-        <div class="tabbable tabs-left">
-        
-        	<ul class="nav nav-tabs">
-    			<?php foreach ($this->rulesList as $title => $rule)
-    			{
-                    ?>
-            	<li class="nav-item"><a class="nav-link <?php if ($title == 'component')
-            	{
-                    echo 'active';
-                                                        } ?>" data-bs-toggle="tab" href="#permission-<?php echo $title; ?>"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_'. strtoupper($title)); ?></a></li>
-    			<?php } ?>
-            </ul>
-            
-            <div class="tab-content">
-    			<?php foreach ($this->rulesList as $title => $rule)
-    			{
-                    ?>
-            	<div id="permission-<?php echo $title ?>" class="tab-pane <?php if ($title == 'component')
-            	{
-                    echo 'active';
-                                    } ?>"><?php echo $rule; ?>
-                </div>
-    			<?php } ?>
-            </div>
-            
-        </div>
-        
-        <div class="alert alert-info"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_RULES_SETTING_NOTES_ITEM');?></div>
-        
-    </div>
-	<?php } ?>
-	
-<script>
-jQuery(document).ready(function($){
-	$('#secretary_tabs_list li a').click(function(){
-		$('#secretary_tabs_list li').removeClass('active');
-		$(this).parent().addClass('active');
-		$('.secretary_tab_pane').hide();
-		var tabpane = $(this).data('tabcontent'); 
-		$('#'+tabpane).show();
-	});
-});
-</script>
-
 </div>
 
 </div>

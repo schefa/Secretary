@@ -1,23 +1,32 @@
 <?php
- 
+
 defined('_JEXEC') or die;
 
 //JHtml::_('bootstrap.tooltip');
+
+$user = \Secretary\Joomla::getUser();
 ?>
 
-<ul id="secretary_tabs_list" class="nav nav-tabs fullwidth margin-bottom">
-    <li class="active">
-        <a class="btn btn-link" href="#" data-tabcontent="settings_general"><?php echo \Joomla\CMS\Language\Text::_('JDETAILS', true); ?></a>
+<ul class="nav nav-tabs fullwidth margin-bottom" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" href="#settings_general" role="tab" data-bs-toggle="tab"><?php echo \Joomla\CMS\Language\Text::_('JDETAILS', true); ?></a>
     </li>
-    <li>
-        <a class="btn btn-link" href="#" data-tabcontent="settings_areas"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_SECTIONS', true); ?></a>
+    <li class="nav-item">
+        <a class="nav-link" href="#settings_areas" role="tab" data-bs-toggle="tab"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_SECTIONS', true); ?></a>
     </li>
+    <?php if ($user->authorise('core.admin', 'com_secretary'))
+    :
+        ?>
+    <li class="nav-item">
+        <a class="nav-link" href="#settings_access" role="tab" data-bs-toggle="tab"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_PERMISSIONS', true); ?></a>
+    </li>
+    <?php endif; ?>
 </ul>
-     
-<div class="secretary_tabs_content"> 
 
-    <div class="secretary_tab_pane" style="display:block;" id="settings_general">
-    
+<div class="tab-content">
+
+    <div class="tab-pane active" id="settings_general">
+
     	<table class="table">
         	<tbody>
             	<tr class="noborder">
@@ -146,7 +155,7 @@ defined('_JEXEC') or die;
         
     </div>
     
-    <div class="secretary_tab_pane" style="display:none;" id="settings_areas">
+    <div class="tab-pane" id="settings_areas">
     	<table class="table table-noborder">
 			<tbody>
             	<tr class="noborder">
@@ -214,5 +223,36 @@ defined('_JEXEC') or die;
             </tbody>
         </table>
     </div>
+
+    <?php if ($user->authorise('core.admin', 'com_secretary'))
+    :
+        ?>
+    <div class="tab-pane" id="settings_access">
+
+        <div class="tabbable tabs-left">
+
+            <ul class="nav nav-tabs">
+                <?php foreach ($this->rulesList as $title => $rule)
+                :
+                    ?>
+                <li class="nav-item"><a class="nav-link<?php echo ($title == 'component') ? ' active' : ''; ?>" data-bs-toggle="tab" href="#permission-<?php echo $title; ?>"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_'. strtoupper($title)); ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <div class="tab-content">
+                <?php foreach ($this->rulesList as $title => $rule)
+                :
+                    ?>
+                <div id="permission-<?php echo $title ?>" class="tab-pane<?php echo ($title == 'component') ? ' active' : ''; ?>"><?php echo $rule; ?>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+        </div>
+
+        <div class="alert alert-info"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_RULES_SETTING_NOTES_ITEM');?></div>
+
+    </div>
+    <?php endif; ?>
 
 </div>

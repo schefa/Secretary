@@ -33,7 +33,7 @@
 		<field name="gMapsAPI" type="text" class="form-control" default="" label="COM_SECRETARY_SETTINGS_GOOGLEMAPS_API_KEY" />
 	</fieldset>
 	<fieldset>
-		<field name="templateColor" type="radio" class="btn-group secretary-group-radio-multi form-control" default="blue" label="COM_SECRETARY_SETTINGS_TEMPLATE" description="COM_SECRETARY_SETTINGS_TEMPLATE_DESC">
+		<field name="templateColor" type="radio" class="btn-group secretary-group-radio-multi" default="blue" label="COM_SECRETARY_SETTINGS_TEMPLATE" description="COM_SECRETARY_SETTINGS_TEMPLATE_DESC">
 			<option value="red">COM_SECRETARY_SETTINGS_TEMPLATE_RED</option>
 			<option value="blue">COM_SECRETARY_SETTINGS_TEMPLATE_BLUE</option>
 			<option value="black">COM_SECRETARY_SETTINGS_TEMPLATE_BLACK</option>
