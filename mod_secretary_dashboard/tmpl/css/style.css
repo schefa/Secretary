@@ -4,32 +4,122 @@
  * @license      GNU General Public License version 2 or later.
  */
 
-.fullwidth{width:100%;display:table}
+.fullwidth {
+    width: 100%;
+    display: table;
+}
 
-#secretaryQuickIcons h3{}
+#secretaryQuickIcons h3 {
+}
 
-.clr
-{ clear:both; height:0; line-height:0; display:block; float:none; }
-div#secretaryQuickIconsTitle
-{ margin:16px 0 0; padding:0; position:relative; z-index:9; }
-div#secretaryQuickIconsTitle a
-{ display:block; clear:both; float:none; background:#f9f9f9 url(../images/secretary_logo_46x18.png) no-repeat 50% 50%; width:46px; height:18px; padding:2px 6px; margin:0 0 0 24px; border:1px solid #d5d5d5; border-bottom:1px solid #f9f9f9; }
-div#secretaryQuickIconsTitle a span
-{ display:none; }
+.clr {
+    clear: both;
+    height: 0;
+    line-height: 0;
+    display: block;
+    float: none;
+}
+div#secretaryQuickIconsTitle {
+    margin: 16px 0 0;
+    padding: 0;
+    position: relative;
+    z-index: 9;
+}
+div#secretaryQuickIconsTitle a {
+    display: block;
+    clear: both;
+    float: none;
+    background: #f9f9f9 url(../images/secretary_logo_46x18.png) no-repeat 50% 50%;
+    width: 46px;
+    height: 18px;
+    padding: 2px 6px;
+    margin: 0 0 0 24px;
+    border: 1px solid #d5d5d5;
+    border-bottom: 1px solid #f9f9f9;
+}
+div#secretaryQuickIconsTitle a span {
+    display: none;
+}
 
-.secretaryQuickIconsLogo{}
-.secretaryQuickIconsLogo img{max-height:50px;}
-#secretaryQuickIcons { clear:both; margin:-1px 0 0; padding:0 0 8px; border-top:1px solid #d5d5d5; position:relative; z-index:8; }
-#secretaryQuickIcons .grid{ display:block; margin:0 auto; }
-#secretaryQuickIcons .grid-item{ float:left; width:150px;display: block !important;}
+.secretaryQuickIconsLogo {
+}
+.secretaryQuickIconsLogo img {
+    max-height: 50px;
+}
+#secretaryQuickIcons {
+    clear: both;
+    margin: -1px 0 0;
+    padding: 0 0 8px;
+    border-top: 1px solid #d5d5d5;
+    position: relative;
+    z-index: 8;
+}
+#secretaryQuickIcons .grid {
+    display: block;
+    margin: 0 auto;
+}
+#secretaryQuickIcons .grid-item {
+    float: left;
+    width: 150px;
+    display: block !important;
+}
 
-#secretaryQuickIcons .qicon {margin:15px 15px 0 0; text-align:center;font-size:17px;background-color:#fff; border:1px solid #CCC; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; -webkit-transition-property:background-position, 0 0; -moz-transition-property:background-position, 0 0; -webkit-transition-duration:.8s; -moz-transition-duration:.8s; }
+#secretaryQuickIcons .qicon {
+    margin: 15px 15px 0 0;
+    text-align: center;
+    font-size: 17px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition-property:
+        background-position,
+        0 0;
+    -moz-transition-property:
+        background-position,
+        0 0;
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+}
 
-#secretaryQuickIcons .qicon > a { display:block;padding:20px 0;min-width:80px; color:#565656; vertical-align:middle; text-decoration:none;overflow:hidden}
-#secretaryQuickIcons .qicon:hover,#cpanel .qicon:focus,#cpanel .qicon:active { -webkit-border-bottom-left-radius:50% 20px; -moz-border-radius-bottomleft:50% 20px; border-bottom-left-radius:50% 20px; -webkit-box-shadow:-5px 10px 15px rgba(0,0,0,0.25); -moz-box-shadow:-5px 10px 15px rgba(0,0,0,0.25); box-shadow:-5px 10px 15px rgba(0,0,0,0.25); position:relative; z-index:10; }
+#secretaryQuickIcons .qicon > a {
+    display: block;
+    padding: 20px 0;
+    min-width: 80px;
+    color: #565656;
+    vertical-align: middle;
+    text-decoration: none;
+    overflow: hidden;
+}
+#secretaryQuickIcons .qicon:hover,
+#cpanel .qicon:focus,
+#cpanel .qicon:active {
+    -webkit-border-bottom-left-radius: 50% 20px;
+    -moz-border-radius-bottomleft: 50% 20px;
+    border-bottom-left-radius: 50% 20px;
+    -webkit-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+    box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 10;
+}
 
-#secretaryQuickIcons .qicon > a span { display:block; text-align:center; font-size:30px; padding-bottom:20px; }
+#secretaryQuickIcons .qicon > a span {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    padding-bottom: 20px;
+}
 
-#secretaryQuickIcons .qicon-wrapper-list{display:block;padding:0 8px 10px 20px;text-align:left;}
-#secretaryQuickIcons .qicon-wrapper-list div{padding:6px 0;}
-#secretaryQuickIcons .qicon-wrapper-list div a{color:#565656}
+#secretaryQuickIcons .qicon-wrapper-list {
+    display: block;
+    padding: 0 8px 10px 20px;
+    text-align: left;
+}
+#secretaryQuickIcons .qicon-wrapper-list div {
+    padding: 6px 0;
+}
+#secretaryQuickIcons .qicon-wrapper-list div a {
+    color: #565656;
+}

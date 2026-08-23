@@ -174,14 +174,14 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                                 {
                                     ?>
                                 <a class="hasTooltip" data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_CLICK_TO_EDIT'). $created; ?>"  href="<?php echo Secretary\Route::create(false, array('task'=> 'document.edit', 'id' => (int) $item->id, 'catid' => (int) $item->catid)); ?>">
-                                <?php echo $item->created. ' / '. $item->category_title; ?></a>
+                                    <?php echo $item->created. ' / '. $item->category_title; ?></a>
                 
                             <?php }
-                            else
-                            {
-                                ?>
-                                <?php echo $item->created. ' / '. $item->category_title; ?>
-                            <?php } ?>
+                                else
+                                {
+                                    ?>
+                                    <?php echo $item->created. ' / '. $item->category_title; ?>
+                                <?php } ?>
         
                             <?php if (!empty($item->upload))
                             {
@@ -329,13 +329,13 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
             {
                 if ($this->canDo->get('core.edit'))
                 {
-            ?> 
+                    ?> 
             
             <hr class="secretary-main-area-right-hr" />
             <div class="row-fluid">
                 <h3 class="documents-sidebar-title"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_REPETITIONS'); ?></h3>
                 <div class="documents-sidebar-repetitions">
-                <?php if (!empty($this->itemsRepeat))
+                    <?php if (!empty($this->itemsRepeat))
                     {
                         ?>
                         <?php echo \Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->itemsRepeat ?? [])); ?>
@@ -350,9 +350,9 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                     {
                         echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_REPETITION_NON');
                     }
-                ?>
+                    ?>
             </div>
-            <?php
+                    <?php
                 }
             }
             ?>

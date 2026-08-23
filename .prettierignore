@@ -1,0 +1,16 @@
+# Third-party / build artifacts - never format someone else's code.
+node_modules/
+vendor/
+com_secretary/tests/vendor/
+com_secretary/media/assets/
+mod_secretary_dashboard/LICENSE.txt
+deploy/joomla-dev/
+_package/
+
+# Minified vendor bundles, wherever they end up.
+*.min.js
+*.min.css
+
+# Joomla's directory-listing-guard stubs (all "<html><body></body></html>"),
+# not real markup.
+index.html

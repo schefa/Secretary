@@ -63,6 +63,16 @@ make lint/fix   # auto-fix what's fixable
 
 Runs as a gate in the release workflow (a tag push only builds/publishes if lint passes). Style warnings about inline control structures missing braces are reported but don't fail the build - fixing those means restructuring code, not a safe blanket auto-fix.
 
+## Formatting
+
+Formatting is enforced via the [pre-commit](https://pre-commit.com) framework: Prettier for `.html`/`.js`/`.css`, `phpcbf` (same standard as `make lint`) for `.php`. Install the tool once (`brew install pre-commit`, or `pip install pre-commit`), then wire up the hook:
+
+```
+pre-commit install
+```
+
+From then on, every `git commit` runs the hooks against your staged files. If a file needs reformatting, the hook rewrites it and aborts the commit so you can review the diff - `git add` the result and commit again. Run `pre-commit run --all-files` to format the whole tree in one pass.
+
 ## Testing
 
 ```

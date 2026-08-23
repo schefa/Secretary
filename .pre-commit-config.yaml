@@ -1,0 +1,21 @@
+repos:
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier (html/js/css)
+        entry: prettier --write
+        language: node
+        additional_dependencies: ["prettier@3.6.2"]
+        types_or: [html, javascript, css]
+        # .prettierignore handles the actual exclusions (vendored assets,
+        # the mirrored deploy/joomla-dev tree, minified bundles, Joomla's
+        # directory-listing-guard index.html stubs).
+
+      - id: phpcbf
+        name: phpcbf (Joomla coding standard)
+        entry: vendor/bin/phpcbf --standard=phpcs.xml
+        language: system
+        files: ^(com_secretary|mod_secretary_dashboard)/.*\.php$
+        # Same scope phpcs.xml itself declares via its <file> entries -
+        # explicit file args bypass that, so it's repeated here to keep
+        # deploy/joomla-dev's mirrored copy and vendor/ out of reach.
