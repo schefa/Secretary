@@ -424,8 +424,8 @@ class SecretaryControllerAjax extends \Joomla\CMS\MVC\Controller\FormController
 			$db->setQuery($query);
 			$db->execute();
 
-			// Item 
-			$new = \Secretary\Database::getQuery($view, $id);
+			// Item
+			$new = \Secretary\Database::getQuery($view, $id, 'id', '*', 'loadObject', true);
 		}
 
 		// Print Button

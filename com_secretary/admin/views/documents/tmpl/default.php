@@ -32,7 +32,9 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
         
 			<?php if (!empty($this->itemsExpired))
 			{
-                echo $this->loadTemplate('deadline'); } ?>
+				echo $this->loadTemplate('deadline');
+			}
+			?>
             
             <div class="secretary-main-area">
                 
@@ -116,17 +118,19 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                         </tr>
                     </thead>
                     <tbody>
-                                    <?php
-                                    foreach ($this->items as $i => $item)
-                                    {
-                                        if (empty($item->email))
-                                        {
-                                            $subject = json_decode($item->subject); $item->email = $subject[5]; }						
-                                        ?>
+                    <?php
+                    foreach ($this->items as $i => $item)
+                    {
+                        if (empty($item->email))
+                        {
+                            $subject = json_decode($item->subject);
+                            $item->email = $subject[5];
+                        }
+                        ?>
                         <tr class="row<?php echo $i % 2 ; ?>">
                             
                             <td class="center hidden-phone">
-                                        <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.id', $i, $item->id); ?>
+                                <?php echo \Joomla\CMS\HTML\HTMLHelper::_('grid.id', $i, $item->id); ?>
                                 <span class="lbl"></span>
                             </td>
                             
@@ -138,59 +142,59 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                                         
                             <a class="hasTooltip" data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_SHOW'); ?>" title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_SHOW'); ?>"  href="<?php echo \Joomla\CMS\Router\Route::_('index.php?option=com_secretary&view=document&id='.(int) $item->id); ?>"><i class="fa fa-newspaper-o"></i></a>
                                 
-                                        <?php if ($item->template > 0)
-                                            {
-                                            ?>
+                            <?php if ($item->template > 0)
+                                {
+                                ?>
                             	<a class="printpdf hasTooltip" data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo Secretary\Route::create('document', array('layout'=>'preview','tmpl'=>'component', 'id'=> $item->id )); ?>"}' data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_PREVIEW'); ?>"><i class="fa fa-print"></i></a>
                             <?php } ?>
                             	
-                                            <?php if ($item->canEdit && (\Secretary\Helpers\Access::checkAdmin()) && !empty($item->email))
-                                            {
-                                                ?>
-                                                <?php $email = 'index.php?option=com_secretary&view=document&layout=email&tmpl=component&id='.$item->id ; ?>
+                            <?php if ($item->canEdit && (\Secretary\Helpers\Access::checkAdmin()) && !empty($item->email))
+                            {
+                                ?>
+                                <?php $email = 'index.php?option=com_secretary&view=document&layout=email&tmpl=component&id='.$item->id ; ?>
                                 <a class="hasTooltip" data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo $email; ?>"}' data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_EMAIL'); ?>"><i class="fa fa-envelope-o"></i></a>
                             <?php }  ?>
                                 
                             </td>
                             
                             <td class="left" >
-                                            <?php if ($item->template > 0 && COM_SECRETARY_PDF)
-                                            {
-                                                ?>
-                                                <?php $href = Secretary\Route::create('document', array('id' => $item->id, 'format' => 'pdf')); ?>
+                            <?php if ($item->template > 0 && COM_SECRETARY_PDF)
+                            {
+                                ?>
+                                <?php $href = Secretary\Route::create('document', array('id' => $item->id, 'format' => 'pdf')); ?>
                                 <a class="hasTooltip printpdf" data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo $href; ?>"}' data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_PDF_PREVIEW') ; ?>"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/pdf-20.png" /></a>
                             <?php } ?>
                             </td>
 
                             <td class="left">
-                                     
-                                            <?php $created = '<br/>'.  \Joomla\CMS\Language\Text::_('COM_SECRETARY_CREATED') .' '. date('H:i:s d.m.Y', $item->createdEntry); ?>
                             
-                                            <?php if ($item->canEdit && !$item->checked_out)
-                                            {
-                                                ?>
+                                <?php $created = '<br/>'.  \Joomla\CMS\Language\Text::_('COM_SECRETARY_CREATED') .' '. date('H:i:s d.m.Y', $item->createdEntry); ?>
+                
+                                <?php if ($item->canEdit && !$item->checked_out)
+                                {
+                                    ?>
                                 <a class="hasTooltip" data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_CLICK_TO_EDIT'). $created; ?>"  href="<?php echo Secretary\Route::create(false, array('task'=> 'document.edit', 'id' => (int) $item->id, 'catid' => (int) $item->catid)); ?>">
-                                                <?php echo $item->created. ' / '. $item->category_title; ?></a>
-                                
-                                            <?php }
-                                            else
-                                            {
-                                                ?>
-                                                <?php echo $item->created. ' / '. $item->category_title; ?>
-                                            <?php } ?>
-                        
-                                            <?php if (!empty($item->upload))
-                                            {
-                                                ?>
+                                <?php echo $item->created. ' / '. $item->category_title; ?></a>
+                
+                            <?php }
+                            else
+                            {
+                                ?>
+                                <?php echo $item->created. ' / '. $item->category_title; ?>
+                            <?php } ?>
+        
+                            <?php if (!empty($item->upload))
+                            {
+                                ?>
                                 <a class="hasTooltip" data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo "index.php?option=com_secretary&task=item.openFile&id=".$item->upload; ?>"}' data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_DOCUMENT_DESC'); ?>"><i class="fa fa-paperclip"></i></a>
                             <?php } ?>
                                 
-                                            <?php if ($item->checked_out)
-                                            {
-                                                ?>
-                                                <?php echo \Joomla\CMS\HTML\HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'documents.', $item->canCheckin); ?>
-                                            <?php } ?>
-                            
+                                <?php if ($item->checked_out)
+                                {
+                                    ?>
+                                    <?php echo \Joomla\CMS\HTML\HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'documents.', $item->canCheckin); ?>
+                                <?php } ?>
+                
                             </td>
                             
                             <td><a style="color:#333" href="<?php echo Secretary\Route::create('subject', array('id' =>  $item->subjectid)); ?>"><?php echo $item->contact_name; ?></a></td>
@@ -201,25 +205,24 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                             </td>
         
                             <td class="center">
-                                        <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
-                                        <?php echo Secretary\HTML::_('status.state', $item, $i, 'documents', $item->canChange, $state ); ?>
+                                <?php $state = array('title' => $item->status_title,'class' => $item->class,'description' => $item->tooltip,'icon' => $item->icon ); ?>
+                                <?php echo Secretary\HTML::_('status.state', $item, $i, 'documents', $item->canChange, $state ); ?>
                             </td>
                             
                         </tr>
-                                    <?php } ?>
-
+                    <?php } ?>
                     </tbody>
                     <tfoot class="table-list-pagination">
-                                        <?php 
-                                        if (isset($this->items[0]))
-                                        {
-                                            $colspan = count(get_object_vars($this->items[0]) ?? []);
-                                        }
-                                        else
-                                        {
-                                            $colspan = 10;
-                                        }
-                                        ?>
+                    <?php 
+                    if (isset($this->items[0]))
+                    {
+                        $colspan = count(get_object_vars($this->items[0]) ?? []);
+                    }
+                    else
+                    {
+                        $colspan = 10;
+                    }
+                    ?>
                     <tr>
                         <td colspan="<?php echo $colspan ?>">
                             <div class="row-fluid">
@@ -233,15 +236,11 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                     </tr>
                     </tfoot>
                 </table>
-
-                <?php }?>
-                    
+                <?php } ?>     
             </div>
-        
         </div>
-        
+
         <div class="secretary-main-container-right">
-             
             <div class="row-fluid documents-sidebar-stats">
                 <h3 class="documents-sidebar-title"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_ERGEBNIS'); ?></h3>
                 <div class="documents-sidebar-stats-status">
@@ -304,37 +303,39 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
             	<div class="select-arrow">
             	
             		<select name="filter_order_Dir" onchange="this.form.submit()" >
-                    <option <?php if ($listDirn === 'asc')
+                    <option <?php
+                    if ($listDirn === 'asc')
                     {
-                        echo 'selected="selected"'; } ?> value="asc"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_ASCENDING') ?></option>
-                    <option <?php 
+                        echo 'selected="selected"';
+                    }
+                    ?> value="asc"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_ASCENDING') ?></option>
+                    <option <?php
                     if ($listDirn === 'desc')
                     {
-                        echo 'selected="selected"'; } ?> value="desc"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_DESCENDING') ?></option>
+                        echo 'selected="selected"';
+                    }
+                    ?> value="desc"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_DESCENDING') ?></option>
                     </select>
                     
             	</div>
 
             	<div class="select-arrow">
-    				<?php echo $this->pagination->getLimitBox(); ?>
+                	<?php echo $this->pagination->getLimitBox(); ?>
                 </div>
                                 
 			</div>   
             
-            
             <?php if ( !empty($this->items) )
             {
-                ?>
-             
-                <?php if ($this->canDo->get('core.edit'))
+                if ($this->canDo->get('core.edit'))
                 {
-                    ?> 
+            ?> 
             
             <hr class="secretary-main-area-right-hr" />
             <div class="row-fluid">
                 <h3 class="documents-sidebar-title"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_REPETITIONS'); ?></h3>
                 <div class="documents-sidebar-repetitions">
-                    <?php if (!empty($this->itemsRepeat))
+                <?php if (!empty($this->itemsRepeat))
                     {
                         ?>
                         <?php echo \Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_REPETITION_WAIT_FOR_CREATION', count($this->itemsRepeat ?? [])); ?>
@@ -347,14 +348,15 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
                 <?php }
                     else
                     {
-                        ?>
-                        <?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_REPETITION_NON'); ?>
-                <?php }?>
+                        echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_REPETITION_NON');
+                    }
+                ?>
             </div>
-            <?php } ?>
+            <?php
+                }
+            }
+            ?>
             
-            <?php } ?>
-              
         </div>
          
     	<?php echo $this->loadTemplate('batch'); ?>

@@ -118,7 +118,7 @@ class Database
     /**
      * SELECT query for secretary tables
      */
-    public static function getQuery($table, $pk, $where_clause = 'id', $select = '*', $output = 'loadObject')
+    public static function getQuery($table, $pk, $where_clause = 'id', $select = '*', $output = 'loadObject', $forceRefresh = false)
     {
         // Allow only secretary tables
         if (!in_array($table, self::$secretary_tables))
@@ -149,7 +149,7 @@ class Database
             $key .= Utilities\Text::alphanumeric($select);
         }
 
-        if (empty(self::$query_result[$key]))
+        if ($forceRefresh || empty(self::$query_result[$key]))
 		{
             $where = (is_numeric($pk)) ? intval($pk) : $db->quote($pk);
             $select = (is_array($select)) ? $db->qn($select) : $db->escape($select);

@@ -50,9 +50,7 @@ class Status
 
 	public static function checkall($name = 'checkall-toggle', $tip = 'JGLOBAL_CHECK_ALL', $action = 'Joomla.checkAll(this)')
 	{
-		//JHtml::_('bootstrap.tooltip');
 		return '<input type="checkbox" name="checkall-toggle" value="" title="' . \Joomla\CMS\Language\Text::_("JGLOBAL_CHECK_ALL") . '" onclick="Joomla.checkAll(this)" />';
-		// return '<input type="checkbox" name="' . $name . '" value="" class="hasTooltip" title="' . $tip . '" onclick="' . $action . '" />';
 	}
 
 	public static function isdefault($value, $i, $prefix = '', $enabled = true)
