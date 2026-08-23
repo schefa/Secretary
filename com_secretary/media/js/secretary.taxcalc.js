@@ -1,6 +1,4 @@
 /**
- * @copyright    Copyright (C) 2026 Fjodor Schaefer. All rights reserved.
- * @license      MIT License
  *
  * Pure tax/total calculation for documents (invoices, offers, ...).
  * No DOM/jQuery dependency, so it can run both in the browser (attached to

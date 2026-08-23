@@ -1,10 +1,4 @@
 <?php
-/**
- * @copyright    Copyright (C) 2026 Fjodor Schaefer. All rights reserved.
- * @license      MIT License
- *
- * 
- */
 
 defined('_JEXEC') or die;
 

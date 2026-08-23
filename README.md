@@ -71,18 +71,19 @@ make test   # PHPUnit tests for com_secretary's server-side logic (com_secretary
 
 Also runs as a gate in the release workflow, alongside lint.
 
-## Free of charge - No support
+## Support
 
-We use Secretary for our own purpose and make it available free of charge to everyone in hope that it will be useful. 
-In order to make it free for everyone, this software is provided **WITHOUT ANY KIND OF SUPPORT WHATSOEVER**. You are free to consult the documentation or share your wisdom in the forum.
+We use Secretary for our own purpose and make it available free of charge to everyone in hope that it will be useful.
+**Support is not included.** You are free to consult the documentation or share your wisdom in the forum.
 
 If you are a developer you are free to submit a pull request with your code fix, as long as there is a clear description of what was not working for you, why and how you fixed it.
 
-## COPYRIGHT AND DISCLAIMER
+## License
+
 Secretary for Joomla! Copyright (c) 2014 - 2026 Fjodor Schäfer, vonfio.de
 
-This program is free software: you can redistribute it and/or modify it under the terms of the MIT License.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the MIT License for more details.
+This program is distributed in the hope that it will be useful, but **WITHOUT ANY WARRANTY**; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the MIT License along with this program. If not, see https://opensource.org/licenses/MIT.
+You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/.

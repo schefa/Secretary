@@ -30,7 +30,7 @@ class Layout
     {
         if (version_compare(\Secretary\Application::getLatestVersion(), \Secretary\Application::getVersion(), '>'))
 		{
-            return '<div class="alert alert-info">' . \Joomla\CMS\Language\Text::_('COM_SECRETARY_DOWNLOAD_NEW_VERSION') . '&nbsp;<a href="https://www.schefa.com/secretary/download" class="btn btn-info" target="_blank">Download</a></div>';
+            return '<div class="alert alert-info">' . \Joomla\CMS\Language\Text::_('COM_SECRETARY_DOWNLOAD_NEW_VERSION') . '&nbsp;<a href="https://github.com/schefa/Secretary/releases" class="btn btn-info" target="_blank">Download</a></div>';
         }
     }
 
@@ -141,7 +141,7 @@ class Layout
 
         $html[] = '<hr/>';
         $html[] = '<h3>Impressum</h3>';
-        $html[] = '<p>SECRETARY ist Eigentum von Fjodor Schäfer. Es wird für die Nutzung zur Verfügung gestellt, wobei es keinerlei Einflussmöglichkeit seitens des Urhebers gibt, sobald der Nutzer die Software bei sich installiert hat. Die Nutzung der Software ist kostenlos und liegt einzig in der Verantwortung des Nutzers. Jegliche Haftung oder Verpflichtung seitens des Urhebers ist in Gänze ausgeschlossen.</p>';
+        $html[] = '<p>' . \Joomla\CMS\Language\Text::_('COM_SECRETARY_DISCLAIMER') . '</p>';
         $html[] = '</div>';
         $html[] = '</template>';
 

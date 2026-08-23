@@ -1,8 +1,3 @@
-/**
- * @copyright    Copyright (C) 2026 Fjodor Schaefer. All rights reserved.
- * @license      MIT License
- */
-  
 
 // Global Objects
 var Secretary = {
