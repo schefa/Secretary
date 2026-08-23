@@ -224,35 +224,4 @@ $user = \Secretary\Joomla::getUser();
         </table>
     </div>
 
-    <?php if ($user->authorise('core.admin', 'com_secretary'))
-    :
-        ?>
-    <div class="tab-pane" id="settings_access">
-
-        <div class="tabbable tabs-left">
-
-            <ul class="nav nav-tabs">
-                <?php foreach ($this->rulesList as $title => $rule)
-                :
-                    ?>
-                <li class="nav-item"><a class="nav-link<?php echo ($title == 'component') ? ' active' : ''; ?>" data-bs-toggle="tab" href="#permission-<?php echo $title; ?>"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_'. strtoupper($title)); ?></a></li>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="tab-content">
-                <?php foreach ($this->rulesList as $title => $rule)
-                :
-                    ?>
-                <div id="permission-<?php echo $title ?>" class="tab-pane<?php echo ($title == 'component') ? ' active' : ''; ?>"><?php echo $rule; ?>
-                </div>
-                <?php endforeach; ?>
-            </div>
-
-        </div>
-
-        <div class="alert alert-info"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_RULES_SETTING_NOTES_ITEM');?></div>
-
-    </div>
-    <?php endif; ?>
-
 </div>
