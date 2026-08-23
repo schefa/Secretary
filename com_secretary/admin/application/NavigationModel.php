@@ -20,34 +20,6 @@ class Headline implements INavigationType
     }
 }
 
-class HeadlineAccordion extends Headline
-{
-    public $id;
-    public $icon;
-    public $title;
-    public $class;
-    public $accordionHeadline;
-    public $headline;
-    public $separator;
-    public $section;
-    public $links;
-    public $counter;
-
-    public function __construct($id, $icon, $title, $class = '', $accordionHeadline = false, $headline = false, $separator = NULL, $section = NULL, $links = NULL, $counter = NULL)
-    {
-        $this->id = $id;
-        $this->icon = $icon;
-        $this->title = $title;
-        $this->class = $class;
-        $this->accordionHeadline = $accordionHeadline;
-        $this->headline = $headline;
-        $this->separator = $separator;
-        $this->section = $section;
-        $this->links = $links;
-        $this->counter = $counter;
-    }
-}
-
 class Item implements INavigationType
 {
 

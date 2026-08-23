@@ -316,7 +316,6 @@ $foldersLink    = $user->authorise('core.show','com_secretary.folder');
             	</div>
 
             	<div class="select-arrow">
-                	<?php /* ?><span class="pagination-filter-text"><?php echo JText::_('COM_SECRETARY_LIMIT');?></span><?php */ ?>
     				<?php echo $this->pagination->getLimitBox(); ?>
                 </div>
                                 

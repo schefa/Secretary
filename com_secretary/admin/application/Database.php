@@ -83,8 +83,6 @@ class Database
         if (!in_array($table, self::$secretary_tables))
 		{
             throw new \Exception('Table not allowed: ' . $table);
-            
-            return false;
         }
 
         $db = self::getDBO();
@@ -112,8 +110,6 @@ class Database
         catch (\Exception $ex)
 		{
             throw new \Exception($ex->getMessage());
-            
-            return false;
         }
 
         return self::$objectList[$key];
@@ -128,16 +124,12 @@ class Database
         if (!in_array($table, self::$secretary_tables))
 		{
             throw new \Exception('Table not allowed: ' . $table);
-            
-            return false;
         }
 
         // Allow only valid query types
         if (!in_array($output, array('loadObject', 'loadResult', 'loadObjectList', 'loadAssoc', 'loadColumn')))
 		{
             throw new \Exception('Not allowed: ' . $output);
-            
-            return false;
         }
 
         $db = self::getDBO();
@@ -176,8 +168,6 @@ class Database
             catch (\Exception $ex)
 			{
                 throw new \Exception($ex->getMessage());
-                
-                return false;
             }
         }
 
@@ -193,16 +183,12 @@ class Database
         if (!in_array($table, self::$joomla_tables))
 		{
             throw new \Exception('Table not allowed: ' . $table);
-            
-            return false;
         }
 
         // Allow only valid query types
         if (!in_array($output, array('loadObject', 'loadResult')))
 		{
             throw new \Exception('Not allowed: ' . $output);
-            
-            return false;
         }
 
         $key = $table . '_' . $pk . '_' . Utilities\Text::alphanumeric($getField);
@@ -226,8 +212,6 @@ class Database
             catch (\Exception $exc)
 			{
                 throw new \Exception($exc->getMessage());
-                
-                return $result;
             }
         }
         
@@ -245,8 +229,6 @@ class Database
         if (!in_array($table, self::$secretary_tables))
 		{
             throw new \Exception('Table not allowed: ' . $table);
-            
-            return false;
         }
 
         $db = self::getDBO();
@@ -266,8 +248,6 @@ class Database
         catch (\Exception $e)
 		{
             throw new \Exception($e->getMessage(), 500);
-            
-            return false;
         }
     }
 }

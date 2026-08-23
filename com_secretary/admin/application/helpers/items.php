@@ -198,7 +198,7 @@ class Items
 	 */
 	public static function getRequiredFields($extension)
 	{
-		if (empty($_reqFields[$extension]))
+		if (empty(self::$_reqFields[$extension]))
 		{
 			$db = \Secretary\Database::getDBO();
 			$query = $db->getQuery(true);

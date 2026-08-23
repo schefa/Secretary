@@ -17,9 +17,7 @@ class SecretaryViewDatabase extends \Joomla\CMS\MVC\View\HtmlView
 		
         if (!$canSee || count($this->get('Errors') ?? []))
 		{
-			throw new Exception(500, \Joomla\CMS\Language\Text('JERROR_ALERTNOAUTHOR'));
-			
-            return false;
+			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
 		}
 
 		$model = $this->getModel('Database');

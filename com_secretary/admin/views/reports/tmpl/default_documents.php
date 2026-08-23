@@ -167,12 +167,6 @@ foreach ($this->documents_total as $cur => $values)
         </th>
         <th class='left'>
         <?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_EINNAHMEN'); ?>
-            <?php /*?><br />
-            <?php if(!is_numeric($this->state->get('filter.state'))) { 
-            foreach($this->states AS $state) {
-                $cssClass = Secretary\Database::getQuery('status', $state->value,'id','class','loadResult');
-                echo '<span class="income status-'. $cssClass .'">'. $state->text .'</span>';
-            }} ?><?php */?>
         </th>
         <th class='left'>
         <?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_AUSGABEN'); ?>

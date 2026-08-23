@@ -18,18 +18,6 @@ class SecretaryModelTime extends \Joomla\CMS\MVC\Model\AdminModel
 	public $type;
 	private static $_item;
 
-	protected static $whiteTasks = array(
-		'time',
-		'times',
-		'events',
-		'location',
-		'locations',
-		'locations_products',
-		'task',
-		'tasks',
-		'projects'
-	);
-
 	/**
 	 * Class constructor
 	 * 
@@ -44,7 +32,6 @@ class SecretaryModelTime extends \Joomla\CMS\MVC\Model\AdminModel
 		$this->locationid  = $this->app->input->getInt('location_id');
 		$this->pid		   = $this->app->input->getInt('pid');
 		$this->extension   = $this->app->input->getCmd('extension');
-		//if(isset($this->extension) && !in_array($this->extension,self::$whiteTasks)) die;
 
 		if ($this->extension == 'tasks')
 		{
@@ -170,8 +157,6 @@ class SecretaryModelTime extends \Joomla\CMS\MVC\Model\AdminModel
 
 			if ($item->id > 0 && $item->extension == 'projects')
 			{
-				$countTasks = 0;
-				$countSubTasks = 0;
 				$item->tasks = \Secretary\Helpers\Times::getProjectTasks($item->id);
 			}
 			self::$_item[$pk] = $item;
@@ -201,8 +186,6 @@ class SecretaryModelTime extends \Joomla\CMS\MVC\Model\AdminModel
 			if (!$user->authorise('core.create', 'com_secretary.time') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.time')))
 			{
 				throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-				
-                return false;
 			}
 		}
 

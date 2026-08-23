@@ -24,7 +24,6 @@ class Documents
 
         for ($i = 0; $i < $totalData; $i++)
 		{
-            $lastCurrency = ($i > 0) ? $data[$i - 1]->currency : '';
             $currentCurrency = $data[$i]->currency;
             $nextCurrency = (isset($data[$i + 1]->currency)) ? $data[$i + 1]->currency : 0;
             

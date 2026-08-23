@@ -53,8 +53,6 @@ class SecretaryViewTemplates extends \Joomla\CMS\MVC\View\HtmlView
         elseif (count(($errors = $this->get('Errors')) ?? []))
 		{
 		    throw new Exception(implode("\n", $errors));
-		    
-            return false;
 		}
         
 		$this->categories	= \Joomla\CMS\Form\FormHelper::loadFieldType('Categories', false)->getCategories( $this->view );

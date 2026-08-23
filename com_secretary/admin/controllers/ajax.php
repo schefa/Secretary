@@ -216,9 +216,6 @@ class SecretaryControllerAjax extends \Joomla\CMS\MVC\Controller\FormController
 				$teamMembers = json_decode($thatProjectTask->contacts, true);
 
 				// Holen des Users aus der Kontakttabelle
-				/*$userContact = Secretary\Database::getQuery('subjects', $user->id);
-				if(!empty($userContact)) $userContactId = $userContact->id;
-				*/
 				// Update Team Members Worktime
 				$new = array();
 				
@@ -398,9 +395,11 @@ class SecretaryControllerAjax extends \Joomla\CMS\MVC\Controller\FormController
 			die;
 		}
 
-		// ACL 
+		$new = \Secretary\Database::getQuery($view, $id);
+
+		// ACL
 		$canChange = false;
-		
+
         if (isset($new->created_by) && ($user->id == $new->created_by && $user->authorise('core.edit.own', 'com_secretary.' . $singleView)) || $user->authorise('core.edit', 'com_secretary.' . $singleView))
 		{
 			$canChange = true;

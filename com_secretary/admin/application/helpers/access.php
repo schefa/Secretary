@@ -176,7 +176,7 @@ abstract class Access
 			{
                 return true;
             }
-            $subjectUserId = Secretary\Database::getQuery('subjects', $item->subjectid, 'id', 'created_by', 'loadResult');
+            $subjectUserId = \Secretary\Database::getQuery('subjects', $item->subjectid, 'id', 'created_by', 'loadResult');
             
             if (false !== self::show($section, $item->id, $subjectUserId))
 			{

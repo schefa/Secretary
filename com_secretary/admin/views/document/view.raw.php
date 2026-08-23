@@ -38,21 +38,15 @@ class SecretaryViewDocument extends \Joomla\CMS\MVC\View\HtmlView
 		$this->canDo	= \Secretary\Helpers\Access::getActions($section);
 
 		// Permission
-		$user   = \Secretary\Joomla::getUser();
-
 		if (!\Secretary\Helpers\Access::documentExportAllowed($this->item, $layout))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
 
 		// Check for errors.
 		if (count(($errors = $this->get('Errors')) ?? []))
 		{
 			throw new Exception(implode("\n", $errors), 404);
-			
-            return false;
 		}
 
 		// Get Business Data

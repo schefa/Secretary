@@ -31,8 +31,6 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
 		if (!\Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary'))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
 		$this->app = \Secretary\Joomla::getApplication();
 		parent::__construct();
@@ -156,8 +154,6 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
         if ($authorised !== true)
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 403);
-			
-            return false;
 		}
 
 		if (!empty($exportTables) && isset($format))
@@ -176,22 +172,16 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
 			{
 				default:
 					return false;
-					break;
 				case 'sql':
 					return $this->exportSQL($tables, $filename);
-					break;
 				case 'csv':
 					return $this->exportCsv($tables, $filename);
-					break;
 				case 'xml':
 					return $this->exportXML($tables, $filename);
-					break;
 				case 'json':
 					return $this->exportJSON($tables, $filename);
-					break;
 				case 'excel':
 					return $this->exportExcel($tables, $filename);
-					break;
 			}
 
 			return true;
@@ -480,8 +470,6 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
         catch (Exception $ex)
 		{
 			throw new Exception($ex->getMessage());
-			
-            return false;
 		}
 
 		if (empty($content))
@@ -512,16 +500,12 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
 		if (empty($single_file_name) && empty($multiple_files))
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('COM_SECRETARY_NO_FILE_SELECTED'), 403);
-			
-            return false;
 		}
 
 		// Adminrechte prüfen
 		if (!(\Secretary\Helpers\Access::checkAdmin()))
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 403);
-			
-            return false;
 		}
 
 		if (!empty($single_file_name))
@@ -536,8 +520,6 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
 				if (!\Secretary\Helpers\Uploads::checkExtension($fileName, 'sql'))
 				{
 					throw new \RuntimeException(\Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_DOCUMENT_INVALID_EXTENSION', 'sql'), 403);
-					
-                    return false;
 				}
 
 				$filePath	= SECRETARY_ADMIN_PATH . '/application/install/samples/' . $fileName;
@@ -570,16 +552,12 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
         if ($fileSize > $allowedSize)
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_DOCUMENT_INVALID_SIZE', \Secretary\Utilities\Number::human_filesize($allowedSize)), 403);
-			
-            return false;
 		}
 
 		// Dateiendung
 		if (!\Secretary\Helpers\Uploads::checkExtension($fileName, 'sql'))
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_DOCUMENT_INVALID_EXTENSION', 'sql'), 403);
-			
-            return false;
 		}
 
 		// Allow an exception to be thrown.
@@ -612,8 +590,6 @@ class SecretaryModelDatabase extends \Joomla\CMS\MVC\Model\ItemModel
 		if ($buffer === false)
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JLIB_INSTALLER_ERROR_SQL_READBUFFER') . 12 . $file, 403);
-			
-            return false;
 		}
 
 		// Create an array of queries from the sql file

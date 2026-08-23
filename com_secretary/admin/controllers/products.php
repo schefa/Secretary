@@ -38,7 +38,6 @@ class SecretaryControllerProducts extends Secretary\Controller\Admin
 
 		$input	= $this->app->input;
 		$pks	= $input->get('cid', array(), 'array');
-		// $suppliers = Secretary\Database::getQuery('products',$pks);
 
 		$this->setRedirect(\Joomla\CMS\Router\Route::_('index.php?option=com_secretary&view=document&layout=edit&pusage=2&pid=' . implode(',', $pks), false));
 		

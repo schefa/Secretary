@@ -35,14 +35,10 @@ class SecretaryViewBusinesses extends \Joomla\CMS\MVC\View\HtmlView
         if (!$this->canDo->get('core.show'))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif (count(($errors = $this->get('Errors')) ?? []))
 		{
 			throw new Exception(implode("\n", $errors));
-			
-            return false;
 		}
 
 		parent::display($tpl);
@@ -61,7 +57,7 @@ class SecretaryViewBusinesses extends \Joomla\CMS\MVC\View\HtmlView
 			$html[] = Secretary\Navigation::ToolbarItem('business.add', \Joomla\CMS\Language\Text::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR', $addEventText), false, 'newentry');
 		}
 
-		if (!empty($this->items[0]) && \Secretary\Joomla::getUser()->authorise('com_secretary', 'core.admin'))
+		if (!empty($this->items[0]) && \Secretary\Joomla::getUser()->authorise('core.admin', 'com_secretary'))
 		{
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.delete', 'COM_SECRETARY_TOOLBAR_DELETE', true, 'default', 'fa-trash');
 			$html[] = Secretary\Navigation::ToolbarItem('businesses.setDefault', 'COM_SECRETARY_TOOLBAR_SET_HOME', true, 'default', 'fa-star');

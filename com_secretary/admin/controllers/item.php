@@ -150,9 +150,7 @@ class SecretaryControllerItem extends \Joomla\CMS\MVC\Controller\FormController
 				$imageData = base64_encode(file_get_contents($file));
 				$src = 'data: ' . mime_content_type($file) . ';base64,' . $imageData;
 
-				$class = (!empty($class)) ? 'class="' . $class . '"' : '';
-				$width = (!empty($size)) ? 'width="' . $size . '"' : '';
-				echo '<img ' . $width . ' ' . $class . ' src="' . $src . '">';
+				echo '<img src="' . $src . '">';
 
 				$this->app->close();
             }

@@ -69,12 +69,7 @@ defined('_JEXEC') or die;
 
                 <?php $href = Secretary\Route::create('document', array('id' => $item->id, 'layout' => 'template', 'tmpl' => 'component')); ?>
                 <a data-original-title="<?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_PREVIEW'); ?>" class="hasTooltip printpdf" data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo $href; ?>"}' id="modalLink1"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/document_print_preview-20.png" /></a>
-                
-                <?php /*if(!empty($item->email)) { ?>
-                <?php $email = 'index.php?option=com_secretary&view=document&task=email&id='.$item->id ; ?>
-                <a class="hasTooltip printpdf" href="<?php echo $email; ?>" data-original-title="<?php echo JText::_('COM_SECRETARY_EMAIL'); ?>"><img src="<?php echo SECRETARY_MEDIA_PATH; ?>/images/email-25.png" /></a>
-                <?php }*/ ?>
-                
+
             </td>
             
             <td class="left"><?php echo $item->deadline; ?>

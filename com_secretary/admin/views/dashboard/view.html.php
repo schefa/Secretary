@@ -6,7 +6,6 @@ defined('_JEXEC') or die;
 
 class SecretaryViewDashboard extends \Joomla\CMS\MVC\View\HtmlView
 {
-	protected $items;
 	protected $pagination;
 	protected $state;
 

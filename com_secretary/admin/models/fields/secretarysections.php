@@ -42,13 +42,6 @@ class JFormFieldSecretarySections extends \Joomla\CMS\Form\Field\ListField
 		);
 	}
 
-	public function getResult($key)
-	{
-		$result = $this->getModulesArray();
-		
-        return $result[$key];
-	}
-
 	public function getOptions()
 	{
 		$result = $this->getModulesArray();

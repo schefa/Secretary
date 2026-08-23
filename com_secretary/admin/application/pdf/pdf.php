@@ -71,8 +71,6 @@ return new DomPDFStrategy;
         else
 		{
             throw new \Exception("No PDF library selected or installed");
-            
-            return false;
         }
 
         if (

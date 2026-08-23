@@ -38,19 +38,12 @@ class HTML
 		{
 			$path = SECRETARY_ADMIN_PATH . '/application/html/' . strtolower($file) . '.php';
 
-			if ($path)
-			{
-				require_once $path;
+			require_once $path;
 
-				if (!class_exists($className))
-				{
-					throw new \Exception(sprintf('Class %s not found.', $className), 500);
-				}
-            }
-            else
+			if (!class_exists($className))
 			{
-				throw new \Exception(sprintf('%s not found.', $file), 500);
-            }
+				throw new \Exception(sprintf('Class %s not found.', $className), 500);
+			}
 		}
 
 		$callFunction = array($className, $function);

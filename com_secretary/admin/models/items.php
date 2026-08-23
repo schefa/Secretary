@@ -39,8 +39,6 @@ class SecretaryModelItems extends \Joomla\CMS\MVC\Model\ListModel
         if (!in_array($this->extension, array('activities', 'currencies', 'entities', 'fields', 'plugins', 'settings', 'status', 'uploads')))
 		{
             throw new Exception('Extension not found', 404);
-            
-            return false;
         }
 
         parent::__construct($config);

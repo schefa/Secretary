@@ -20,23 +20,17 @@ class SecretaryViewDocument extends \Joomla\CMS\MVC\View\HtmlView
 		if (!\Secretary\Helpers\Access::documentExportAllowed($this->item, $this->_layout))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
 
 		// Check for errors.
 		if (count(($errors = $this->get('Errors')) ?? []))
 		{
 			throw new Exception(implode("\n", $errors), 404);
-			
-            return false;
 		}
 
 		if (!\Secretary\Helpers\ERechnung::isAvailable($this->item))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('COM_SECRETARY_ERECHNUNG_UNAVAILABLE'), 404);
-			
-            return false;
 		}
 
 		$xml = \Secretary\Helpers\ERechnung::generate($this->item);

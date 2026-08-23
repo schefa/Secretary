@@ -31,22 +31,16 @@ class JFormFieldDatafields extends \Joomla\CMS\Form\Field\ListField
         return $result;
 	}
 
-	public function getResult($key)
-	{
-		$result = $this->getFieldsArray();
-		
-        return $result[$key];
-	}
-
 	public function getOptions()
 	{
 		$result = $this->getFieldsArray();
-		
+		$html = array();
+
         foreach ($result as $key => $value)
 		{
 			$html[] = \Joomla\CMS\HTML\HTMLHelper::_('select.option', $key, $value);
 		}
-		
-        return $result;
+
+        return $html;
 	}
 }

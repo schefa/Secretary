@@ -30,7 +30,7 @@ class Times
 	public static function getProjectStatus($itemID, $projectID)
 	{
 		$status = '';
-		$business = \Secretary\Application::company('id');
+		$business = \Secretary\Application::company();
 		
         if (isset($itemID))
 		{

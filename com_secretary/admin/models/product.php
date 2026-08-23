@@ -170,8 +170,6 @@ class SecretaryModelProduct extends \Joomla\CMS\MVC\Model\AdminModel
 			if (!$user->authorise('core.create', 'com_secretary.product') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.product.' . $pk)))
 			{
 				throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-				
-                return false;
 			}
 		}
 

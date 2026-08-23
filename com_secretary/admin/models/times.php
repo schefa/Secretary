@@ -157,17 +157,6 @@ class SecretaryModelTimes extends \Joomla\CMS\MVC\Model\ListModel
 		// Filter by search in title
 		$month = $this->getState('filter.month');
 		$day = $this->getState('filter.day');
-		/*if (!empty($month) || !empty($day)) {
-			if(empty($month)) { $month = date('m');} else { $month = str_pad($month, 2 ,'0', STR_PAD_LEFT); }
-			if(empty($day)) { $day = date('d');} else { $day = str_pad($day, 2 ,'0', STR_PAD_LEFT); }
-			$date = $db->quote( date('Y').'-'. $month ."-". $day."%");
-			if(count($where1 ?? []) > 0) {
-				$where1[] = ' AND ';
-				$where2[] = ' AND ';
-			}
-			$where1[] = ' (time.endDate >= '. $date.' )';
-			$where2[] = ' (time.endDate >= '. $date.' )';
-		}*/
 
 		// Filter by a single or group of folders.
 		$categoryId = $this->getState('filter.category');
@@ -436,19 +425,6 @@ class SecretaryModelTimes extends \Joomla\CMS\MVC\Model\ListModel
 
 			$db->setQuery($query);
 			$events = $db->loadObjectList();
-			/*
-			$numberOfDays = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-			$items = array();
-			for($i = 1; $i <= $numberOfDays; $i++) {
-				
-			}
-			
-			foreach($events as $event) {
-				$start = explode(" ",$event->startDate);
-				$ende = explode(" ",$event->endDate);
-				$items[$start[0].':'.$ende[0]] = $event;
-			}
-			*/
 			$result['items'] = $events;
 		}
 

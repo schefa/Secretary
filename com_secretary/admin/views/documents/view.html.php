@@ -25,7 +25,6 @@ class SecretaryViewDocuments extends \Joomla\CMS\MVC\View\HtmlView
 	{
 
 		$app	= Secretary\Joomla::getApplication();
-		$user	= Secretary\Joomla::getUser();
 
 		$this->view			= $app->input->getCmd('view');
 		$this->task			= $app->input->getVar('task');

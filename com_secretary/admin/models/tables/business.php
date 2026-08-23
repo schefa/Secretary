@@ -165,9 +165,7 @@ class SecretaryTableBusiness extends \Joomla\CMS\Table\Table
         }
         catch (Exception $ex)
 		{
-            throw new $ex;
-            
-            return false;
+            throw $ex;
         }
     }
 }

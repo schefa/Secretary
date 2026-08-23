@@ -238,8 +238,6 @@ class SecretaryModelSubject extends \Joomla\CMS\MVC\Model\AdminModel
 		if (!$show)
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-			
-            return false;
 		}
 
 		// Allow an exception to be thrown.

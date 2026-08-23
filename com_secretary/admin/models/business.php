@@ -134,8 +134,6 @@ class SecretaryModelBusiness extends \Joomla\CMS\MVC\Model\AdminModel
 			if (!$user->authorise('core.create', 'com_secretary.business') || ($pk > 0 && !$user->authorise('core.edit.own', 'com_secretary.business.' . $pk)))
 			{
 				throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-				
-                return false;
 			}
 		}
 
@@ -222,8 +220,6 @@ class SecretaryModelBusiness extends \Joomla\CMS\MVC\Model\AdminModel
 		if (!$user->authorise('core.edit', 'com_secretary.business'))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-			
-            return false;
 		}
 
 		$business = $this->getTable();
@@ -231,8 +227,6 @@ class SecretaryModelBusiness extends \Joomla\CMS\MVC\Model\AdminModel
         if (!$business->load((int) $id))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('COM_SECRETARY_NOT_FOUND'));
-			
-            return false;
 		}
 
 		// Reset the home fields for all

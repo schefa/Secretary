@@ -120,7 +120,11 @@ class Uploads
 
 			if ($extension == 'pdf')
 			{
-				$output[] = '<a class="btn btn-upload modal" rel="{size: {x: 900, y: 500}, handler:\'iframe\'}" href="index.php?option=com_secretary&task=item.openFile&id=' . $item->id . '"><i class="fa fa-eye"></i></a>';
+				\Joomla\CMS\Factory::getApplication()->getDocument()->getWebAssetManager()
+					->useScript('joomla.dialog-autocreate');
+
+				$previewUrl = 'index.php?option=com_secretary&task=item.openFile&id=' . $item->id;
+				$output[] = '<a class="btn btn-upload" href="' . $previewUrl . '" data-joomla-dialog=\'{"popupType": "iframe", "src": "' . $previewUrl . '"}\'><i class="fa fa-eye"></i></a>';
             }
 
 			// ACL
@@ -151,8 +155,6 @@ class Uploads
 		if (!$user->authorise('core.upload', 'com_secretary'))
 		{
 			throw new \Exception('JERROR_ALERTNOAUTHOR', 500);
-			
-            return false;
 		}
 
 		$checkBox = $input->get('deleteDocument');
@@ -270,8 +272,6 @@ class Uploads
 		if (!in_array($section, \Secretary\Database::$secretary_tables))
 		{
 			throw new \Exception('Table not allowed: ' . $section);
-			
-            return false;
 		}
 
 		// Update Upload Table

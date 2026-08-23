@@ -86,7 +86,6 @@ class SecretaryViewProducts extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	protected function addToolbar()
 	{
-		$state	= $this->get('State');
 		$html	= array();
 	
 		if ($this->canDo->get('core.create'))

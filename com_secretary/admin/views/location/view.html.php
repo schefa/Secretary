@@ -12,7 +12,6 @@ class SecretaryViewLocation extends \Joomla\CMS\MVC\View\HtmlView
     protected $item;
     protected $layout;
     protected $state;
-    protected $titel;
 	protected $view;
 
 	/**
@@ -44,20 +43,14 @@ class SecretaryViewLocation extends \Joomla\CMS\MVC\View\HtmlView
         if ( $this->layout == 'edit' && !$check )
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif ( $this->layout != 'edit' && false === \Secretary\Helpers\Access::show($this->view, $this->item->id,  $this->item->created_by) )
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif (count(($errors = $this->get('Errors')) ?? []))
 		{
 		    throw new Exception(implode("\n", $errors));
-		    
-            return false;
 		}
 
         if (isset($this->item->checked_out))

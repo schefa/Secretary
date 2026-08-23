@@ -24,7 +24,6 @@ class SecretaryViewTimes extends \Joomla\CMS\MVC\View\HtmlView
 	public function display($tpl = null)
 	{
 	    $this->app	    = Secretary\Joomla::getApplication();
-	    $user			= Secretary\Joomla::getUser(); 
 		$this->section	= $this->app->input->getCmd('section');
 		$this->view		= $this->app->input->getCmd('view');
 		$this->extension= $this->app->input->getCmd('extension');

@@ -68,7 +68,7 @@ class Admin extends AdminController
         if ($return === false)
 		{
 			// Checkin failed.
-			$message = \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
+			$message = \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', '');
 			$this->setRedirect(\Joomla\CMS\Router\Route::_($this->redirect_url, false), $message, 'error');
 		}
         else

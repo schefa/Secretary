@@ -11,10 +11,6 @@ defined('_JEXEC') or die;
 class Google
 {
 
-    public static function items()
-    {
-    }
-
     public static function maps($items, $type = 'contacts')
     {
 

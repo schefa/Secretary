@@ -12,9 +12,6 @@ defined('_JEXEC') or die;
     <li>
         <a class="btn btn-link" href="#" data-tabcontent="settings_areas"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_SECTIONS', true); ?></a>
     </li>
-    <li>
-        <a class="btn btn-link" href="#" data-tabcontent="settings_access"><?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_ACCESS_CONTROLS'); ?></a>
-    </li>
 </ul>
      
 <div class="secretary_tabs_content"> 
@@ -22,14 +19,7 @@ defined('_JEXEC') or die;
     <div class="secretary_tab_pane" style="display:block;" id="settings_general">
     
     	<table class="table">
-        	<tbody> 
-				<?php /*
-            	<tr>
-                	<td><?php echo $this->form->getLabel('downloadID'); ?></td>
-                	<td colspan="2"><?php echo $this->form->getInput('downloadID'); ?></td> 
-                </tr>
-				*/ ?>
-				
+        	<tbody>
             	<tr class="noborder">
                 	<td colspan="3">&nbsp;</td>
                 </tr>
@@ -224,30 +214,5 @@ defined('_JEXEC') or die;
             </tbody>
         </table>
     </div>
-    
-    <?php /* ?>
-    <div class="tab-pane " id="settings_access">
-    
-        <div class="tabbable tabs-left">
-        
-        	<ul class="nav nav-tabs">
-    			<?php foreach($this->rulesList as $title => $rule) { ?>
-            	<li class="nav-item"><a class="nav-link <?php if($title == 'component') echo 'active'; ?>" data-bs-toggle="tab" href="#permission-<?php echo $title; ?>"><?php echo JText::_('COM_SECRETARY_'. strtoupper($title)); ?></a></li>
-    			<?php } ?>
-            </ul>
-            
-            <div class="tab-content">
-    			<?php foreach($this->rulesList as $title => $rule) { ?>
-            	<div id="permission-<?php echo $title ?>" class="tab-pane <?php if($title == 'component') echo 'active'; ?>"><?php echo $rule; ?>
-                </div>
-    			<?php } ?>
-            </div>
-            
-        </div>
-        
-        <div class="alert"><?php echo JText::_('COM_SECRETARY_RULES_SETTING_NOTES_ITEM');?></div>
-        
-    </div>
-    <?php */ ?>
 
 </div>

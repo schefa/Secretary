@@ -126,7 +126,7 @@ class Navigation
 		$sublinks = array();
 
 		// Counter
-		$contactsCounter = NULL; // self::getLockedContacts(); 
+		$contactsCounter = NULL;
 
 		// Menu START
 		// Zentrale 
@@ -258,7 +258,7 @@ class Navigation
 		$levels = $user->getAuthorisedViewLevels();
 		asort($levels);
 		$key = 'navigation' . implode(',', $levels) . '.' . $active . '.' . $disabled . '.' . $itemCatid;
-		$cache = Joomla::getCache('com_secretary', '');
+		$cache = Joomla::getCache();
 		$enabled = Application::parameters()->get('cache');
 
 		if (($enabled == 0) || !($html = $cache->get($key)))
@@ -457,15 +457,6 @@ class Navigation
 		}
 
 		return $html;
-	}
-
-	private static function getLockedContacts()
-	{
-		$db = Database::getDBO();
-		$query = $db->getQuery(true)->select('COUNT(*)')->from($db->quoteName('#__secretary_subjects'))->where('state = 0');
-		$db->setQuery($query);
-		
-        return $db->loadResult();
 	}
 
 }

@@ -58,27 +58,4 @@ class SecretaryControllerFolders extends Secretary\Controller\Admin
 		$this->setRedirect(\Joomla\CMS\Router\Route::_($this->redirect_url, false));
 	}
 
-	public function checkin()
-	{
-		// Check for request forgeries.
-		\Joomla\CMS\Session\Session::checkToken() or jexit(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN'));
-		$ids = $this->input->post->get('cid', array(), 'array');
-
-		$return = Secretary\Controller::checkin($this->view_list, $ids);
-		
-        if ($return === false)
-		{
-			// Checkin failed.
-			$message = \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $model->getError());
-			$this->setRedirect(\Joomla\CMS\Router\Route::_($this->redirect_url, false), $message, 'error');
-		}
-        else
-		{
-			// Checkin succeeded.
-			$message = \Joomla\CMS\Language\Text::plural($this->text_prefix . '_N_ITEMS_CHECKED_IN', count($ids ?? []));
-			$this->setRedirect(\Joomla\CMS\Router\Route::_($this->redirect_url, false), $message);
-		}
-		
-        return $return;
-	}
 }

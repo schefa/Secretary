@@ -26,20 +26,14 @@ class SecretaryViewSubject extends \Joomla\CMS\MVC\View\HtmlView
         if ( $this->_layout == 'edit' && !$check )
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif ( false === \Secretary\Helpers\Access::show($section, $this->item->id,  $this->item->created_by) )
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif (empty($this->defaultTemplate))
 		{
 			throw new Exception( \Joomla\CMS\Language\Text::_('COM_SECRETARY_EMAIL_NOTEMPLATE'), 404 );
-			
-            return false;
 		}
         
 		// Prepare

@@ -15,11 +15,6 @@ class SecretaryTableSettings extends \Joomla\CMS\Table\Table
 		parent::__construct('#__secretary_settings', 'id', $db);
 	}
 
-	public function getAssetPId()
-	{
-		return self::_getAssetParentId();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * @see \Joomla\CMS\Table\Table::_getAssetParentId()

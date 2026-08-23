@@ -26,10 +26,6 @@ class SecretaryTableUploads extends \Joomla\CMS\Table\Table
 		// Delete file
 		$app = \Secretary\Joomla::getApplication();
 
-		if (!defined('DS'))
-		{
-			define('DS', DIRECTORY_SEPARATOR);
-		}
 		$upload = Secretary\Database::getQuery('uploads', $pk);
 
 		$path = SECRETARY_ADMIN_PATH . '/uploads/' . $upload->business . '/' . $upload->folder . '/' . $upload->title;

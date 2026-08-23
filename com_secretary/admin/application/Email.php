@@ -141,11 +141,9 @@ class Email
 		{
 			$sent = $mail->Send();
 		}
-        catch (Exception $e)
+        catch (\Exception $e)
 		{
 			throw new Exception($e->getMessage());
-			
-            return false;
 		}
 
 		return $sent;

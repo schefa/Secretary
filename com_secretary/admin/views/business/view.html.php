@@ -37,20 +37,14 @@ class SecretaryViewBusiness extends \Joomla\CMS\MVC\View\HtmlView
         if ($this->layout == 'edit' && !$check)
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif ($this->layout != 'edit' && false === \Secretary\Helpers\Access::show($section, $this->item->id))
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif (count(($errors = $this->get('Errors')) ?? []))
 		{
 			throw new Exception(implode("\n", $errors));
-			
-            return false;
 		}
 
 		if (isset($this->item->checked_out))

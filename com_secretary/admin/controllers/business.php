@@ -53,7 +53,6 @@ class SecretaryControllerBusiness extends \Joomla\CMS\MVC\Controller\FormControl
 		}
 
 		// Create an array of queries from the sql file
-		//$queries = JDatabaseDriver::splitSql($buffer); // Joomla 3.x+
 		$queries = \Joomla\Database\DatabaseDriver::splitSql($buffer);
 
 		$update_count = 0;

@@ -55,7 +55,6 @@ $values = json_decode($this->item->values,true);
 		var value = $('#jform_type').val();
 		if(!($('#secretary-fields-values.controls').is(':empty')))
 			return;
-console.log(value);
 		switch (value) {
     		case 'list' :
     			$('#secretary-fields-values.controls').append('<div class="fields-items"></div><div id="value-add" class="btn btn-default" counter="<?php echo 0 + count($values ?? []); ?>"><span class="fa fa-plus"></span> <?php echo \Joomla\CMS\Language\Text::_('COM_SECRETARY_NEW'); ?></div>');

@@ -17,7 +17,8 @@ class SecretaryViewTemplate extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	public function display($tpl = null)
 	{
-	    $jinput			= Secretary\Joomla::getApplication()->input;
+	    $app			= Secretary\Joomla::getApplication();
+		$jinput			= $app->input;
 		$this->view		= $jinput->getCmd('view');
 		$this->layout	= $jinput->getCmd('layout');
 		

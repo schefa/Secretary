@@ -83,8 +83,6 @@ class Folders
 		if (!in_array($table, \Secretary\Database::$secretary_tables))
 		{
 			throw new \Exception('Query failure: ' . $table);
-			
-            return false;
 		}
 
 		if (!isset(self::$_lastNr[$catid]))

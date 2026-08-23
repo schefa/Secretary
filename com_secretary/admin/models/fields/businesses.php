@@ -22,12 +22,4 @@ class JFormFieldBusinesses extends \Joomla\CMS\Form\Field\ListField
 
 		return $html;
 	}
-
-	public function getList($default, $name = 'jform[fields][template]')
-	{
-		$html = $this->getOptions();
-		$result = '<select name="' . $name . '" class="form-control inputbox">' . \Joomla\CMS\HTML\HTMLHelper::_('select.options', $html, 'value', 'text', $default) . '</select>';
-		
-        return $result;
-	}
 }

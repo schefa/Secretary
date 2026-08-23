@@ -1,8 +1,5 @@
 <?php
 
-use Dompdf\Exception;
-
-
 defined('_JEXEC') or die;
 
 
@@ -29,8 +26,6 @@ class SecretaryViewItem extends \Joomla\CMS\MVC\View\HtmlView
         if (!$user->authorise('core.admin', 'com_secretary'))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
 
 		if ($this->extension !== 'plugins')

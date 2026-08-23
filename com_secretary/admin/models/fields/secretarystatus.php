@@ -45,20 +45,4 @@ class JFormFieldSecretarystatus extends \Joomla\CMS\Form\Field\ListField
 
 		return $html;
 	}
-
-	public function getObject($id)
-	{
-		$items = new \Joomla\CMS\Object\CMSObject;
-
-		$db = \Secretary\Database::getDBO();
-		$query = $db->getQuery(true)
-			->select("*")
-			->from($db->quoteName('#__secretary_status'))
-			->where($db->quoteName('id') . ' = ' . $db->escape($id));
-
-		$db->setQuery($query);
-		$items = $db->loadAssoc();
-
-		return $items;
-	}
 }

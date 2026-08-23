@@ -92,6 +92,7 @@ class SecretaryViewFolder extends \Joomla\CMS\MVC\View\HtmlView
 	protected function addToolbar()
 	{
 
+		$user		= \Secretary\Joomla::getUser();
 		$isNew		= ($this->item->id == 0);
 
 		// Prepare the toolbar.

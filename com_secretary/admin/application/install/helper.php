@@ -361,7 +361,7 @@ class SecretaryInstall
 			$object->name = 'com_secretary';
 			$object->type = 'extension';
 			$object->enabled = 1;
-			$object->extra_query = $extra_query;
+			$object->extra_query = '';
 			$object->location = $location;
 			$result = $db->insertObject('#__update_sites', $object);
 		}

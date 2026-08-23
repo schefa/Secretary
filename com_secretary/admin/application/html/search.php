@@ -15,6 +15,8 @@ class Search
 
 	public static function contacts($class = NULL)
 	{
+		Factory::getApplication()->getDocument()->getWebAssetManager()
+			->useScript('joomla.dialog-autocreate');
 
 		// Build the script.
 		$script = array();
@@ -57,7 +59,7 @@ class Search
                 			} else  {
                 				connectionDropdown.parentNode.style.display="block";
 	                        }';
-		$script[] = '		SqueezeBox.close();';
+		$script[] = '		if (Joomla.Modal.getCurrent()) { Joomla.Modal.getCurrent().close(); }';
 		$script[] = '	}';
 
 		// Add the script to the document head.
@@ -65,11 +67,13 @@ class Search
 
 		$link	= 'index.php?option=com_secretary&amp;view=subjects&amp;layout=modal&amp;tmpl=component&amp;' . Session::getFormToken() . '=1';
 
-		return '<a class="modal btn-select-contacts ' . $class . ' pull-right hasTooltip" title="' . HTMLHelper::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG') . '"  href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
+		return '<a class="btn-select-contacts ' . $class . ' pull-right hasTooltip" title="' . HTMLHelper::tooltipText('COM_SECRETARY_CONTACTS_MODAL_DIALOG') . '" href="' . $link . '" data-joomla-dialog=\'{"popupType": "iframe", "src": "' . $link . '"}\'><i class="fa fa-search"></i></a>';
 	}
 
 	public static function documents($class = NULL)
 	{
+		Factory::getApplication()->getDocument()->getWebAssetManager()
+			->useScript('joomla.dialog-autocreate');
 
 		// Build the script.
 		$script = array();
@@ -83,7 +87,7 @@ class Search
 		$script[] = ' 		contact : contact,';
 		$script[] = '		total : total,';
 		$script[] = '		currency : currency';
-		$script[] = '	}; Secretary.Search.drawBudgetContainer( item , "input.search-documents"); SqueezeBox.close();';
+		$script[] = '	}; Secretary.Search.drawBudgetContainer( item , "input.search-documents"); if (Joomla.Modal.getCurrent()) { Joomla.Modal.getCurrent().close(); }';
 		$script[] = '}';
 
 		// Add the script to the document head.
@@ -91,12 +95,14 @@ class Search
 
 		$link	= 'index.php?option=com_secretary&amp;view=documents&amp;layout=modal&amp;tmpl=component&amp;' . Session::getFormToken() . '=1';
 
-		return '<a class="modal ' . $class . '" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
+		return '<a class="' . $class . '" href="' . $link . '" data-joomla-dialog=\'{"popupType": "iframe", "src": "' . $link . '"}\'><i class="fa fa-search"></i></a>';
 	}
 
 
 	public static function locations($class = NULL, $extension = NULL)
 	{
+		Factory::getApplication()->getDocument()->getWebAssetManager()
+			->useScript('joomla.dialog-autocreate');
 
 		// Build the script.
 		$script = array();
@@ -107,7 +113,7 @@ class Search
 		$script[] = '		document.getElementById("jform_location_id").value = id;';
 		$script[] = '		var input = document.getElementsByClassName("search-locations");';
 		$script[] = '		input[0].value = title;';
-		$script[] = '		SqueezeBox.close();';
+		$script[] = '		if (Joomla.Modal.getCurrent()) { Joomla.Modal.getCurrent().close(); }';
 		$script[] = '	}';
 
 
@@ -116,6 +122,6 @@ class Search
 
 		$link	= 'index.php?option=com_secretary&amp;view=locations&amp;extension=' . $extension . '&amp;layout=modal&amp;tmpl=component&amp;' . Session::getFormToken() . '=1';
 
-		return '<a class="modal ' . $class . '" href="' . $link . '" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="fa fa-search"></i></a>';
+		return '<a class="' . $class . '" href="' . $link . '" data-joomla-dialog=\'{"popupType": "iframe", "src": "' . $link . '"}\'><i class="fa fa-search"></i></a>';
 	}
 }

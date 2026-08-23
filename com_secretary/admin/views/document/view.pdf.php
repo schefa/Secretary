@@ -23,13 +23,13 @@ class SecretaryViewDocument extends \Joomla\CMS\MVC\View\HtmlView
 		// Permission
 		if (!\Secretary\Helpers\Access::documentExportAllowed($this->item, $this->_layout))
 		{
-		    throw new Exception( \Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'),500); return false;
+		    throw new Exception( \Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'),500);
 		}
 		
 		// Check for errors.
 		if (count(($errors = $this->get('Errors')) ?? []))
 		{
-		    throw new Exception( implode("\n", $errors), 404); return false;
+		    throw new Exception( implode("\n", $errors), 404);
 		}
 		
 		
@@ -39,8 +39,6 @@ class SecretaryViewDocument extends \Joomla\CMS\MVC\View\HtmlView
 		if (empty($this->defaultTemplate))
 		{
 			throw new Exception( \Joomla\CMS\Language\Text::_('COM_SECRETARY_EMAIL_NOTEMPLATE'), 404 );
-			
-            return false;
 		}
 
 		$html  = \Secretary\Helpers\Templates::transformText($this->defaultTemplate->text,array('subject'=>$this->item->subjectid), $this->item->templateInfoFields );

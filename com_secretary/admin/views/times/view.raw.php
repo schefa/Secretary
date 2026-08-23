@@ -22,7 +22,6 @@ class SecretaryViewTimes extends \Joomla\CMS\MVC\View\HtmlView
 	 */
 	public function display($tpl = null)
 	{
-	    $user			= \Secretary\Joomla::getUser();
 	    $this->jinput	= \Secretary\Joomla::getApplication()->input;
 		$this->section	= $this->jinput->getCmd('section');
 		$this->view		= $this->jinput->getCmd('view');
@@ -32,8 +31,6 @@ class SecretaryViewTimes extends \Joomla\CMS\MVC\View\HtmlView
 		if ( !$this->canDo->get('core.show'))
 		{
 			throw new Exception( \Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR') , 500);
-			
-            return false;
 		}
 		
 		$this->state		= $this->get('State');
@@ -197,17 +194,6 @@ class SecretaryViewTimes extends \Joomla\CMS\MVC\View\HtmlView
 			$category = Secretary\Database::getQuery('folders', $this->categoryId, 'id', 'alias');
 		}
 		
-		/*
-		if ($this->canDo->get('core.create')) {
-			if(isset($category->alias)) {
-				$addtimeText = $category->alias;
-			} else {
-				$addtimeText = JText::_('COM_SECRETARY_TIME');
-			}
-			$html[] = Secretary\Navigation::ToolbarItem('time.add', JText::sprintf('COM_SECRETARY_NEW_ENTRY_TOOLBAR',$addtimeText), false, 'newentry');
-		}
-		*/
-
 		if (($this->canDo->get('core.edit') || $this->canDo->get('core.edit.own')) && isset($this->items[0]))
 		{
 			$html[] = Secretary\Navigation::ToolbarItem('time.edit', 'COM_SECRETARY_TOOLBAR_EDIT', true, 'default', 'fa-pencil-square-o');

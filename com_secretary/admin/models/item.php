@@ -196,8 +196,6 @@ class SecretaryModelItem extends \Joomla\CMS\MVC\Model\AdminModel
 		if (!$user->authorise('core.admin', 'com_secretary'))
 		{
 			throw new Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
-			
-            return false;
 		}
 
 		// Allow an exception to be thrown.
@@ -247,14 +245,6 @@ class SecretaryModelItem extends \Joomla\CMS\MVC\Model\AdminModel
 
 					unset($data['id']);
 
-					/*
-					if(empty($data['downloadID'])) {
-						$this->setError('Download ID missing');
-						return false;
-					} else {
-						$this->updateDownloadId($data['downloadID']);
-					}
-					*/
 					$this->updateDownloadId();
 
 					$data['products_columns'] = $this->getAcceptedCols($data, 'products_columns', \Secretary\Helpers\Products::$selectedColumns);

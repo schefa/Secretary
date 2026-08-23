@@ -21,20 +21,15 @@ class SecretaryViewProduct extends \Joomla\CMS\MVC\View\HtmlView
 		$this->item	    = $this->get('Item');
 
 		// Permission
-		$user = \Secretary\Joomla::getUser();
 		$check	= \Secretary\Helpers\Access::edit($section, $this->item->id, $this->item->created_by );
 		
         if ( $this->_layout == 'edit' && !$check )
 		{
 			throw new Exception( \Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
         elseif ( false === \Secretary\Helpers\Access::show($section, $this->item->id,  $this->item->created_by) )
 		{
 		    throw new Exception( \Joomla\CMS\Language\Text::_('JERROR_ALERTNOAUTHOR'), 500);
-			
-            return false;
 		}
 		
 		$this->defaultTemplate		= \Secretary\Helpers\Templates::getTemplate($this->item->template);
@@ -42,8 +37,6 @@ class SecretaryViewProduct extends \Joomla\CMS\MVC\View\HtmlView
 		if (empty($this->defaultTemplate))
 		{
 			throw new Exception( \Joomla\CMS\Language\Text::_('COM_SECRETARY_EMAIL_NOTEMPLATE'), 404 );
-			
-            return false;
 		}
 
 		$extra = array('product'=>$this->item->id);

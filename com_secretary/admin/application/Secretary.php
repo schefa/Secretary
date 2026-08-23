@@ -144,6 +144,10 @@ namespace Secretary {
          */
         public static function getLatestVersion()
         {
+            if (self::$lastversion !== false)
+            {
+                return self::$lastversion;
+            }
 
             $key = 'secretary_version_' . date('Y_m_d');
             $cache = Factory::getCache('com_secretary', '');
@@ -162,7 +166,10 @@ namespace Secretary {
                 }
                 catch (\Exception $e)
 				{
-                    throw new $e;
+                    // This runs on every backend page load (via latestVersionMsg()/footer()) to
+                    // show an optional "update available" notice - a transient network/GitHub
+                    // failure here must not take down the whole admin, so it's swallowed and
+                    // falls through to the cache-miss fallback below.
                 }
             }
 

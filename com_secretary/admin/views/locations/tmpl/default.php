@@ -169,18 +169,6 @@ $listDirn	= $this->state->get('list.direction');
                             ?>
                             <?php echo \Joomla\CMS\Language\Text::_($item->title); ?>
                         <?php } ?>
-                        
-                        <?php /*
-
-							if(!isset($item->time_id)) { ?>
-                                <a class="pull-right btn btn-sm" href="index.php?option=com_secretary&task=time.edit&extension=locations_<?php echo $item->extension; ?>&location_id=<?php echo $item->id;?>">+&nbsp;<?php echo JText::_('COM_SECRETARY_LOCATION_OCCUPANCY');?></a>
-                            <?php } else { ?>
-                            
-                                <a class="pull-right btn btn-sm" href="index.php?option=com_secretary&view=time&extension=locations&id=<?php echo $item->time_id; ?>"><?php echo JText::_('COM_SECRETARY_LOCATION_OCCUPANCY');?>&nbsp;<i class="fa fa-angle-double-right"></i></a>
-                                
-							<?php }
-
-						*/ ?>
                     </td>
                     
 					<td><?php echo $this->sectionIcons[$item->extension] .' '.\Joomla\CMS\Language\Text::_('COM_SECRETARY_'.strtoupper($item->extension)); ?></td>

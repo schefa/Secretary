@@ -6,7 +6,7 @@ defined('_JEXEC') or die;
 class SecretaryControllerDatabase extends \Joomla\CMS\MVC\Controller\FormController
 {
 	protected $app;
-	static $whiteTasks = array('fixassets', 'import', 'submit');
+	static $whiteTasks = array('fixassets', 'submit');
 	static $whiteExports = array('sql', 'csv', 'xml', 'excel', 'json');
 
 	/**

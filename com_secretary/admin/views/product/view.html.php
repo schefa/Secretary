@@ -133,8 +133,7 @@ class SecretaryViewProduct extends \Joomla\CMS\MVC\View\HtmlView
 		$this->suppliers_ids = array_keys($contacts);
 		$this->contactsCounts = count($contacts ?? []);
 		$contacts = json_encode( $contacts );
-		
-		$document = \Joomla\CMS\Factory::getDocument();
+
 		$document->addScriptDeclaration(" var featuresList = ". $contacts .";");
 		$document->addScriptDeclaration(\Secretary\HTML::_('javascript.submitformbutton','product'));
 	}

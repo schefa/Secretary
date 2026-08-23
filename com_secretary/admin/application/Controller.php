@@ -14,8 +14,6 @@ class Controller
         if (!in_array($table, Database::$secretary_tables))
 		{
             throw new Exception('Query failure: ' . $table);
-            
-            return false;
         }
 
         $return = false;

@@ -111,6 +111,7 @@ class SecretaryModelSubjects extends \Joomla\CMS\MVC\Model\ListModel
 
         $orderCol = $this->state->get('list.ordering');
         $orderDirn = $this->state->get('list.direction');
+        $letter    = $this->app->input->getCmd('letter');
 
         if ($this->layout == 'modaljusers')
 		{
@@ -176,12 +177,10 @@ class SecretaryModelSubjects extends \Joomla\CMS\MVC\Model\ListModel
             }
 
             // Filter by search in title
-            $letter    = $this->app->input->getCmd('letter');
-            
             if (!empty($search))
 			{
                 $search = $db->Quote('' . $db->escape($search, true) . '%');
-            
+
                 if (!empty($letter))
                 {
                             $search = $db->Quote(strtoupper($letter) . $db->escape($search, true) . '%');
