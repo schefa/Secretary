@@ -30,7 +30,22 @@ class DomPDFStrategy implements IPDFStrategy
 
         $input .= $header . $footer . '<div id="dompdf_content">' . $html . '</div></body></html>';
 
-        require_once JPATH_LIBRARIES . '/dompdf/autoload.inc.php';
+        // dompdf/dompdf is installed into its own isolated Composer project
+        // under libraries/dompdf-lib, same as mpdf-lib - falls back to the
+        // older manual (non-Composer) bundle's autoload.inc.php under
+        // libraries/dompdf for installs done that way.
+        $autoload = JPATH_LIBRARIES . '/dompdf-lib/vendor/autoload.php';
+
+        if (!file_exists($autoload))
+		{
+            $autoload = JPATH_LIBRARIES . '/dompdf/autoload.inc.php';
+        }
+
+        if (!file_exists($autoload))
+		{
+            throw new \Exception('Dompdf not exists');
+        }
+        require_once $autoload;
 
         $dompdf = new Dompdf;
 
