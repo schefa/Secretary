@@ -18,9 +18,6 @@ ZIPFILE_MODULE      = $(RELEASE)/$(SECRETARY_DASHBOARD)_$(VERSION).zip
 # ".*" is deliberately avoided: it would drop the uploads/.htaccess.
 ZIP_EXCLUDES        = -x "*.svn*" -x "*.DS_Store" -x "README.md"
 
-JOOMLA_VERSION = 6.1.3
-# JOOMLA_VERSION = 5.4.8
-
 # --- Credentials --------------------------------------------------------------
 # Defaults live in .env (also read directly by `docker compose`'s built-in
 # .env support). Override per-invocation with `make up DEV_DB_PASSWORD=secret`
