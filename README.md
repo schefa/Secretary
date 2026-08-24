@@ -1,7 +1,7 @@
 # Secretary ![Static Badge](https://img.shields.io/badge/remastered-559953)
 
 
-Secretary is a Joomla 6 component that allows you to manage your digital office locally or from anywhere. Create invoices, offers, manage master data of your clients, observe products trends, manage events and project and much more.
+Secretary is a Joomla CMS component that allows you to manage your digital office locally or from anywhere. Create invoices, offers, manage master data of your clients, observe products trends, manage events and project and much more.
 
 If Secretary is useful to you, consider supporting its development:
 
