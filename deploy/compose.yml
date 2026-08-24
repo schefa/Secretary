@@ -51,17 +51,17 @@ services:
       - "80:80"
       - "443:443"
 
-  # Fresh Joomla 6.1.3 installation, with no customizations.
+  # Fresh Joomla installation (version set via JOOMLA_VERSION in .env), with no customizations.
   joomla:
     <<: *joomla-base
     container_name: secretary_joomla
-    image: joomla-base:6.1.3
+    image: joomla-base:${JOOMLA_VERSION}
     build:
       context: ..
       dockerfile: Dockerfile
       target: base
       args:
-        JOOMLA_VERSION: "6.1.3"
+        JOOMLA_VERSION: "${JOOMLA_VERSION}"
     volumes:
       - joomla6_html:/var/www/html
       - ./joomla-dev/.htaccess:/var/www/html/.htaccess:ro
@@ -69,17 +69,17 @@ services:
       - ./joomla-dev/php.ini:/usr/local/etc/php/php.ini:ro
     user: "1000:1000"
   
-  # Development Joomla 6.1.3 installation, with Secretary installed
+  # Development Joomla installation (version set via JOOMLA_VERSION in .env), with Secretary installed
   dev:
     <<: *joomla-base
     container_name: secretary_dev
-    image: joomla:6.1.3
+    image: joomla:${JOOMLA_VERSION}
     build:
       context: ..
       dockerfile: Dockerfile
       target: joomla
       args:
-        JOOMLA_VERSION: "6.1.3"
+        JOOMLA_VERSION: "${JOOMLA_VERSION}"
     volumes:
       - dev_logs:/var/www/html/logs
       # The admin com_secretary tree below is made of relative symlinks

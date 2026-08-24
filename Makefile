@@ -18,7 +18,8 @@ ZIPFILE_MODULE      = $(RELEASE)/$(SECRETARY_DASHBOARD)_$(VERSION).zip
 # ".*" is deliberately avoided: it would drop the uploads/.htaccess.
 ZIP_EXCLUDES        = -x "*.svn*" -x "*.DS_Store" -x "README.md"
 
-JOOMLA6_VERSION = 6.1.3
+# JOOMLA_VERSION = 6.1.3
+JOOMLA_VERSION = 5.4.8
 
 # --- Credentials --------------------------------------------------------------
 # Defaults live in .env (also read directly by `docker compose`'s built-in
@@ -42,10 +43,10 @@ stop:
 
 # --- Image builds -------------------------------------------------------------
 build/base:
-	docker build --target base --build-arg JOOMLA_VERSION=$(JOOMLA6_VERSION) -t joomla-base:$(JOOMLA6_VERSION) -f Dockerfile .
+	docker build --target base --build-arg JOOMLA_VERSION=$(JOOMLA_VERSION) -t joomla-base:$(JOOMLA_VERSION) -f Dockerfile .
 
 build/joomla:
-	docker build --target joomla --build-arg JOOMLA_VERSION=$(JOOMLA6_VERSION) -t joomla:$(JOOMLA6_VERSION) -f Dockerfile .
+	docker build --target joomla --build-arg JOOMLA_VERSION=$(JOOMLA_VERSION) -t joomla:$(JOOMLA_VERSION) -f Dockerfile .
 
 build: build/base build/joomla
 
@@ -77,18 +78,18 @@ secretary/module:
 # Runs via the joomla-base image so contributors don't need PHP/composer
 # installed locally. Config lives in phpcs.xml (Joomla coding standard).
 lint: build/base
-	docker run --rm -v $(CURDIR):/work -w /work joomla-base:$(JOOMLA6_VERSION) \
+	docker run --rm -v $(CURDIR):/work -w /work joomla-base:$(JOOMLA_VERSION) \
 		sh -c "composer install --quiet && vendor/bin/phpcs"
 
 lint/fix: build/base
-	docker run --rm -v $(CURDIR):/work -w /work joomla-base:$(JOOMLA6_VERSION) \
+	docker run --rm -v $(CURDIR):/work -w /work joomla-base:$(JOOMLA_VERSION) \
 		sh -c "composer install --quiet && vendor/bin/phpcbf -d memory_limit=512M"
 
 # --- Testing --------------------------------------------------------------
 # PHPUnit tests for com_secretary's server-side logic. Runs via the
 # joomla-base image, same as lint. Config lives in com_secretary/tests/.
 test: build/base
-	docker run --rm -v $(CURDIR):/work -w /work/com_secretary/tests joomla-base:$(JOOMLA6_VERSION) \
+	docker run --rm -v $(CURDIR):/work -w /work/com_secretary/tests joomla-base:$(JOOMLA_VERSION) \
 		sh -c "composer install --quiet && vendor/bin/phpunit"
 
 # --- Documentation ----------------------------------------------------------
