@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
 
 defined('_JEXEC') or die;
 
@@ -363,7 +368,7 @@ class SecretaryModelItem extends \Joomla\CMS\MVC\Model\AdminModel
 			$object->type = 'extension';
 			$object->enabled = 1;
 			$object->extra_query = $extra_query;
-			$object->location = 'https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';
+			$object->location = 'https://raw.githubusercontent.com/schefa/Secretary/refs/heads/master/secretary.xml';
 			$result = $db->insertObject('#__update_sites', $object);
 		}
 	}

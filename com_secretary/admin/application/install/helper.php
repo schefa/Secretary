@@ -1,6 +1,11 @@
 <?php
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
 
-// No direct access 
+ 
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
@@ -131,7 +136,7 @@ class SecretaryInstall
 			{
 				// copy the index.html to the new folder
 				$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-				File::write($uploadfolder . DS . "index.html", $data);
+				File::write($uploadfolder . DIRECTORY_SEPARATOR . "index.html", $data);
 				$message .= '<p>' . \Joomla\CMS\Language\Text::sprintf("Folder <strong><em>%s</em></strong> created!", "<em>../com_secretary/<strong>uploads</strong></em>") . '</p>';
 			}
 		}
@@ -335,7 +340,7 @@ class SecretaryInstall
 	public function _update_3_2_0()
 	{
 		$db = Factory::getDbo();
-		$location = 'https://raw.githubusercontent.com/schefa/updateservers/master/secretary/secretary.xml';
+		$location = 'https://raw.githubusercontent.com/schefa/Secretary/refs/heads/master/secretary.xml';
 
 		$query = $db->getQuery(true);
 

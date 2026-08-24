@@ -1,7 +1,7 @@
 # Third-party / build artifacts - never format someone else's code.
 node_modules/
 vendor/
-com_secretary/tests/vendor/
+tests/vendor/
 com_secretary/media/assets/
 mod_secretary_dashboard/LICENSE.txt
 deploy/joomla-dev/

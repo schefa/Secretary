@@ -6,7 +6,7 @@
     <file>mod_secretary_dashboard</file>
 
     <!--
-      Locally composer-installed PHPUnit for com_secretary/tests, gitignored
+      Locally composer-installed PHPUnit for tests, gitignored
       and not part of the extension's own source - never lint/fix vendored
       third-party code.
     -->

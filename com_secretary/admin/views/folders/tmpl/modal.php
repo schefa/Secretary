@@ -1,5 +1,10 @@
 <?php
- 
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
+
 defined('_JEXEC') or die;
 
 $app = Secretary\Joomla::getApplication();
@@ -9,9 +14,7 @@ if ($app->isClient('site'))
 	\Joomla\CMS\Session\Session::checkToken('get') or die(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN'));
 }
 
-require_once JPATH_ROOT . '/components/com_content/helpers/route.php';
-
-// Include the component HTML helpers. 
+// Include the component HTML helpers.
 \Joomla\CMS\HTML\HTMLHelper::_('bootstrap.tooltip');
 
 $extension	= $this->escape($this->state->get('filter.extension'));
@@ -121,7 +124,7 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 				<tr class="row<?php echo $i % 2; ?>">
 					<td>
 						<?php echo str_repeat('<span class="gi">&mdash;</span>', $item->level - 1) ?>
-						<a href="javascript:void()" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', null, '<?php echo $this->escape(ContentHelperRoute::getCategoryRoute($item->id, $item->language)); ?>', '<?php echo $this->escape($lang); ?>', null);">
+						<a href="javascript:void()" onclick="if (window.parent) window.parent.<?php echo $this->escape($function);?>('<?php echo $item->id; ?>', '<?php echo $this->escape(addslashes($item->title)); ?>', null, '<?php echo $this->escape(\Joomla\Component\Content\Site\Helper\RouteHelper::getCategoryRoute($item->id, $item->language)); ?>', '<?php echo $this->escape($lang); ?>', null);">
 							<?php echo $this->escape($item->title); ?>
 						</a>
 					</td>

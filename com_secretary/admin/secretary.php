@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
 
 defined('_JEXEC') or die;
 
@@ -28,7 +33,7 @@ $format = $app->input->get('format');
 $layout = $app->input->get('layout');
 $task = $app->input->get('task');
 
-if ($app->isClient('administrator') && !Factory::getUser()->authorise('core.manage', 'com_secretary'))
+if ($app->isClient('administrator') && !$app->getIdentity()->authorise('core.manage', 'com_secretary'))
 {
 	throw new Exception(Text::_('JERROR_ALERTNOAUTHOR'));
 	

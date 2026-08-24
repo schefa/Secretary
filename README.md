@@ -76,7 +76,7 @@ From then on, every `git commit` runs the hooks against your staged files. If a 
 ## Testing
 
 ```
-make test   # PHPUnit tests for com_secretary's server-side logic (com_secretary/tests)
+make test   # PHPUnit tests for com_secretary's server-side logic (tests)
 ```
 
 Also runs as a gate in the release workflow, alongside lint.

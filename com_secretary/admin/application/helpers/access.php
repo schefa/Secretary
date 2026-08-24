@@ -1,8 +1,13 @@
 <?php
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
 
 namespace Secretary\Helpers;
 
-// No direct access
+
 use Secretary\Joomla;
 use Joomla\CMS\Helper\ContentHelper;
 
@@ -121,7 +126,7 @@ abstract class Access
     public static function edit($section = '', $id = '', $created_by = '')
     {
         $test = false;
-        $user = \Joomla\CMS\Factory::getUser();
+        $user = \Secretary\Joomla::getUser();
         $section = (!empty($section)) ? ('.' . $section) : '';
 
         // Edit

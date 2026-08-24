@@ -3,7 +3,7 @@
 /robots.txt.dist
 /_package/
 /vendor/
-/com_secretary/tests/vendor/
+/tests/vendor/
 .phpunit.cache
 deploy/traefik/access.log
 *.pdf

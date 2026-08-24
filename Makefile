@@ -18,8 +18,8 @@ ZIPFILE_MODULE      = $(RELEASE)/$(SECRETARY_DASHBOARD)_$(VERSION).zip
 # ".*" is deliberately avoided: it would drop the uploads/.htaccess.
 ZIP_EXCLUDES        = -x "*.svn*" -x "*.DS_Store" -x "README.md"
 
-# JOOMLA_VERSION = 6.1.3
-JOOMLA_VERSION = 5.4.8
+JOOMLA_VERSION = 6.1.3
+# JOOMLA_VERSION = 5.4.8
 
 # --- Credentials --------------------------------------------------------------
 # Defaults live in .env (also read directly by `docker compose`'s built-in
@@ -87,9 +87,9 @@ lint/fix: build/base
 
 # --- Testing --------------------------------------------------------------
 # PHPUnit tests for com_secretary's server-side logic. Runs via the
-# joomla-base image, same as lint. Config lives in com_secretary/tests/.
+# joomla-base image, same as lint. Config lives in tests/.
 test: build/base
-	docker run --rm -v $(CURDIR):/work -w /work/com_secretary/tests joomla-base:$(JOOMLA_VERSION) \
+	docker run --rm -v $(CURDIR):/work -w /work/tests joomla-base:$(JOOMLA_VERSION) \
 		sh -c "composer install --quiet && vendor/bin/phpunit"
 
 # --- Documentation ----------------------------------------------------------

@@ -54,11 +54,11 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        working-directory: com_secretary/tests
+        working-directory: tests
         run: composer install --prefer-dist --no-progress
 
       - name: Run phpunit
-        working-directory: com_secretary/tests
+        working-directory: tests
         run: vendor/bin/phpunit
 
   release:
@@ -75,6 +75,11 @@ jobs:
           TAG="${{ inputs.tag }}"
           sed -i "s#<version>[^<]*</version>#<version>${TAG}</version>#" secretary.xml com_secretary/secretary.xml
           sed -i "s#releases/tag/[^\"<]*#releases/tag/${TAG}#g" secretary.xml
+
+      - name: Update creationDate in secretary.xml
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          sed -i "s#<creationDate>[^<]*</creationDate>#<creationDate>${DATE}</creationDate>#" com_secretary/secretary.xml
 
       - name: Commit and push version bump
         # Pushed with the default GITHUB_TOKEN, so GitHub suppresses any resulting

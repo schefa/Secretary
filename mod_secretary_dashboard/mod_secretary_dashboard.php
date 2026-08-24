@@ -5,7 +5,7 @@
  * @license      GNU General Public License version 2 or later.
  */
 
-// no direct access
+
 defined('_JEXEC') or die ;
 
 $user = \Joomla\CMS\Factory::getUser();

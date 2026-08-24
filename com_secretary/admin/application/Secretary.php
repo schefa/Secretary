@@ -1,228 +1,232 @@
 <?php
+/**
+ * @package     Secretary
+ * @copyright   Copyright (C) 2014-2026 Fjodor Schaefer. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ */
 
-namespace Secretary {
+namespace Secretary;
 
-    use Joomla\CMS\Factory;
-    use Joomla\Registry\Registry;
+// No direct access
+defined('_JEXEC') or die;
 
-    if (!defined('SECRETARY_ADMIN_PATH'))
-    {
-        define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR . '/components/com_secretary');
-    }
+use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 
-    // No direct access
-    defined('_JEXEC') or die;
+if (!defined('SECRETARY_ADMIN_PATH'))
+{
+    define('SECRETARY_ADMIN_PATH', JPATH_ADMINISTRATOR . '/components/com_secretary');
+}
 
-    \Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/');
-    \Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/helpers/');
-    \Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/utilities/');
+\Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/');
+\Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/helpers/');
+\Secretary\Application::loadFunctionsFromFolder(SECRETARY_ADMIN_PATH . '/application/utilities/');
 
-    require_once SECRETARY_ADMIN_PATH . '/application/pdf/pdf.php';
+require_once SECRETARY_ADMIN_PATH . '/application/pdf/pdf.php';
+
+/**
+ * PHP doesnt support enumerator
+ * 
+ * @author schefa
+ */
+abstract class DataTypeEnum
+{
+    const String = "string";
+    const Textarea = "textarea";
+    const Clean = "clean";
+    const Integer = "integer";
+    const Float = "float";
+    const Money = "money";
+    const Date = "date";
+    const ImageFile = "imagefile";
+}
+
+class Application
+{
+
+    private static $_params;
+    protected static $_company = array();
+    public static $version = "";
+    public static $lastversion = false;
 
     /**
-     * PHP doesnt support enumerator
-     * 
-     * @author schefa
+     * Singular => Database Tables
      */
-    abstract class DataTypeEnum
+    public static $sections = array(
+        'component' => 'component',
+        'system' => 'system',
+        // however not the database table!
+        'business' => 'businesses',
+        'document' => 'documents',
+        'folder' => 'folders',
+        'item' => 'items',
+        'product' => 'products',
+        'reports' => 'reports',
+        'location' => 'locations',
+        'subject' => 'subjects',
+        'time' => 'times',
+        'template' => 'templates',
+    );
+
+    /**
+     * Get the current company
+     * 
+     * @return array company
+     */
+    public static function company()
     {
-        const String = "string";
-        const Textarea = "textarea";
-        const Clean = "clean";
-        const Integer = "integer";
-        const Float = "float";
-        const Money = "money";
-        const Date = "date";
-        const ImageFile = "imagefile";
+        if (empty(self::$_company))
+			{
+            $db = Database::getDBO();
+            $q = $db->getQuery(true);
+            $q->select('*')
+                ->from($db->qn('#__secretary_businesses'))
+                ->where($db->qn('home') . '=1');
+
+            $db->setQuery($q);
+            $company = $db->loadAssoc();
+
+            if (!empty($company))
+				{
+                $company['currencySymbol'] = Database::getQuery('currencies', $company['currency'], 'currency', 'symbol', 'loadResult');
+            }
+
+            self::$_company = $company;
+        }
+        
+        return self::$_company;
     }
 
-    class Application
+    /**
+     * Get Secretary configuration settings
+     * 
+     * @return \JRegistry parameter settings
+     */
+    public static function parameters()
     {
-
-        private static $_params;
-        protected static $_company = array();
-        public static $version = "";
-        public static $lastversion = false;
-
-        /**
-         * Singular => Database Tables
-         */
-        public static $sections = array(
-            'component' => 'component',
-            'system' => 'system',
-            // however not the database table!
-            'business' => 'businesses',
-            'document' => 'documents',
-            'folder' => 'folders',
-            'item' => 'items',
-            'product' => 'products',
-            'reports' => 'reports',
-            'location' => 'locations',
-            'subject' => 'subjects',
-            'time' => 'times',
-            'template' => 'templates',
-        );
-
-        /**
-         * Get the current company
-         * 
-         * @return array company
-         */
-        public static function company()
-        {
-            if (empty(self::$_company))
+        if (empty(self::$_params))
 			{
-                $db = Database::getDBO();
-                $q = $db->getQuery(true);
-                $q->select('*')
-                    ->from($db->qn('#__secretary_businesses'))
-                    ->where($db->qn('home') . '=1');
+            $db = Database::getDBO();
+            $q = $db->getQuery(true);
+            $q->select('params')
+                ->from($db->qn('#__secretary_settings'))
+                ->where($db->qn('id') . '=1');
 
-                $db->setQuery($q);
-                $company = $db->loadAssoc();
-
-                if (!empty($company))
-				{
-                    $company['currencySymbol'] = Database::getQuery('currencies', $company['currency'], 'currency', 'symbol', 'loadResult');
-                }
-
-                self::$_company = $company;
-            }
-            
-            return self::$_company;
+            $db->setQuery($q);
+            $result = $db->loadResult();
+            $return = new Registry(json_decode($result, true));
+            self::$_params = $return;
         }
+        
+        return self::$_params;
+    }
 
-        /**
-         * Get Secretary configuration settings
-         * 
-         * @return \JRegistry parameter settings
-         */
-        public static function parameters()
-        {
-            if (empty(self::$_params))
+    /**
+     * Current Secretary version
+     * 
+     * @return string
+     */
+    public static function getVersion()
+    {
+        if (empty(self::$version))
 			{
-                $db = Database::getDBO();
-                $q = $db->getQuery(true);
-                $q->select('params')
-                    ->from($db->qn('#__secretary_settings'))
-                    ->where($db->qn('id') . '=1');
-
-                $db->setQuery($q);
-                $result = $db->loadResult();
-                $return = new Registry(json_decode($result, true));
-                self::$_params = $return;
-            }
+            $xmlPath = SECRETARY_ADMIN_PATH . "/secretary.xml";
             
-            return self::$_params;
+            if (file_exists($xmlPath))
+				{
+                $xml = simplexml_load_file($xmlPath);
+                self::$version = $xml->version;
+            }
         }
+        
+        return self::$version;
+    }
 
-        /**
-         * Current Secretary version
-         * 
-         * @return string
-         */
-        public static function getVersion()
+    /**
+     * Get latest version via webservice
+     * 
+     * @return string latest version
+     */
+    public static function getLatestVersion()
+    {
+        if (self::$lastversion !== false)
         {
-            if (empty(self::$version))
-			{
-                $xmlPath = SECRETARY_ADMIN_PATH . "/secretary.xml";
-                
-                if (file_exists($xmlPath))
-				{
-                    $xml = simplexml_load_file($xmlPath);
-                    self::$version = $xml->version;
-                }
-            }
-            
-            return self::$version;
-        }
-
-        /**
-         * Get latest version via webservice
-         * 
-         * @return string latest version
-         */
-        public static function getLatestVersion()
-        {
-            if (self::$lastversion !== false)
-            {
-                return self::$lastversion;
-            }
-
-            $key = 'secretary_version_' . date('Y_m_d');
-            $cache = Factory::getCache('com_secretary', '');
-
-            $cache->setCaching(1);
-
-            if (!($cache->get($key)))
-			{
-                try
-				{
-                    if ($xml_obj = simplexml_load_file("https://raw.githubusercontent.com/schefa/Secretary/refs/heads/master/secretary.xml"))
-					{
-                        self::$lastversion = (string) $xml_obj->update->version;
-                        $cache->store(self::$lastversion, $key, "com_secretary");
-                    }
-                }
-                catch (\Exception $e)
-				{
-                    // This runs on every backend page load (via latestVersionMsg()/footer()) to
-                    // show an optional "update available" notice - a transient network/GitHub
-                    // failure here must not take down the whole admin, so it's swallowed and
-                    // falls through to the cache-miss fallback below.
-                }
-            }
-
-            self::$lastversion = $cache->get($key);
-            
             return self::$lastversion;
         }
 
-        /**
-         * Translates the name of a view into the singular section title (e.g. documents => document)
-         * Useful for ACL 
-         * 
-         * @param string $view
-         * @return string section
-         */
-        public static function getSingularSection($view)
-        {
-            $result = NULL;
-            
-            if (isset($view))
+        $key = 'secretary_version_' . date('Y_m_d');
+        $cache = Factory::getCache('com_secretary', '');
+
+        $cache->setCaching(1);
+
+        if (!($cache->get($key)))
 			{
-                if (isset(self::$sections[(string) $view]))
+            try
 				{
-                    $result = $view;
-                }
-                elseif ($key = array_search($view, self::$sections))
-				{
-                    $result = $key;
+                if ($xml_obj = simplexml_load_file("https://raw.githubusercontent.com/schefa/Secretary/refs/heads/master/secretary.xml"))
+					{
+                    self::$lastversion = (string) $xml_obj->update->version;
+                    $cache->store(self::$lastversion, $key, "com_secretary");
                 }
             }
-            
-            return $result;
+            catch (\Exception $e)
+				{
+                // This runs on every backend page load (via latestVersionMsg()/footer()) to
+                // show an optional "update available" notice - a transient network/GitHub
+                // failure here must not take down the whole admin, so it's swallowed and
+                // falls through to the cache-miss fallback below.
+            }
         }
 
-        /**
-         * Loads PHP Classes
-         * 
-         * @param string $folder name of the folder where the files are
-         */
-        public static function loadFunctionsFromFolder($folder)
-        {
+        self::$lastversion = $cache->get($key);
+        
+        return self::$lastversion;
+    }
 
-            if (is_dir($folder) && $handle = opendir($folder))
+    /**
+     * Translates the name of a view into the singular section title (e.g. documents => document)
+     * Useful for ACL 
+     * 
+     * @param string $view
+     * @return string section
+     */
+    public static function getSingularSection($view)
+    {
+        $result = NULL;
+        
+        if (isset($view))
 			{
-                while (false !== ($entry = readdir($handle)))
+            if (isset(self::$sections[(string) $view]))
 				{
-                    if ($entry != "." && $entry != ".." && strpos($entry, '.php') !== false)
-					{
-                        require_once $folder . $entry;
-                    }
-                }
-                closedir($handle);
+                $result = $view;
             }
+            elseif ($key = array_search($view, self::$sections))
+				{
+                $result = $key;
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Loads PHP Classes
+     * 
+     * @param string $folder name of the folder where the files are
+     */
+    public static function loadFunctionsFromFolder($folder)
+    {
+
+        if (is_dir($folder) && $handle = opendir($folder))
+			{
+            while (false !== ($entry = readdir($handle)))
+				{
+                if ($entry != "." && $entry != ".." && strpos($entry, '.php') !== false)
+					{
+                    require_once $folder . $entry;
+                }
+            }
+            closedir($handle);
         }
     }
 }
