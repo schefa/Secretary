@@ -157,7 +157,8 @@ class SecretaryModelItem extends \Joomla\CMS\MVC\Model\AdminModel
 					
                     if (!empty($item->id) && !empty($item->title))
 					{
-						$item->link = '/administrator/components/com_secretary/uploads/' . $item->business . '/' . $item->folder . '/' . $item->title;
+						// Served through the access-checked task; the folder itself is closed to the web.
+						$item->link = \Joomla\CMS\Router\Route::_('index.php?option=com_secretary&task=item.openFile&id=' . (int) $item->id);
 					}
 					break;
 

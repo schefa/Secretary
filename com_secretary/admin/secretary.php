@@ -42,6 +42,13 @@ if ($app->isClient('administrator') && !$app->getIdentity()->authorise('core.man
 
 // Dependancies
 require_once SECRETARY_ADMIN_PATH . '/application/Secretary.php';
+
+// The uploads folder sits in the web root; keep its deny file in place even
+// when something replaced the folder after installation.
+if (!Secretary\Helpers\Uploads::protectRoot() && $app->isClient('administrator'))
+{
+	$app->enqueueMessage(Text::_('COM_SECRETARY_UPLOADS_UNPROTECTED'), 'warning');
+}
 Table::addIncludePath(SECRETARY_ADMIN_PATH . '/models/tables');
 Form::addFormPath(SECRETARY_ADMIN_PATH . '/models/forms');
 

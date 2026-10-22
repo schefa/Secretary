@@ -18,7 +18,7 @@ $modules = \Joomla\CMS\Form\FormHelper::loadFieldType('SecretarySections', false
 </div>
 <div class="control-group">
     <div class="control-label"><?php echo $this->form->getLabel('folder'); ?></div>
-    <div class="controls"><?php echo $this->item->link;  ?></div>
+    <div class="controls"><?php echo $this->escape($this->item->folder); ?></div>
 </div>
 <div class="control-group">
     <div class="control-label"><?php echo $this->form->getLabel('business'); ?></div>

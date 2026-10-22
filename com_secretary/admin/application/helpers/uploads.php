@@ -17,6 +17,52 @@ class Uploads
 	private static $_uploadedFile = array();
 
 	/**
+	 * Deny rules for the uploads root. Apache 2.4 (mod_authz_core) and the 2.2
+	 * syntax both deny, so the folder stays closed whether or not the host loads
+	 * mod_access_compat. Same content as admin/htaccess.txt.
+	 */
+	const DENY_HTACCESS = "Options -Indexes\n"
+		. "<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n"
+		. "<IfModule !mod_authz_core.c>\n\tOrder allow,deny\n\tDeny from all\n</IfModule>\n";
+
+	/**
+	 * Makes sure the uploads root carries its deny .htaccess.
+	 *
+	 * The uploads live inside the web root, and the installer only writes the
+	 * .htaccess once. Anything that replaces the folder afterwards - a restore,
+	 * a manual copy, a bind mount over it - silently drops the protection, and
+	 * invoices and e-mailed PDFs become downloadable by anyone who knows a file
+	 * name. Called on every request, so a missing file is recreated at once; an
+	 * existing one is never touched, so local additions survive.
+	 *
+	 * @param string|null $root uploads root, defaults to the component's
+	 * @return bool true if the protection file is in place
+	 */
+	public static function protectRoot($root = null)
+	{
+		$root = $root ?? SECRETARY_ADMIN_PATH . '/uploads';
+		$file = $root . '/.htaccess';
+
+		if (is_link($file))
+		{
+			// Never write through a link; report it so it gets looked at.
+			return false;
+		}
+
+		if (is_file($file))
+		{
+			return true;
+		}
+
+		if (!is_dir($root) && !@mkdir($root, 0755, true))
+		{
+			return false;
+		}
+
+		return @file_put_contents($file, self::DENY_HTACCESS, LOCK_EX) === strlen(self::DENY_HTACCESS);
+	}
+
+	/**
 	 * Resolves a path under the uploads root and confirms it doesn't escape it - defends
 	 * against path traversal if a business/folder/title value is ever crafted or corrupted.
 	 * Shared by every read/delete site that builds an uploads path from a DB row.
@@ -35,6 +81,33 @@ class Uploads
 		}
 
 		return $target;
+	}
+
+	/**
+	 * Whether the current user may see an uploaded file: core.show on the item the
+	 * file belongs to, or on its whole section. Files outside a section (extension
+	 * "uploads") fall back to the component.
+	 *
+	 * @param object $item uploads row with extension and itemID
+	 * @return bool
+	 */
+	public static function canShow($item)
+	{
+		if (empty($item))
+		{
+			return false;
+		}
+
+		$user = \Secretary\Joomla::getUser();
+		$section = \Secretary\Application::getSingularSection($item->extension);
+
+		if (empty($section))
+		{
+			return $user->authorise('core.show', 'com_secretary');
+		}
+
+		return $user->authorise('core.show', 'com_secretary.' . $section . '.' . $item->itemID)
+			|| $user->authorise('core.show', 'com_secretary.' . $section);
 	}
 
 	public static function whatFileType($title)
@@ -132,17 +205,7 @@ class Uploads
 				$output[] = '<a class="btn btn-upload" href="' . $previewUrl . '" data-joomla-dialog=\'{"popupType": "iframe", "src": "' . $previewUrl . '"}\'><i class="fa fa-eye"></i></a>';
             }
 
-			// ACL
-			$user = \Secretary\Joomla::getUser();
-			$section = \Secretary\Application::getSingularSection($item->extension);
-			$canDownload = $user->authorise('core.show', 'com_secretary.' . $section . '.' . $item->itemID);
-			
-            if (!$canDownload)
-			{
-				$canDownload = $user->authorise('core.show', 'com_secretary.' . $section);
-            }
-
-            if ($canDownload)
+            if (self::canShow($item))
 			{
                 $output[] = '<a class="btn btn-upload" href="index.php?option=com_secretary&task=item.openFileDownload&id=' . $item->id . '"><i class="fa fa-download"></i></a></div>';
             }

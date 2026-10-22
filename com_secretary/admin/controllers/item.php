@@ -72,27 +72,14 @@ class SecretaryControllerItem extends \Joomla\CMS\MVC\Controller\FormController
 
 	public function openFileDownload()
 	{
-		$user	= \Secretary\Joomla::getUser();
 		$id		= $this->app->input->getInt('id');
-		$canDownload = false;
 
 		if ($id > 0)
 		{
-			$db = \Secretary\Database::getDBO();
-			$item = Secretary\Database::getQuery('uploads', intval($id), 'id', $db->qn(array('extension', 'itemID', 'business', 'title', 'folder')));
-			$section = Secretary\Application::getSingularSection($item->extension);
-
-			// ACL
-			$canDownload = $user->authorise('core.show', 'com_secretary.' . $section . '.' . $item->itemID);
-			
-            if (!$canDownload)
-			{
-				$canDownload = $user->authorise('core.show', 'com_secretary.' . $section);
-			}
-
+			$item = $this->getUpload($id);
 			$file = (!empty($item->title)) ? \Secretary\Helpers\Uploads::safeUploadPath($item->business . '/' . $item->folder . '/' . $item->title) : false;
 
-			if ($file !== false && $canDownload)
+			if ($file !== false && \Secretary\Helpers\Uploads::canShow($item))
 			{
 				$filename = $item->title;
 
@@ -132,18 +119,22 @@ class SecretaryControllerItem extends \Joomla\CMS\MVC\Controller\FormController
 	public function openFile()
 	{
 		$id		= $this->app->input->getInt('id');
-		
+
         if ($id > 0)
 		{
-			$item = Secretary\Database::getQuery('uploads', intval($id), 'id', 'business,title,folder');
-			$file = \Secretary\Helpers\Uploads::safeUploadPath($item->business . '/' . $item->folder . '/' . $item->title);
-			$ext = explode('.', $item->title);
-			$fileType = \Secretary\Helpers\Uploads::whatFileType(end($ext));
+			$item = $this->getUpload($id);
+			$file = (!empty($item->title)) ? \Secretary\Helpers\Uploads::safeUploadPath($item->business . '/' . $item->folder . '/' . $item->title) : false;
 
-			if ($file === false)
+			if ($file === false || !\Secretary\Helpers\Uploads::canShow($item))
 			{
+				$this->setMessage(\Joomla\CMS\Language\Text::_('COM_SECRETARY_PERMISSION_FAILED'), 'error');
+				$this->setRedirect(\Joomla\CMS\Router\Route::_('index.php?option=com_secretary&view=items&extension=uploads', false));
+
 				return;
             }
+
+			$ext = explode('.', strtolower($item->title));
+			$fileType = \Secretary\Helpers\Uploads::whatFileType(end($ext));
 
 			if ($fileType == 'pdf')
 			{
@@ -161,10 +152,21 @@ class SecretaryControllerItem extends \Joomla\CMS\MVC\Controller\FormController
             }
             else
 			{
-                header("Content-Type: " . end($ext));
-                header("Content-Disposition: attachment; filename=\"$file\"");
-                readfile($file);
+				$this->setRedirect(\Joomla\CMS\Router\Route::_('index.php?option=com_secretary&task=item.openFileDownload&id=' . $id, false));
             }
 		}
+	}
+
+	/**
+	 * Loads an uploads row with everything the access check needs
+	 *
+	 * @param int $id
+	 * @return object|null
+	 */
+	private function getUpload($id)
+	{
+		$db = \Secretary\Database::getDBO();
+
+		return Secretary\Database::getQuery('uploads', intval($id), 'id', $db->qn(array('extension', 'itemID', 'business', 'title', 'folder')));
 	}
 }

@@ -7,7 +7,8 @@
     },
     "autoload-dev": {
         "classmap": [
-            "../com_secretary/admin/application/helpers/taxcalc.php"
+            "../com_secretary/admin/application/helpers/taxcalc.php",
+            "../com_secretary/admin/application/helpers/uploads.php"
         ]
     }
 }

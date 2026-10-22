@@ -74,10 +74,12 @@ $status = Secretary\Database::getQuery('status',$this->item->state,'id','title',
                     <div class="control-group">
                         <div class="control-label"><?php echo $this->form->getLabel('upload'); ?></div>
                         <div class="controls">
-                        <?php if ($this->item->upload)
+                        <?php if (!empty($this->item->upload))
                         {
-                            ?>
-                        <div class="upload-file"><a data-joomla-dialog='{"popupType": "iframe", "src": "<?php echo \Joomla\CMS\Router\Route::_('/administrator/components/com_secretary/uploads/'. $this->business['id'].'/time/'.$this->item->upload);?>"}'><?php echo $this->item->upload; ?></a></div>
+                            $logoImage = Secretary\Database::getQuery('uploads', $this->item->upload, 'id', 'id,extension,itemID,business,title,folder');?>
+                            <div class="upload-file">
+                            <?php \Secretary\Helpers\Uploads::getUploadFile($logoImage, NULL, 200); ?>
+                            </div>
                         <?php } ?>
 						</div>
                     </div>

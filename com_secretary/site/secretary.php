@@ -18,21 +18,42 @@ require_once  JPATH_ADMINISTRATOR . '/components/com_secretary/application/Secre
 $user    = \Secretary\Joomla::getUser();
 $app    = \Secretary\Joomla::getApplication();
 $view    = $app->input->getCmd('view', 'dashboard');
-$task    = $app->input->getCmd('task');
 $layout    = $app->input->getCmd('layout');
+
+// Read the task the way BaseController::getInstance() does (including the
+// task[controller.task]= array form), so the gate checks the controller that
+// actually runs.
+$task    = $app->input->get('task', '');
+
+if (is_array($task))
+{
+    $keys = array_keys($task);
+    $task = array_pop($keys);
+}
+$task    = \Joomla\CMS\Filter\InputFilter::getInstance()->clean((string) $task, 'cmd');
 $parts  = explode(".", $task);
 
-$single = Secretary\Application::getSingularSection($view);
-$canSee    = $user->authorise('core.show', 'com_secretary.' . $single);
-
-if (in_array($view, array('dashboard')) || in_array($parts[0], array('ajax')))
+if (count($parts) > 1)
 {
-    $canSee = $user->authorise('core.show', 'com_secretary.business');
+    // A controller.task request runs that controller whatever view it names, so
+    // the view - dashboard by default, which is open to guests - says nothing
+    // about it. ajax and dashboard (deleting activities, checked again in the
+    // model) work on the business; other controllers outside the ACL sections
+    // are backend-only.
+    $single = Secretary\Application::getSingularSection($parts[0]);
+    $canSee = in_array($parts[0], array('ajax', 'dashboard'))
+        ? $user->authorise('core.show', 'com_secretary.business')
+        : (!empty($single) && $user->authorise('core.show', 'com_secretary.' . $single));
 }
-
-if ($view === 'dashboard')
+else
 {
-    $canSee = true;
+    $single = Secretary\Application::getSingularSection($view);
+    $canSee    = $user->authorise('core.show', 'com_secretary.' . $single);
+
+    if ($view === 'dashboard')
+    {
+        $canSee = true;
+    }
 }
 
 /********************************************

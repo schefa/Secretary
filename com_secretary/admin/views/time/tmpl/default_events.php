@@ -88,7 +88,7 @@ if ($this->item->document_id > 0)
                         <div class="controls">
 						<?php if (!empty($this->item->upload))
 						{
-                            $logoImage = Secretary\Database::getQuery('uploads', $this->item->upload,'id','business,title,folder');?>
+                            $logoImage = Secretary\Database::getQuery('uploads', $this->item->upload, 'id', 'id,extension,itemID,business,title,folder');?>
                             <div class="upload-file">
                             <?php \Secretary\Helpers\Uploads::getUploadFile( $logoImage, NULL, 200); ?>
                             </div>
